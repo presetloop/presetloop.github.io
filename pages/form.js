@@ -1,11 +1,20 @@
-import { useState } from 'react';
+import { useState, useRef, useEffect } from 'react';
 import {useRouter} from 'next/router'
 // import FormComponent from '../components/FormComponent'
 
 function MyForm() {
-  const router = useRouter()
+  const router = useRouter();
+  const titleField = useRef();
+
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+
+  // to get input autofocus working
+  useEffect(() => {
+    if (titleField.current) {
+      titleField.current.focus();
+    }
+  }, []);
 
   const handleSubmit = async (event) => {
     event.preventDefault();
@@ -31,6 +40,8 @@ function MyForm() {
           Title
         </label>
         <input
+          ref={titleField}
+          required 
           className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="title"
           type="text"
