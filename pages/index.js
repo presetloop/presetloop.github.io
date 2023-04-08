@@ -11,7 +11,7 @@ function MyPage() {
     async function fetchData() {
       const res = await fetch('https://toot.olk1.com/api/');
       const json = await res.json();
-      // console.log(json)
+
       json.reverse();
       setData(json);
     }

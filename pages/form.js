@@ -8,6 +8,7 @@ function MyForm() {
 
   const [title, setTitle] = useState('');
   const [content, setContent] = useState('');
+  const [loading, setLoading] = useState(false);
 
   // to get input autofocus working
   useEffect(() => {
@@ -17,6 +18,8 @@ function MyForm() {
   }, []);
 
   const handleSubmit = async (event) => {
+    setLoading(true);
+    
     event.preventDefault();
     const formData = new FormData();
     formData.append('title', title);
@@ -28,6 +31,7 @@ function MyForm() {
     router.push("/")
     // const data = await response.json();
     // console.log(data);
+    setLoading(false);
   };
 
   return (
@@ -70,23 +74,12 @@ function MyForm() {
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
           type="submit"
         >
-          Submit
+          {loading ? 'Tooting...' : 'Toot'}
         </button>
       </div>
     </form>
  
     </div>
-    // <form onSubmit={handleSubmit}>
-    //   <label>
-    //     Title:
-    //     <input type="text" value={title} onChange={(e) => setTitle(e.target.value)} />
-    //   </label>
-    //   <label>
-    //     Content:
-    //     <textarea value={content} onChange={(e) => setContent(e.target.value)} />
-    //   </label>
-    //   <button type="submit">Submit</button>
-    // </form>
   );
 }
 
