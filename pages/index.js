@@ -18,7 +18,7 @@ function MyPage() {
     return (
       
         <div className="max-w-16 w-[95vh] m-auto">
-        <a className="block my-4 text-2xl text-blue-700" href="/form">FORM</a>
+        <a className="block my-4 text-2xl text-blue-700" href="/form">Toot?</a>
             <ul>
                 {data?.map(item => (
                     <li className="my-2" key={item.id}>

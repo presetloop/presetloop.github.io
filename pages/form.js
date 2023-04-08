@@ -31,9 +31,12 @@ function MyForm() {
   };
 
   return (
-    <div className="container m-auto">
+    <div className="max-w-16 w-[95vh] m-auto">
       {/* <FormComponent handleSubmit={handleSubmit}/> */}
 
+      <div className="">
+        <a className="block my-4 text-md text-blue-700" href="/">View all Toots</a>
+      </div>
       <form onSubmit={handleSubmit}>
       <div className="mb-4">
         <label className="block text-gray-700 font-bold mb-2" htmlFor="title">
