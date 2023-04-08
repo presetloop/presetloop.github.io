@@ -9,9 +9,10 @@ function MyPage() {
     }, []);
 
     async function fetchData() {
-      const res = await fetch('https://dev.olk1.com/api/');
+      const res = await fetch('https://toot.olk1.com/api/');
       const json = await res.json();
       // console.log(json)
+      json.reverse();
       setData(json);
     }
 
@@ -22,8 +23,8 @@ function MyPage() {
             <ul>
                 {data?.map(item => (
                     <li className="my-2" key={item.id}>
-                      <p className="text-xl">{item.title}</p>
-                      <p className="text-lg text-slate-700">{item.content}</p>
+                      <p className="bg-slate-200 border-dashed border-l-2 border-indigo-500 w-fit p-1 stext-xl">{item.title}</p>
+                      <p className="bg-slate-100 border-dashed border-l-2 border-indigo-500 w-fit p-1 text-lg text-slate-700">{item.content}</p>
                       <DeleteBtn id={item.id} />
                     </li>
                 ))}

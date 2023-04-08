@@ -21,7 +21,7 @@ function MyForm() {
     const formData = new FormData();
     formData.append('title', title);
     formData.append('content', content);
-    const response = await fetch('https://dev.olk1.com/api/form.php', {
+    const response = await fetch('https://toot.olk1.com/api/form.php', {
       method: 'POST',
       body: formData
     });
