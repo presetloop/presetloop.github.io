@@ -7,6 +7,7 @@ function MyForm() {
   const titleField = useRef();
 
   const [title, setTitle] = useState('');
+  const [linkTag, setLinkTag] = useState('');
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -23,6 +24,7 @@ function MyForm() {
     event.preventDefault();
     const formData = new FormData();
     formData.append('title', title);
+    formData.append('linkTag', linkTag);
     formData.append('content', content);
     const response = await fetch('https://toot.olk1.com/api/form.php', {
       method: 'POST',
@@ -35,7 +37,7 @@ function MyForm() {
   };
 
   return (
-    <div className="max-w-16 w-[95vh] m-auto">
+    <div className="max-w-[700px] w-[95%] m-auto">
       {/* <FormComponent handleSubmit={handleSubmit}/> */}
 
       <div className="">
@@ -57,12 +59,27 @@ function MyForm() {
           onChange={(e) => setTitle(e.target.value)}
         />
       </div>
+      
+      <div className="mb-4">
+        <label className="block text-gray-700 font-bold mb-2" htmlFor="title">
+          Link
+        </label>
+        <input
+          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="title"
+          type="text"
+          placeholder="Enter a link (optional)"
+          value={linkTag}
+          onChange={(e) => setLinkTag(e.target.value)}
+        />
+      </div>
+      
       <div className="mb-6">
         <label className="block text-gray-700 font-bold mb-2" htmlFor="content">
           Content
         </label>
         <textarea
-          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="appearance-none border rounded w-full h-48 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="content"
           placeholder="Enter some content"
           value={content}

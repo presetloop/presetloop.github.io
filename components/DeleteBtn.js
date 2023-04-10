@@ -18,10 +18,10 @@ function DeleteBtn(props) {
       });
 
       if (response.status === 204) {
-        router.reload();
+        router.push("/")
       } else if (response.status === 200) {
         // console.log('Success');
-        router.reload();
+        router.push("/")
       } else {
         // Handle any other non-204 response status codes here
         console.error(`Unexpected response status: ${response.status}`);

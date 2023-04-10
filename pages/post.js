@@ -28,24 +28,29 @@ function Post() {
   }, [id]);
 
   if (loading) {
-    return <div>Loading...</div>;
+    return <div className="max-w-[700px] w-[95%] m-auto">Loading...</div>;
   }
 
   if (!data || data.length === 0) {
-    return <div>No data</div>;
+    return <div className="max-w-[700px] w-[95%] m-auto">No data</div>;
   }
 
   return (
-    <div className="max-w-16 w-[95vh] m-auto">
-      <div className='flex gap-2'>
-        <a className="block my-4 text-2xl text-blue-700" href="/">Home</a>
+    <div className="max-w-[700px] w-[95%] m-auto">
+      <div className='flex gap-2 justify-between'>
         <a className="block my-4 text-2xl text-blue-700" href="/form">Toot?</a>
+        <a className="block my-4 text-2xl text-blue-700" href="/">Home</a>
       </div>
       <ul>
         {data.map(item => (
           <li className="my-2" key={item.id}>
-            <p className="bg-slate-200 border-dashed border-l-2 border-indigo-500 w-fit p-1 stext-xl">{item.title}</p>
-            <p className="bg-slate-100 border-dashed border-l-2 border-indigo-500 w-fit p-1 text-lg text-slate-700" dangerouslySetInnerHTML={{__html: item.content}}></p>
+            
+            <p className="bg-slate-100 w-fit p-1 mb-4 text-xl">{item.title}</p>
+            
+            {item.linkTag && <p className="bg-slate-100 w-fit p-1 text-xl"><a href={`${item.linkTag}`} target="_blank">{item.linkTag}</a></p>}
+            
+            <p className="bg-slate-50 w-fit p-1 mb-2 text-lg text-slate-700" dangerouslySetInnerHTML={{__html: item.content}}></p>
+            
             <DeleteBtn id={item.id} />
           </li>
         ))}
