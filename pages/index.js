@@ -22,11 +22,11 @@ function MyPage() {
         <a className="block my-4 text-2xl text-blue-700" href="/form">Toot?</a>
             <ul>
                 {data?.map(item => (
-                    <li className="my-2" key={item.id}>
-                      <p className="bg-slate-200 border-dashed border-l-2 border-indigo-500 w-fit p-1 stext-xl">{item.title}</p>
-                      <p className="bg-slate-100 border-dashed border-l-2 border-indigo-500 w-fit p-1 text-lg text-slate-700">{item.content}</p>
-                      <DeleteBtn id={item.id} />
-                    </li>
+                  <li className="my-2" key={item.id}>
+                    <p className="bg-slate-200 border-dashed border-l-2 border-indigo-500 w-fit p-1 stext-xl">{item.title}</p>
+                    <p className="bg-slate-100 border-dashed border-l-2 border-indigo-500 w-fit p-1 text-lg text-slate-700" dangerouslySetInnerHTML={{__html: item.content}}></p>
+                    <DeleteBtn id={item.id} />
+                  </li>
                 ))}
             </ul>
         </div>
