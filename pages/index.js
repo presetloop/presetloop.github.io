@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import DeleteBtn from '../components/DeleteBtn';
 
-function MyPage() {
+function Home() {
     const [data, setData] = useState([]);
 
     useEffect(() => {
@@ -23,7 +23,9 @@ function MyPage() {
             <ul>
                 {data?.map(item => (
                   <li className="my-2" key={item.id}>
-                    <p className="bg-slate-200 border-dashed border-l-2 border-indigo-500 w-fit p-1 stext-xl">{item.title}</p>
+                    <a href={`/post?id=${item.id}`}>
+                      <p className="bg-slate-200 border-dashed border-l-2 border-indigo-500 w-fit p-1 text-xl">{item.title}</p>
+                    </a>
                     <p className="bg-slate-100 border-dashed border-l-2 border-indigo-500 w-fit p-1 text-lg text-slate-700" dangerouslySetInnerHTML={{__html: item.content}}></p>
                     <DeleteBtn id={item.id} />
                   </li>
@@ -33,6 +35,6 @@ function MyPage() {
     );
 }
 
-export default MyPage;
+export default Home;
 
 

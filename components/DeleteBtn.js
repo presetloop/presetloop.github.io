@@ -6,16 +6,21 @@ function DeleteBtn(props) {
   const [loading, setLoading] = useState(false);
 
   const handleClick = async () => {
-    setLoading(true);
+    const confirmed = window.confirm('Are you sure?');
+    if (!confirmed) {
+      return;
+    }
 
+    setLoading(true);
     try {
       const response = await fetch(`https://toot.olk1.com/api/delete-row.php?id=${props.id}`, {
         method: 'DELETE'
       });
 
       if (response.status === 204) {
-        // Success! Do something here, like update the UI or display a message
-        console.log("Row deleted successfully!");
+        router.reload();
+      } else if (response.status === 200) {
+        // console.log('Success');
         router.reload();
       } else {
         // Handle any other non-204 response status codes here
