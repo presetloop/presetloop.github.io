@@ -29,14 +29,14 @@ function Home() {
       <div className="max-w-[700px] w-[95%] m-auto">       
       {!loading ?
         <>
-          <a className="block my-4 text-2xl text-blue-700" href="/form">Toot?</a>
+          <a className="block my-4 text-xl text-blue-700" href="/form">Toot?</a>
             <ul>
               {data?.map(item => (
-                <li className="mb-8" key={item.id}>
+                <li className="mb-6" key={item.id}>
                   <a href={`/post?id=${item.id}`}>
-                    <p className="bg-slate-200 border-dashed border-l-2 border-slate-500 w-fit p-1 text-xl">{item.title}</p>
+                    <p className="bg-slate-200 md:w-fit px-4 p-2 text-xl">{item.title}</p>
                   </a>
-                  <p className="bg-slate-100 border-dashed border-b-4 border-l-2 border-slate-500 w-fit p-1 text-lg text-slate-700" dangerouslySetInnerHTML={{__html: item.content.slice(0,100)+"..."}}></p>
+                  <p className="bg-slate-100 border-dashed border-b-4 border-slate-200 px-4 p-1 md:px-4 md:p-2 text-lg text-slate-700" dangerouslySetInnerHTML={{__html: item.content.slice(0,100)+"..."}}></p>
                   {/* <DeleteBtn id={item.id} /> */}
                 </li>
               ))}

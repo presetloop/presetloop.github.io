@@ -40,11 +40,11 @@ function MyForm() {
     <div className="max-w-[700px] w-[95%] m-auto">
       {/* <FormComponent handleSubmit={handleSubmit}/> */}
 
-      <div className="">
-        <a className="block my-4 text-md text-blue-700" href="/">View all Toots</a>
+      <div className="flex justify-end">
+        <a className="block my-4 text-xl text-blue-700" href="/">View all</a>
       </div>
       <form onSubmit={handleSubmit}>
-      <div className="mb-4">
+      <div className="mb-2">
         <label className="block text-gray-700 font-bold mb-2" htmlFor="title">
           Title
         </label>
@@ -60,7 +60,7 @@ function MyForm() {
         />
       </div>
       
-      <div className="mb-4">
+      <div className="mb-2">
         <label className="block text-gray-700 font-bold mb-2" htmlFor="title">
           Link
         </label>
@@ -74,7 +74,7 @@ function MyForm() {
         />
       </div>
       
-      <div className="mb-6">
+      <div className="mb-2">
         <label className="block text-gray-700 font-bold mb-2" htmlFor="content">
           Content
         </label>

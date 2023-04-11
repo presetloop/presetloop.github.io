@@ -38,20 +38,20 @@ function Post() {
   return (
     <div className="max-w-[700px] w-[95%] m-auto">
       <div className='flex gap-2 justify-between'>
-        <a className="block my-4 text-2xl text-blue-700" href="/form">Toot?</a>
-        <a className="block my-4 text-2xl text-blue-700" href="/">Home</a>
+        <a className="block my-4 text-xl text-blue-700" href="/form">Toot?</a>
+        <a className="block my-4 text-xl text-blue-700" href="/">View all</a>
       </div>
       <ul>
         {data.map(item => (
           <li className="my-2" key={item.id}>
             
-            <p className="bg-slate-100 w-fit p-1 mb-4 text-xl">{item.title}</p>
+            <p className="bg-slate-100 w-fit px-4 p-2 md:px-8 md:p-4 mb-4 text-xl">{item.title}</p>
             
             {item.linkTag && <p className="bg-slate-100 w-fit p-1 text-xl"><a href={`${item.linkTag}`} target="_blank">{item.linkTag}</a></p>}
             
-            <p className="bg-slate-50 w-fit p-1 mb-2 text-lg text-slate-700" dangerouslySetInnerHTML={{__html: item.content}}></p>
+            <p className="bg-slate-50 w-fit p-4 md:p-8 md:mb-1 text-lg text-slate-700" dangerouslySetInnerHTML={{__html: item.content}}></p>
             
-            <DeleteBtn id={item.id} />
+            <div className="flex justify-start"><DeleteBtn id={item.id} /></div>
           </li>
         ))}
       </ul>
