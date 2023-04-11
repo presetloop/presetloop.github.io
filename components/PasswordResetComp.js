@@ -51,6 +51,16 @@ function PasswordResetComp({ apiUrl }) {
     if (responseData === '') {
       throw new Error('No data received from server');
     }
+
+    // Set the message returned by the PHP function
+    if(JSON.parse(responseData) === "No user found with that email address."){
+      setData('Please try again');
+      setErrorMessage(JSON.parse(responseData));
+      setLoading(false);
+      return; 
+    }
+
+    // Set the message returned by the PHP function
     setData(JSON.parse(responseData));
     setErrorMessage('');
     setEmail('');

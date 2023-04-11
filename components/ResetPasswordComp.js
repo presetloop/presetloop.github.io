@@ -7,7 +7,7 @@ function ResetPasswordComp({ apiUrl }) {
 
     const [email, setEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
-    const [message, setMessage] = useState('');
+    const [data, setData] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [loading, setLoading] = useState(false);
 
@@ -40,16 +40,28 @@ function ResetPasswordComp({ apiUrl }) {
             },
             body: JSON.stringify({ email, newPassword })
         });
-
-        const data = await response.json();
-
+        if (!response.ok) {
+          throw new Error('Unable to reset your password. Please try again later.');
+        }
+        const responseData = await response.text();
+        if (responseData === '') {
+          throw new Error('No data received from server');
+        }
+        
         // Set the message returned by the PHP function
-        setMessage(data.message);
+        if(JSON.parse(responseData) === "No user found with that email address."){
+          setData('Please try again');
+          setErrorMessage(JSON.parse(responseData));
+          setLoading(false);
+          return; 
+        }
+        // Set the message returned by the PHP function
+        setData(JSON.parse(responseData));
         setErrorMessage('');
         setEmail('');
-        // setTimeout(() => {
-        //   router.push("/login")
-        // }, 3000);
+        setTimeout(() => {
+          router.push("/")
+        }, 3000);
         setLoading(false);
     } catch (error) {
         // Log any errors that occur
@@ -82,7 +94,7 @@ function ResetPasswordComp({ apiUrl }) {
                 type="password" 
                 value={newPassword} 
                 onChange={event => setNewPassword(event.target.value)} />
-            {message && <p className="mt-2 text-blue-500">{message}</p>}
+            {data && <p className="mt-2 text-blue-500">{data}</p>}
             {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
             <button className="my-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
