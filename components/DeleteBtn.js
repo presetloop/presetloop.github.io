@@ -13,7 +13,7 @@ function DeleteBtn(props) {
 
     setLoading(true);
     try {
-      const response = await fetch(`https://toot.olk1.com/api/delete-row.php?id=${props.id}`, {
+      const response = await fetch(`https://toot.olk1.com/api/delete_row.php?id=${props.id}`, {
         method: 'DELETE'
       });
 
