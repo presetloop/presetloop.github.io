@@ -1,11 +1,28 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
+import { gsap, Power1, Power2} from "gsap";
 
 function Home() {
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
 
+    const element1Ref = useRef(null);
+    const element2Ref = useRef(null);
+    
     useEffect(() => {
         fetchData();
+    }, []);
+
+    useEffect(() => {
+      gsap.fromTo(
+        element1Ref.current,
+        { opacity: 0, y: 10 },
+        { opacity: 1, y: 0, duration: 1, ease: Power1.easeInOut }
+      );
+      gsap.fromTo(
+        element2Ref.current,
+        { opacity: 0 },
+        { opacity: 1, duration: 3, ease: Power2.easeInOut }
+      );
     }, []);
 
     async function fetchData() {
@@ -25,10 +42,16 @@ function Home() {
     }
 
     return (
-      <div className="max-w-[700px] w-[95%] m-auto">       
+      <div ref={element1Ref} className="opacity-10 max-w-[700px] w-[95%] m-auto">       
+      
       {!loading ?
         <>
-          <a className="block my-4 text-xl text-blue-700" href="/form">Toot?</a>
+          <a className="block" href="/form">
+            <p className="my-4 text-xl text-blue-700">
+              Toot?
+            </p>
+          </a>
+
           <ul>
             {data?.map(item => (
               <li className="mb-6" key={item.id}>
@@ -39,14 +62,14 @@ function Home() {
               </li>
             ))}
           </ul>
-        </>
-      : <p>Loading...</p>}
+        </> : <p>Loading...</p>}
 
-      <p className="mt-3"><a href='/password-reset'>Forgot password?</a></p>
+      <p ref={element2Ref} className="mt-3">
+        <a href='/password-reset'>Forgot password?</a>
+      </p>
+  
       </div>
     );
 }
 
 export default Home;
-
-
