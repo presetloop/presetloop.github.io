@@ -60,7 +60,7 @@ function ResetPasswordComp({ apiUrl }) {
         setErrorMessage('');
         setEmail('');
         setTimeout(() => {
-          router.push("/")
+          router.push("/login")
         }, 3000);
         setLoading(false);
     } catch (error) {

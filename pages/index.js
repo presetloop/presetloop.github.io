@@ -1,16 +1,25 @@
 import { useState, useEffect, useRef } from 'react';
-import Cookies from 'js-cookie';
 import { gsap, Power1} from "gsap";
 import LogoutBtn from '@/components/LogoutBtn';
+import Cookies from 'universal-cookie';
 
 function Home() {
+    const cookies = new Cookies();
+    const [loggedIn, setLoggedIn] = useState(false);
+    
+    useEffect(() => {
+        if (cookies.get('PHPSESSID')) {
+            setLoggedIn(true)
+        }
+    }, [cookies.get('PHPSESSID')]);
+
     const [data, setData] = useState([]);
-    const [hasCookie, setHasCookie] = useState([]);
     const [loading, setLoading] = useState(false);
 
     const element1Ref = useRef(null);
-
+    
     useEffect(() => {
+
       gsap.fromTo(
         element1Ref.current,
         { opacity: 0, y: 10 },
@@ -30,8 +39,9 @@ function Home() {
         const json = await res.json();
 
         if (Array.isArray(json)) {
+        
           setData(json);
-          setHasCookie(Cookies.get('COOOOOKIE', "YO"))
+
         } else {
           throw new Error("Data is not an array");
         }
@@ -48,7 +58,7 @@ function Home() {
       
       {!loading ?
         <>
-          { hasCookie && 
+          { loggedIn && 
             <div className='flex gap-2 justify-between'>
             
               <a className="block" href="/form">
@@ -65,7 +75,7 @@ function Home() {
             {data?.map(item => (
               <li className="mb-6" key={item.id}>
                 
-                <a href={Cookies.get('COOOOOKIE', "YO") ? `/post?id=${item.id}` : `/login`}>
+                <a href={loggedIn ? `/post?id=${item.id}` : `/login`}>
 
                   <p className="bg-slate-200 md:w-fit px-4 p-2 text-xl">{item.title}</p>
                 </a>

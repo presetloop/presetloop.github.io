@@ -1,10 +1,11 @@
-import Cookies from 'js-cookie';
+import Cookies from 'universal-cookie';
 
 export default function LogoutBtn() {
-  
+  const cookies = new Cookies();
+
   const handleRemoveCookie = () => {
-    Cookies.remove('COOOOOKIE', "YO");
-    window.location.href="/";
+      cookies.remove("PHPSESSID");
+      window.location.href="/";
   };
 
   return (

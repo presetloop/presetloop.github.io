@@ -1,10 +1,13 @@
-import Cookies from 'js-cookie';
 import { useState } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import Cookies from 'universal-cookie';
 
 function LoginForm({ apiUrl }) {
   const router = useRouter();
+  const cookies = new Cookies();
+
+  const [loggedIn, setLoggedIn] = useState(false);  
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -34,7 +37,15 @@ function LoginForm({ apiUrl }) {
       }
 
       if (responseData.success) {
-        Cookies.set('COOOOOKIE', "YO")
+        const sessionId = cookies.get('PHPSESSID');
+        if (sessionId) {
+          // If the PHPSESSID cookie already exists, the user is already logged in
+          setLoggedIn(true);
+        } else {
+          // If the PHPSESSID cookie doesn't exist, set it and mark the user as logged in
+          cookies.set('PHPSESSID', 'yo!', { path: '/' });
+          setLoggedIn(true);
+        }
         router.push('/');
       } else {
         setErrorMessage('Invalid email or password');
