@@ -1,18 +1,20 @@
 import { useState, useEffect, useRef } from 'react';
 import { gsap, Power1} from "gsap";
 import LogoutBtn from '@/components/LogoutBtn';
-import Cookies from 'universal-cookie';
+
 
 function Home() {
-    const cookies = new Cookies();
     const [loggedIn, setLoggedIn] = useState(false);
     
     useEffect(() => {
-        if (cookies.get('PHPSESSID')) {
-            setLoggedIn(true)
-        }
-    }, [cookies.get('PHPSESSID')]);
+      const cookies = document.cookie.split("; ");
+      const cookie = cookies.find((c) => c.startsWith("jello="));
 
+      if (cookie) {
+        setLoggedIn(true);
+      }
+    },[]);
+    
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
 
