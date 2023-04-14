@@ -2,18 +2,13 @@ import { useState, useEffect, useRef } from 'react';
 import { gsap, Power1} from "gsap";
 import LogoutBtn from '@/components/LogoutBtn';
 
-
 function Home() {
     const [loggedIn, setLoggedIn] = useState(false);
+    const [hasCookie, setHasCookie] = useState(false);
     
     useEffect(() => {
-      const cookies = document.cookie.split("; ");
-      const cookie = cookies.find((c) => c.startsWith("jello="));
-
-      if (cookie) {
-        setLoggedIn(true);
-      }
-    },[]);
+      hasCookie && setLoggedIn(true);
+    },[hasCookie]);
     
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
@@ -33,27 +28,36 @@ function Home() {
         fetchData(); 
     }, []);
 
-    async function fetchData() {
-      setLoading(true);
+  async function fetchData() {
+    setLoading(true);
 
-      try {
-        const res = await fetch('https://toot.olk1.com/api/');
-        const json = await res.json();
+    try {
+      const res = await fetch('https://toot.olk1.com/api/');
+      const json = await res.json();
 
-        if (Array.isArray(json)) {
-        
-          setData(json);
-
-        } else {
-          throw new Error("Data is not an array");
-        }
-
-        setLoading(false);
-      } catch (error) {
-        console.log('Print the error:', error)
-        setLoading(false);
-      }
+      const cookie = document.cookie;
+      const cookieArr = cookie.split(';');
+      const sessionCookie = cookieArr.find(c => c.trim().startsWith(`${json.sessionName}=`));
+      if (sessionCookie) {
+        const sessionId = sessionCookie.split('=')[1];
+        document.cookie = `${json.sessionName}=${sessionId}; path=/; `;
+        setHasCookie(true);
     }
+
+      if (Array.isArray(json.data)) {
+      
+        setData(json.data);
+
+      } else {
+        throw new Error("Data is not an array");
+      }
+
+      setLoading(false);
+    } catch (error) {
+      console.log('Print the error:', error)
+      setLoading(false);
+    }
+  }
 
     return (
       <div ref={element1Ref} className="opacity-10 max-w-[700px] w-[95%] m-auto">       

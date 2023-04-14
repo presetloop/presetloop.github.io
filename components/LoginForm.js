@@ -36,8 +36,9 @@ function LoginForm({ apiUrl }) {
       if (responseData.success) {
 
         const sessionId = response.data.session_id;
+        const sessionName = response.data.session_name;
         if (sessionId) {
-          document.cookie = `jello=${sessionId}; path=/`;
+          document.cookie = `${sessionName}=${sessionId}; path=/`;
         } else {
           router.push('/login');
         }

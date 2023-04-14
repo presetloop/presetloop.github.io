@@ -10,10 +10,9 @@ function LogoutBtn() {
 
     axios.post('https://toot.olk1.com/api/logout.php')
       .then(response => {
-        // console.log(response.data);
-        
+        let sessionName = response.data.session_name;
         // remove cookie (by using a date in the past/expired time)
-        document.cookie = 'jello=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;';
+        document.cookie = `${sessionName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
         // redirect to login page
         window.location.href = '/';
 
