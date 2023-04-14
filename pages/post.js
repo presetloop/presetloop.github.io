@@ -9,23 +9,23 @@ function Post() {
   const [loading, setLoading] = useState(true);
 
   useEffect(() => {
-    async function fetchData() {
-      try {
-        const res = await fetch(`https://toot.olk1.com/api/post.php?id=${id}`);
-        const json = await res.json();
-        json.reverse();
-        setData(json);
-        setLoading(false);
-      } catch (error) {
-        console.log('Print the error:', error);
-        setLoading(false);
-      }
-    }
-
+    
     if (id) {
       fetchData();
     }
   }, [id]);
+  
+  async function fetchData() {
+    try {
+      const res = await fetch(`https://toot.olk1.com/api/post.php?id=${id}`);
+      const json = await res.json();
+      setData(json);
+      setLoading(false);
+    } catch (error) {
+      console.log('Print the error:', error);
+      setLoading(false);
+    }
+  }
 
   if (loading) {
     return <div className="max-w-[700px] w-[95%] m-auto">Loading...</div>;
