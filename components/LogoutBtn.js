@@ -1,26 +1,28 @@
 import { useState } from 'react';
-import axios from 'axios';
 
 function LogoutBtn() {
 
   const [loggingOut, setLoggingOut] = useState(false);
 
-  function handleLogout() {
+  async function handleLogout() {
     setLoggingOut(true);
-
-    axios.post('https://toot.olk1.com/api/logout.php')
-      .then(response => {
-        let sessionName = response.data.session_name;
-        // remove cookie (by using a date in the past/expired time)
-        document.cookie = `${sessionName}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
-        // redirect to login page
+    
+    try {
+      const res = await fetch('https://toot.olk1.com/api/logout.php');
+      const json = await res.json();
+      
+      if(json.logged_in == false){
+        setLoggingOut(true);
+        localStorage.removeItem("session", "jelli");;
         window.location.href = '/';
+      }
+      
+      } catch (error) {
+          console.error(error);
+          setLoggingOut(false);
+      }
 
-      })
-      .catch(error => {
-        console.error(error);
-        setLoggingOut(false);
-      });
+      // document.cookie = `${loggedOut}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
   }
 
   return (

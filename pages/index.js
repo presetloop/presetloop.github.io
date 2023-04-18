@@ -1,22 +1,19 @@
+import { useRouter } from 'next/router';
 import { useState, useEffect, useRef } from 'react';
+import axios from 'axios';
 import { gsap, Power1} from "gsap";
 import LogoutBtn from '@/components/LogoutBtn';
 
 function Home() {
+    const apiUrl = "https://toot.olk1.com/api/";
+    const router = useRouter();
     const [loggedIn, setLoggedIn] = useState(false);
-    const [hasCookie, setHasCookie] = useState(false);
-    
-    useEffect(() => {
-      hasCookie && setLoggedIn(true);
-    },[hasCookie]);
-    
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);
-
-    const element1Ref = useRef(null);
     
-    useEffect(() => {
+    const element1Ref = useRef(null);
 
+    useEffect(() => {
       gsap.fromTo(
         element1Ref.current,
         { opacity: 0, y: 10 },
@@ -32,25 +29,36 @@ function Home() {
     setLoading(true);
 
     try {
-      const res = await fetch('https://toot.olk1.com/api/');
-      const json = await res.json();
+      const response = await axios.get(`${apiUrl}/index.php`);
+      // console.log('Login request response:', response);
 
-      const cookie = document.cookie;
-      const cookieArr = cookie.split(';');
-      const sessionCookie = cookieArr.find(c => c.trim().startsWith(`${json.sessionName}=`));
-      if (sessionCookie) {
-        const sessionId = sessionCookie.split('=')[1];
-        document.cookie = `${json.sessionName}=${sessionId}; path=/; `;
-        setHasCookie(true);
-    }
-
-      if (Array.isArray(json.data)) {
-      
-        setData(json.data);
-
-      } else {
-        throw new Error("Data is not an array");
+      // console.log('Login response data:', responseData);
+      if (!response) {
+        throw new Error('No data received from server');
       }
+
+      const responseData = response.data;
+      // const res = await fetch('https://toot.olk1.com/api/index.php');
+      // const json = await res.json();
+
+      // console.table(Object.entries(responseData));
+      
+      // if(!json.success) {
+      //   router.push('/login');
+      // } 
+
+      const loggedIn = responseData.logged_in && localStorage.getItem("session", "jelli");
+      loggedIn && setLoggedIn(true);
+
+      setData(responseData.posts);
+      
+      // if (Array.isArray(Object.entries(responseData.data))) {
+      
+      //   setData(Object.entries(responseData.data));
+
+      // } else {
+      //   throw new Error("Data is not an array");
+      // }
 
       setLoading(false);
     } catch (error) {
