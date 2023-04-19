@@ -1,4 +1,4 @@
-import { useRouter } from 'next/router';
+// import { useRouter } from 'next/router';
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { gsap, Power1} from "gsap";
@@ -6,7 +6,7 @@ import LogoutBtn from '@/components/LogoutBtn';
 
 function Home() {
     const apiUrl = "https://toot.olk1.com/api/";
-    const router = useRouter();
+    // const router = useRouter();
     const [loggedIn, setLoggedIn] = useState(false);
     const [data, setData] = useState([]);
     const [loading, setLoading] = useState(false);

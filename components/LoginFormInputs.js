@@ -2,9 +2,11 @@ const LoginFormInputs = ({ handleSubmit, email, setEmail, password, setPassword,
   
   return (
     <div className="max-w-[700px] w-[95%] m-auto">
-      <div className="flex justify-end">
-        <a className="block my-4 text-xl text-blue-700" href="/register">
-          Register
+      
+      <div className="flex align-middle justify-end my-4">
+        <p className="block text-lg text-slate-600">No account?</p>
+        <a className="ml-2 block text-lg text-blue-700" href="/register">
+          Register Here
         </a>
       </div>
 

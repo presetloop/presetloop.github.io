@@ -31,6 +31,10 @@ function RegistrationForm({apiUrl}) {
             if (!responseData) {
               throw new Error('No data received from server');
             }
+            if(responseData.message){
+              setErrorMessage(responseData.message);
+              return;
+            }
 
             setData(responseData);
             setErrorMessage('');
@@ -46,8 +50,11 @@ function RegistrationForm({apiUrl}) {
     return (
       <div className="max-w-[700px] w-[95%] m-auto">
 
-      <div className="flex justify-end">
-        <a className="block my-4 text-xl text-blue-700" href="/login">Login</a>
+      <div className="flex align-middle justify-end my-4">
+        <p className="block text-lg text-slate-600">Already registered?</p>
+        <a className="ml-2 block text-lg text-blue-700" href="/login">
+          Login here
+        </a>
       </div>
     
         <form onSubmit={handleSubmit}>

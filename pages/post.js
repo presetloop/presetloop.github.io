@@ -19,7 +19,14 @@ function Post() {
     try {
       const res = await fetch(`https://toot.olk1.com/api/post.php?id=${id}`);
       const json = await res.json();
+      
+      if(!localStorage.getItem("session", "jelli")){
+        router.push('/login');
+        return;
+      }
+
       setData(json);
+
       setLoading(false);
     } catch (error) {
       console.log('Print the error:', error);
