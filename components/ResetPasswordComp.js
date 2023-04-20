@@ -3,6 +3,7 @@ import {useRouter} from 'next/router';
 
 function ResetPasswordComp({ apiUrl }) {
     const router = useRouter();
+    const { token } = router.query;
     const titleField = useRef();
 
     const [email, setEmail] = useState('');
@@ -29,16 +30,17 @@ function ResetPasswordComp({ apiUrl }) {
       return;
     }
 
-    // Send password reset email
-    const resetLink = `${apiUrl}/reset_password.php`;
+    // Submit password link and token to database
+    const resetPasswordWithToken = `${apiUrl}/reset_password.php`;
+    
     try {
         // Send a POST request to the PHP function with the email and new password
-        const response = await fetch(resetLink, {
+        const response = await fetch(resetPasswordWithToken, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email, newPassword })
+            body: JSON.stringify({ email, newPassword, token })
         });
         if (!response.ok) {
           throw new Error('Unable to reset your password. Please try again later.');
@@ -49,8 +51,8 @@ function ResetPasswordComp({ apiUrl }) {
         }
         
         // Set the message returned by the PHP function
-        if(JSON.parse(responseData) === "No user found with that email address."){
-          setData('Please try again');
+        if(JSON.parse(responseData) === "No user found with that email address or token."){
+          setData('Please try again or check you are using the latest email link');
           setErrorMessage(JSON.parse(responseData));
           setLoading(false);
           return; 
