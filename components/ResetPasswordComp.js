@@ -30,6 +30,11 @@ function ResetPasswordComp({ apiUrl }) {
       return;
     }
 
+    if(!token){
+      router.push("/password-reset");
+      return;
+    }   
+
     // Submit password link and token to database
     const resetPasswordWithToken = `${apiUrl}/reset_password.php`;
     
@@ -62,7 +67,7 @@ function ResetPasswordComp({ apiUrl }) {
         setErrorMessage('');
         setEmail('');
         setTimeout(() => {
-          router.push("/login")
+          router.push("/login");
         }, 3000);
         setLoading(false);
     } catch (error) {
