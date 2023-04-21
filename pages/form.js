@@ -7,6 +7,7 @@ function MyForm() {
 
   const [title, setTitle] = useState('');
   const [linkTag, setLinkTag] = useState('');
+  const [imgHref, setimgHref] = useState('');
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -17,13 +18,34 @@ function MyForm() {
     }
   }, []);
 
+  function addHttpsToLink(linkTag) {
+    let updatedLink = linkTag;
+    if (!linkTag.startsWith("https://")) {
+      const wwwIndex = linkTag.indexOf("www.");
+      const httpIndex = linkTag.indexOf("http://");
+      const httpsIndex = linkTag.indexOf("https://");
+      const startIndex = Math.max(wwwIndex, httpIndex, httpsIndex);
+      if (startIndex !== -1) {
+        if (startIndex === httpIndex) {
+          updatedLink = `https://${linkTag.substring(startIndex + 7)}`;
+        } else {
+          updatedLink = `https://${linkTag.substring(startIndex)}`;
+        }
+      } else {
+        updatedLink = `https://${linkTag}`;
+      }
+    }
+    return updatedLink;
+}
+    
   const handleSubmit = async (event) => {
     setLoading(true);
     
     event.preventDefault();
     const formData = new FormData();
     formData.append('title', title);
-    formData.append('linkTag', linkTag);
+    formData.append('linkTag', addHttpsToLink(linkTag));
+    formData.append('imgHref', addHttpsToLink(imgHref));
     formData.append('content', content);
     const response = await fetch('https://toot.olk1.com/api/form.php', {
       method: 'POST',
@@ -59,7 +81,7 @@ function MyForm() {
       </div>
       
       <div className="mb-2">
-        <label className="block text-gray-700 font-bold mb-2" htmlFor="title">
+        <label className="block text-gray-700 font-bold mb-2" htmlFor="link">
           Link
         </label>
         <input
@@ -68,7 +90,20 @@ function MyForm() {
           type="text"
           placeholder="Enter a link (optional)"
           value={linkTag}
-          onChange={(e) => setLinkTag(e.target.value)}
+          onChange={(e) => {setLinkTag(e.target.value)}}/>
+      </div>
+      
+      <div className="mb-2">
+        <label className="block text-gray-700 font-bold mb-2" htmlFor="image">
+          Image
+        </label>
+        <input
+          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          id="title"
+          type="text"
+          placeholder="Enter an external image link (optional)"
+          value={imgHref}
+          onChange={(e) => setimgHref(e.target.value)}
         />
       </div>
       

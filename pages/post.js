@@ -1,5 +1,7 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+import DOMPurify from 'dompurify';
+import validUrl from 'valid-url';
 import DeleteBtn from '../components/DeleteBtn';
 
 function Post() {
@@ -54,9 +56,32 @@ function Post() {
             
             <p className="bg-slate-100 w-fit px-4 p-2 md:px-8 md:p-4 mb-4 text-xl">{item.title}</p>
             
-            {item.linkTag && <p className="bg-slate-100 w-fit p-1 text-xl"><a href={`https://${item.linkTag}`} target="_blank">{item.linkTag}</a></p>}
+            {item.linkTag && (
+              <p className="cursor-pointer bg-slate-100 w-fit px-4 p-2 md:px-8 md:p-4 text-xl">
+                <a href={
+                  item.linkTag &&
+                  validUrl.isWebUri(item.linkTag) &&
+                  DOMPurify.sanitize(item.linkTag).replace(/^https?:\/\//i, 'https://')} target="_blank" rel="noopener">
+                  {item.linkTag.replace(/^https?:\/\//i, '')}
+                </a>
+              </p>
+            )}
+
+            <div className='flex justify-center'>
+              {item.imgHref && (
+                <a href={
+                  item.imgHref &&
+                  validUrl.isWebUri(item.imgHref) &&
+                  DOMPurify.sanitize(item.imgHref).replace(/^https?:\/\//i, 'https://')} target="_blank" rel="noopener noreferrer">
+                <img className="mt-4 cursor-pointer h-64 w-64" src={
+                  item.imgHref &&
+                  validUrl.isWebUri(item.imgHref) &&
+                  DOMPurify.sanitize(item.imgHref).replace(/^https?:\/\//i, 'https://')} alt={item.title || 'No Image Available'} />
+                </a>
+              )}
+            </div>
             
-            <p className="bg-slate-50 w-fit p-4 md:p-8 md:mb-1 text-lg text-slate-700" dangerouslySetInnerHTML={{__html: item.content}}></p>
+            <p className="bg-slate-50 w-fit mt-4 p-4 md:p-8 md:mb-1 text-lg text-slate-700" dangerouslySetInnerHTML={{__html: item.content}}></p>
             
             <div className="flex justify-start"><DeleteBtn id={item.id} /></div>
           </li>
