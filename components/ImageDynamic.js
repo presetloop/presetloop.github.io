@@ -10,7 +10,7 @@ export default function ImageDynamic({ item }) {
       const img = new Image();
       img.src = item.imgHref;
       img.onload = () => {
-        setClassName(img.height < 275 ? 'h-64 w-64' : 'max-h-64 w-[700px]');
+        setClassName(img.height < 275 ? 'object-fit' : 'max-h-64 w-[700px]');
       };
     }
   }, [item.imgHref]);
