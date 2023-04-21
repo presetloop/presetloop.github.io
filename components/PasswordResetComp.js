@@ -61,11 +61,12 @@ function PasswordResetComp({ apiUrl }) {
     }
 
     // Set the message returned by the PHP function
+    // Success, email sent redirect to login page
     setData(JSON.parse(responseData));
     setErrorMessage('');
     setEmail('');
     setTimeout(() => {
-      router.push("/")
+      router.push("/login")
     }, 3000);
     setLoading(false);
   } catch (error) {

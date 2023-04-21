@@ -54,7 +54,7 @@ function Post() {
             
             <p className="bg-slate-100 w-fit px-4 p-2 md:px-8 md:p-4 mb-4 text-xl">{item.title}</p>
             
-            {item.linkTag && <p className="bg-slate-100 w-fit p-1 text-xl"><a href={`${item.linkTag}`} target="_blank">{item.linkTag}</a></p>}
+            {item.linkTag && <p className="bg-slate-100 w-fit p-1 text-xl"><a href={`https://${item.linkTag}`} target="_blank">{item.linkTag}</a></p>}
             
             <p className="bg-slate-50 w-fit p-4 md:p-8 md:mb-1 text-lg text-slate-700" dangerouslySetInnerHTML={{__html: item.content}}></p>
             

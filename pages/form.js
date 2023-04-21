@@ -1,6 +1,5 @@
 import { useState, useRef, useEffect } from 'react';
 import {useRouter} from 'next/router'
-// import FormComponent from '../components/FormComponent'
 
 function MyForm() {
   const router = useRouter();
@@ -38,7 +37,6 @@ function MyForm() {
 
   return (
     <div className="max-w-[700px] w-[95%] m-auto">
-      {/* <FormComponent handleSubmit={handleSubmit}/> */}
 
       <div className="flex justify-end">
         <a className="block my-4 text-xl text-blue-700" href="/">View all</a>

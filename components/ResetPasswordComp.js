@@ -63,9 +63,11 @@ function ResetPasswordComp({ apiUrl }) {
           return; 
         }
         // Set the message returned by the PHP function
+        // success, password reset
         setData(JSON.parse(responseData));
         setErrorMessage('');
         setEmail('');
+        setNewPassword('');
         setTimeout(() => {
           router.push("/login");
         }, 3000);
