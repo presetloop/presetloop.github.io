@@ -26,7 +26,7 @@ function Post() {
         router.push('/login');
         return;
       }
-
+      
       setData(json);
 
       setLoading(false);
@@ -40,8 +40,17 @@ function Post() {
     return <div className="max-w-[700px] w-[95%] m-auto">Loading...</div>;
   }
 
+  function handleClick() {
+    router.push('/');
+  }
+
   if (!data || data.length === 0) {
-    return <div className="max-w-[700px] w-[95%] m-auto">No data</div>;
+    return (
+      <div className="max-w-[700px] w-[95%] m-auto">
+        <p>Post no longer exists or perhaps it never did?</p>
+        <p className="mt-2 text-md text-blue-500 cursor-pointer" onClick={handleClick}>Go back &larr;</p>
+      </div>
+    );
   }
 
   return (
