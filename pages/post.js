@@ -3,6 +3,7 @@ import { useState, useEffect } from 'react';
 import DOMPurify from 'dompurify';
 import validUrl from 'valid-url';
 import DeleteBtn from '../components/DeleteBtn';
+import ImageDynamic from '../components/ImageDynamic';
 
 function Post() {
   const router = useRouter();
@@ -10,13 +11,12 @@ function Post() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {
-    
+  useEffect(() => {    
     if (id) {
       fetchData();
     }
   }, [id]);
-  
+
   async function fetchData() {
     try {
       const res = await fetch(`https://toot.olk1.com/api/post.php?id=${id}`);
@@ -78,15 +78,7 @@ function Post() {
 
             <div className='flex justify-center'>
               {item.imgHref && (
-                <a href={
-                  item.imgHref &&
-                  validUrl.isWebUri(item.imgHref) &&
-                  DOMPurify.sanitize(item.imgHref).replace(/^https?:\/\//i, 'https://')} target="_blank" rel="noopener noreferrer">
-                <img className="mt-4 cursor-pointer h-64 w-64" src={
-                  item.imgHref &&
-                  validUrl.isWebUri(item.imgHref) &&
-                  DOMPurify.sanitize(item.imgHref).replace(/^https?:\/\//i, 'https://')} alt={item.title || 'No Image Available'} />
-                </a>
+                <ImageDynamic item={item}/>
               )}
             </div>
             
