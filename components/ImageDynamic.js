@@ -16,8 +16,7 @@ export default function ImageDynamic({ item }) {
   }, [item.imgHref]);
 
   return (
-    <a
-      href={
+    <a href={
         item.imgHref &&
         validUrl.isWebUri(item.imgHref) &&
         DOMPurify.sanitize(item.imgHref).replace(/^https?:\/\//i, 'https://')
