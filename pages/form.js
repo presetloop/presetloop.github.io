@@ -76,7 +76,7 @@ function MyForm() {
           type="text"
           placeholder="Enter a title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          onChange={(e) => setTitle(e.target.value.trim())}
         />
       </div>
       
@@ -90,7 +90,8 @@ function MyForm() {
           type="text"
           placeholder="Enter a link (optional)"
           value={linkTag}
-          onChange={(e) => {setLinkTag(e.target.value)}}/>
+          onChange={(e) => setLinkTag(e.target.value.trim())}
+          />
       </div>
       
       <div className="mb-2">
@@ -103,7 +104,7 @@ function MyForm() {
           type="text"
           placeholder="Enter an external image link (optional)"
           value={imgHref}
-          onChange={(e) => setimgHref(e.target.value)}
+          onChange={(e) => setimgHref(e.target.value.trim())}
         />
       </div>
       
@@ -116,7 +117,7 @@ function MyForm() {
           id="content"
           placeholder="Enter some content"
           value={content}
-          onChange={(e) => setContent(e.target.value)}
+          onChange={(e) => setContent(e.target.value.trim())}
         />
       </div>
       <div className="flex items-center justify-between">
