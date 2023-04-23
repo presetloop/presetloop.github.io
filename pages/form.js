@@ -3,7 +3,7 @@ import {useRouter} from 'next/router'
 
 function MyForm() {
   const router = useRouter();
-  const titleField = useRef();
+  const titleField = useRef(null);
 
   const [title, setTitle] = useState('');
   const [linkTag, setLinkTag] = useState('');

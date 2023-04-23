@@ -1,4 +1,4 @@
-const LoginFormInputs = ({ handleSubmit, email, setEmail, password, setPassword, loading, errorMessage }) => {
+const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, setPassword, loading, errorMessage }) => {
   
   return (
     <div className="max-w-[700px] w-[95%] m-auto">
@@ -11,17 +11,19 @@ const LoginFormInputs = ({ handleSubmit, email, setEmail, password, setPassword,
       </div>
 
       <form onSubmit={handleSubmit}>
-        <div className="mb-4">
+        <div className="mb-2">
           <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
             Email:
           </label>
           <input
+            ref={titleField}
+            required
             className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="Enter your email"
             type="email"
             name="email"
             value={email}
             onChange={(event) => setEmail(event.target.value)}
-            required
             pattern="\S+@\S+\.\S+"
           />
         </div>
@@ -31,12 +33,14 @@ const LoginFormInputs = ({ handleSubmit, email, setEmail, password, setPassword,
             Password:
           </label>
           <input
+            required
             className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="Enter your password"
             type="password"
             name="password"
             value={password}
             onChange={(event) => setPassword(event.target.value)}
-            required
+            // pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
           />
         </div>
 

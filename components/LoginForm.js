@@ -1,15 +1,23 @@
-import { useState } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
 import LoginFormInputs from './LoginFormInputs'
 
 function LoginForm({ apiUrl }) {
+  const titleField = useRef(null);
   const router = useRouter();
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
+
+  // to get input autofocus working
+  useEffect(() => {
+    if (titleField.current) {
+      titleField.current.focus();
+    }
+  }, []);
 
   const handleSubmit = async (event) => {
     setLoading(true);
@@ -61,7 +69,7 @@ function LoginForm({ apiUrl }) {
   };
 
   return (
-    <LoginFormInputs handleSubmit={handleSubmit} email={email} setEmail={setEmail} password={password} setPassword={setPassword} loading={loading} errorMessage={errorMessage} />
+    <LoginFormInputs titleField={titleField} handleSubmit={handleSubmit} email={email} setEmail={setEmail} password={password} setPassword={setPassword} loading={loading} errorMessage={errorMessage} />
   );
 }
 

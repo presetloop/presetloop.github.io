@@ -1,15 +1,24 @@
-import { useState } from 'react';
+import { useRef, useEffect, useState } from 'react';
 import {useRouter} from 'next/router'
 import axios from 'axios';
 
 function RegistrationForm({apiUrl}) {
+    const titleField = useRef(null);
     const router = useRouter();
+    
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
     const [data, setData] = useState('');
     const [loading, setLoading] = useState(false);
 
+    // to get input autofocus working
+    useEffect(() => {
+      if (titleField.current) {
+        titleField.current.focus();
+      }
+    }, []);
+    
     const handleSubmit = async (event) => {
         setLoading(true);
         event.preventDefault();
@@ -58,28 +67,35 @@ function RegistrationForm({apiUrl}) {
       </div>
     
         <form onSubmit={handleSubmit}>
-          <div className="mb-4">
+          <div className="mb-2">
             <label className="block text-gray-700 font-bold mb-2"  htmlFor="email">Email:</label>
             <input
-                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-                type="email"
-                name="email"
-                value={email}
-                onChange={(event) => setEmail(event.target.value)}
-                required
+              ref={titleField}
+              required
+              className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              placeholder="Enter your email"
+              type="email"
+              name="email"
+              value={email}
+              onChange={(event) => setEmail(event.target.value)}
+              pattern="\S+@\S+\.\S+"
             />
           </div>
 
-            <div className="mb-4">
+            <div className="mb-2">
               <label className="block text-gray-700 font-bold mb-2"  htmlFor="password">Password:</label>
               <input
+                required
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                placeholder="Enter a password"
                 type="password"
                 name="password"
                 value={password}
                 onChange={(event) => setPassword(event.target.value)}
-                required
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
               />
+            
+            <span className="block mt-2 text-slate-400 text-sm">Password must be a minimum of 8 characters containing one uppercase letter, one lowercase letter, at least one number and one special character (e.g., !, @, #, $, %, ^, &, *)</span>
             </div>
 
             {data && <p className="mt-2 text-blue-500">{data.success}</p>}

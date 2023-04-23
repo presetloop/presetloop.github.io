@@ -4,7 +4,7 @@ import {useRouter} from 'next/router';
 
 function PasswordResetComp({ apiUrl }) {
   const router = useRouter();
-  const titleField = useRef();
+  const titleField = useRef(null);
 
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
@@ -78,7 +78,7 @@ function PasswordResetComp({ apiUrl }) {
   return (
     <form className="max-w-[700px] w-[95%] m-auto" onSubmit={handleSubmit}>
       <label className="block text-gray-700 font-bold mb-2">
-        Email
+        Email:
       </label>
         <input 
           ref={titleField}
@@ -88,6 +88,7 @@ function PasswordResetComp({ apiUrl }) {
           type="email" 
           value={email} 
           onChange={handleEmailChange} 
+          pattern="\S+@\S+\.\S+"
         />
 
       {data && <p className="mt-2 text-blue-500">{data}</p>}

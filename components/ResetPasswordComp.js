@@ -4,7 +4,7 @@ import {useRouter} from 'next/router';
 function ResetPasswordComp({ apiUrl }) {
     const router = useRouter();
     const { token } = router.query;
-    const titleField = useRef();
+    const titleField = useRef(null);
 
     const [email, setEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -82,8 +82,10 @@ function ResetPasswordComp({ apiUrl }) {
     return (
       <div className="max-w-[700px] w-[95%] m-auto">
         <form onSubmit={handleResetPassword}>
+            
+            <div className="mb-0">
             <label className="block text-gray-700 font-bold mb-2">
-              Email
+              Email:
             </label>
               <input 
                 ref={titleField}
@@ -92,21 +94,32 @@ function ResetPasswordComp({ apiUrl }) {
                 placeholder="Enter your email"
                 type="email" 
                 value={email} 
-                onChange={event => setEmail(event.target.value)} />
+                onChange={event => setEmail(event.target.value)}
+                pattern="\S+@\S+\.\S+"
+              />
+            </div>
+
+            <div className="mb-0">
             <label className="mt-2 block text-gray-700 font-bold mb-2">
-              New Password
+              New Password:
             </label>
               <input 
+                required 
                 className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Enter a new password"
-                required 
                 type="password" 
                 value={newPassword} 
-                onChange={event => setNewPassword(event.target.value)} />
+                onChange={event => setNewPassword(event.target.value)}
+                pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
+                />
+            
+            <span className="block mt-2 text-slate-400 text-sm">Password must be a minimum of 8 characters containing one uppercase letter, one lowercase letter, at least one number and one special character (e.g., !, @, #, $, %, ^, &, *)</span>
+            </div>
+
             {data && <p className="mt-2 text-blue-500">{data}</p>}
             {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
-            <button className="my-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+            <button className="my-2 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
               {loading ? 'Reseting...' : 'Reset Password'}
             </button>
         </form>
