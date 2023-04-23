@@ -20,7 +20,8 @@ function PasswordResetComp({ apiUrl }) {
 
 
   const handleEmailChange = (event) => {
-    setEmail(event.target.value);
+    const { value } = event.target;
+    setEmail(value.trim());
   };
 
   const handleSubmit = async (event) => {

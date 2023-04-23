@@ -94,7 +94,7 @@ function ResetPasswordComp({ apiUrl }) {
                 placeholder="Enter your email"
                 type="email" 
                 value={email} 
-                onChange={event => setEmail(event.target.value)}
+                onChange={event => setEmail(event.target.value.trim())}
                 pattern="\S+@\S+\.\S+"
               />
             </div>
@@ -109,7 +109,7 @@ function ResetPasswordComp({ apiUrl }) {
                 placeholder="Enter a new password"
                 type="password" 
                 value={newPassword} 
-                onChange={event => setNewPassword(event.target.value)}
+                onChange={event => setNewPassword(event.target.value.trim())}
                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                 />
             

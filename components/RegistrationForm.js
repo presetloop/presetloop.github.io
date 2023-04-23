@@ -77,7 +77,7 @@ function RegistrationForm({apiUrl}) {
               type="email"
               name="email"
               value={email}
-              onChange={(event) => setEmail(event.target.value)}
+              onChange={(event) => setEmail(event.target.value.trim())}
               pattern="\S+@\S+\.\S+"
             />
           </div>
@@ -91,7 +91,7 @@ function RegistrationForm({apiUrl}) {
                 type="password"
                 name="password"
                 value={password}
-                onChange={(event) => setPassword(event.target.value)}
+                onChange={(event) => setPassword(event.target.value.trim())}
                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
               />
             
