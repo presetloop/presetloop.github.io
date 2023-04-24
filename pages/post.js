@@ -63,7 +63,7 @@ function Post() {
         {data.map(item => (
           <li className="my-2" key={item.id}>
             
-            <p className="bg-slate-100 w-fit px-4 p-2 md:px-8 md:p-4 mb-4 text-xl">{item.title}</p>
+            <p className="bg-slate-100 w-fit px-4 p-2 md:px-8 md:p-4 mb-4 text-xl">{DOMPurify.sanitize(item.title)}</p>
             
             {item.linkTag && (
               <p className="cursor-pointer bg-slate-100 w-fit px-4 p-2 md:px-8 md:p-4 text-xl">
@@ -82,7 +82,7 @@ function Post() {
               )}
             </div>
             
-            <p className="bg-slate-50 w-fit mt-4 p-4 md:p-8 md:mb-1 text-lg text-slate-700" dangerouslySetInnerHTML={{__html: item.content}}></p>
+            <p className="bg-slate-50 w-fit mt-4 p-4 md:p-8 md:mb-1 text-lg text-slate-700" dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.content)}}></p>
             
             <div className="flex justify-start"><DeleteBtn id={item.id} /></div>
           </li>

@@ -1,5 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
-import {useRouter} from 'next/router'
+import {useRouter} from 'next/router';
+import DOMPurify from 'dompurify';
 
 function MyForm() {
   const router = useRouter();
@@ -43,10 +44,10 @@ function MyForm() {
     
     event.preventDefault();
     const formData = new FormData();
-    formData.append('title', title);
-    formData.append('linkTag', addHttpsToLink(linkTag));
-    formData.append('imgHref', addHttpsToLink(imgHref));
-    formData.append('content', content);
+    formData.append('title', encodeURIComponent(DOMPurify.sanitize(title)));
+    formData.append('linkTag', encodeURIComponent(DOMPurify.sanitize(addHttpsToLink(linkTag))));
+    formData.append('imgHref', encodeURIComponent(DOMPurify.sanitize(addHttpsToLink(imgHref))));
+    formData.append('content', encodeURIComponent(DOMPurify.sanitize(content)));
     const response = await fetch('https://toot.olk1.com/api/form.php', {
       method: 'POST',
       body: formData
