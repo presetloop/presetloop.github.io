@@ -67,7 +67,7 @@ function PasswordResetComp({ apiUrl }) {
     setErrorMessage('');
     setEmail('');
     setTimeout(() => {
-      router.push("/login")
+      router.push("/")
     }, 3000);
     setLoading(false);
   } catch (error) {

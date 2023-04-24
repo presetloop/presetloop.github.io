@@ -44,10 +44,10 @@ function MyForm() {
     
     event.preventDefault();
     const formData = new FormData();
-    formData.append('title', encodeURIComponent(DOMPurify.sanitize(title)));
-    formData.append('linkTag', encodeURIComponent(DOMPurify.sanitize(addHttpsToLink(linkTag))));
-    formData.append('imgHref', encodeURIComponent(DOMPurify.sanitize(addHttpsToLink(imgHref))));
-    formData.append('content', encodeURIComponent(DOMPurify.sanitize(content)));
+    formData.append('title', DOMPurify.sanitize(title));
+    formData.append('linkTag', DOMPurify.sanitize(addHttpsToLink(linkTag)));
+    formData.append('imgHref', DOMPurify.sanitize(addHttpsToLink(imgHref)));
+    formData.append('content', DOMPurify.sanitize(content));
     const response = await fetch('https://toot.olk1.com/api/form.php', {
       method: 'POST',
       body: formData
@@ -77,7 +77,7 @@ function MyForm() {
           type="text"
           placeholder="Enter a title"
           value={title}
-          onChange={(e) => setTitle(e.target.value.trim())}
+          onChange={(e) => setTitle(e.target.value)}
         />
       </div>
       
@@ -118,7 +118,7 @@ function MyForm() {
           id="content"
           placeholder="Enter some content"
           value={content}
-          onChange={(e) => setContent(e.target.value.trim())}
+          onChange={(e) => setContent(e.target.value)}
         />
       </div>
       <div className="flex items-center justify-between">
