@@ -59,11 +59,15 @@ function RegistrationForm({apiUrl}) {
     return (
       <div className="max-w-[700px] w-[95%] m-auto">
 
-      <div className="flex align-middle justify-end my-4">
-        <p className="block text-lg text-slate-600">Already registered?</p>
-        <a className="ml-2 block text-lg text-blue-700" href="/login">
-          Login here
-        </a>
+      <div className="flex align-middle justify-between my-4">
+        <p className="border-red-500 border-b-2 text-lg text-slate-600">REGISTER</p>
+        
+        <div className="flex align-middle">
+          <p className="text-lg text-slate-600">Already registered?</p>
+          <a className="ml-2 block text-lg text-blue-700" href="/login">
+            Login here
+          </a>
+        </div>
       </div>
     
         <form onSubmit={handleSubmit}>
