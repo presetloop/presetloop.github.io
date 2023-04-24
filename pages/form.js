@@ -11,6 +11,8 @@ function MyForm() {
   const [imgHref, setimgHref] = useState('');
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
+  const [titleErrorMessage, setTitleErrorMessage] = useState("");
+  const [contentErrorMessage, setContentErrorMessage] = useState("");
 
   // to get input autofocus working
   useEffect(() => {
@@ -19,6 +21,30 @@ function MyForm() {
     }
   }, []);
 
+  // Remove urls from title and content fields
+  function handleChange(event) {
+    const { name, value } = event.target;
+    const regex = /\b((http|https):\/\/)?((www\.)|([^\s]+\.(?!(com|net|org|edu))\S*))/gi;
+
+    // Check if title or content fields contains a URL and render error message
+    if (value.match(regex)) {
+      if (name === "Title") {
+        setTitleErrorMessage("Titles cannot contain URLs. Use the Link box instead.");
+      } else {
+        setContentErrorMessage("Content cannot contain URLs. Use the Link box instead.");
+      }
+    } else {
+      if (name === "Title") {
+        setTitleErrorMessage("");
+        setTitle(value);
+      } else {
+        setContentErrorMessage("");
+        setContent(value);
+      }
+    }
+  }
+  
+  // Convert all links (link and image field) to https
   function addHttpsToLink(linkTag) {
     let updatedLink = linkTag;
     if(!updatedLink) return;
@@ -77,9 +103,12 @@ function MyForm() {
           id="title"
           type="text"
           placeholder="Enter a title"
+          name="Title"
           value={title}
-          onChange={(e) => setTitle(e.target.value)}
+          // onChange={(e) => setTitle(e.target.value)}
+          onChange={handleChange}
         />
+        {titleErrorMessage && <p className="text-red-500 text-md">{titleErrorMessage}</p>}
       </div>
       
       <div className="mb-2">
@@ -118,9 +147,12 @@ function MyForm() {
           className="appearance-none border rounded w-full h-48 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="content"
           placeholder="Enter some content"
+          name="Content"
           value={content}
-          onChange={(e) => setContent(e.target.value)}
+          // onChange={(e) => setContent(e.target.value)}
+          onChange={handleChange}
         />
+        {contentErrorMessage && <p className="text-red-500 text-md">{contentErrorMessage}</p>}
       </div>
       <div className="flex items-center justify-between">
         <button
