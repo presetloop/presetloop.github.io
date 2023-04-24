@@ -21,6 +21,7 @@ function MyForm() {
 
   function addHttpsToLink(linkTag) {
     let updatedLink = linkTag;
+    if(!updatedLink) return;
     if (!linkTag.startsWith("https://")) {
       const wwwIndex = linkTag.indexOf("www.");
       const httpIndex = linkTag.indexOf("http://");

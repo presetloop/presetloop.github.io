@@ -71,7 +71,7 @@ function Post() {
                   item.linkTag &&
                   validUrl.isWebUri(item.linkTag) &&
                   DOMPurify.sanitize(item.linkTag).replace(/^https?:\/\//i, 'https://')} target="_blank" rel="noopener">
-                  {item.linkTag.replace(/^https?:\/\//i, '')}
+                  {item.linkTag && item.linkTag.replace(/^https?:\/\//i, '')}
                 </a>
               </p>
             )}
