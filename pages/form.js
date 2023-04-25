@@ -14,19 +14,21 @@ function MyForm() {
   const [titleErrorMessage, setTitleErrorMessage] = useState("");
   const [contentErrorMessage, setContentErrorMessage] = useState("");
 
-  // to get input autofocus working
+  // To get input autofocus working
   useEffect(() => {
     if (titleField.current) {
       titleField.current.focus();
     }
   }, []);
 
-  // Remove urls from title and content fields
+
+// Remove urls from title and content fields
 function handleChange(event) {
   const { name, value } = event.target;
   const regex = /((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?)/gi;
 
-  // Check if title or content fields contains a URL or '.' character and render error message
+
+  // Check if title/content fields contains URL or '.' and render error message
   if (value.match(regex) || value.includes(".")) {
     if (name === "Title") {
       setTitleErrorMessage("Titles cannot contain URLs or '.' characters.");
@@ -45,7 +47,7 @@ function handleChange(event) {
 }
 
 
-  // Convert all links (link and image field) to https
+// Convert all links (link and image field) to https
  function addHttpsToLink(linkTag) {
   let updatedLink = linkTag;
   if (!updatedLink) return;
@@ -60,8 +62,7 @@ function handleChange(event) {
   return updatedLink;
 }
 
-
-    
+  
   const handleSubmit = async (event) => {
     setLoading(true);
     
@@ -77,7 +78,6 @@ function handleChange(event) {
     });
     router.push("/")
     // const data = await response.json();
-    // console.log(data);
     setLoading(false);
   };
 
@@ -101,7 +101,6 @@ function handleChange(event) {
           placeholder="Enter a title"
           name="Title"
           value={title}
-          // onChange={(e) => setTitle(e.target.value)}
           onChange={handleChange}
         />
         {titleErrorMessage && <p className="text-red-500 text-md">{titleErrorMessage}</p>}
