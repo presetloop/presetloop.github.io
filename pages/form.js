@@ -145,7 +145,6 @@ function handleChange(event) {
           placeholder="Enter some content"
           name="Content"
           value={content}
-          // onChange={(e) => setContent(e.target.value)}
           onChange={handleChange}
         />
         {contentErrorMessage && <p className="text-red-500 text-md">{contentErrorMessage}</p>}
