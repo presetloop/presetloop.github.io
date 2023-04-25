@@ -26,8 +26,6 @@ function MyForm() {
 function handleChange(event) {
   const { name, value } = event.target;
   const regex = /((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?)/gi;
-
-
   // Check if title/content fields contains URL or '.' and render error message
   if (value.match(regex) || value.includes(".")) {
     if (name === "Title") {
