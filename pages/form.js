@@ -22,49 +22,45 @@ function MyForm() {
   }, []);
 
   // Remove urls from title and content fields
-  function handleChange(event) {
-    const { name, value } = event.target;
-    const regex = /\b((http|https):\/\/)?((www\.)|([^\s]+\.(?!(com|net|org|edu))\S*))/gi;
+function handleChange(event) {
+  const { name, value } = event.target;
+  const regex = /((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?)/gi;
 
-    // Check if title or content fields contains a URL and render error message
-    if (value.match(regex)) {
-      if (name === "Title") {
-        setTitleErrorMessage("Titles cannot contain URLs. Use the Link box instead.");
-      } else {
-        setContentErrorMessage("Content cannot contain URLs. Use the Link box instead.");
-      }
+  // Check if title or content fields contains a URL or '.' character and render error message
+  if (value.match(regex) || value.includes(".")) {
+    if (name === "Title") {
+      setTitleErrorMessage("Titles cannot contain URLs or '.' characters.");
     } else {
-      if (name === "Title") {
-        setTitleErrorMessage("");
-        setTitle(value);
-      } else {
-        setContentErrorMessage("");
-        setContent(value);
-      }
+      setContentErrorMessage("Content cannot contain URLs or '.' characters.");
+    }
+  } else {
+    if (name === "Title") {
+      setTitleErrorMessage("");
+      setTitle(value);
+    } else {
+      setContentErrorMessage("");
+      setContent(value);
     }
   }
-  
-  // Convert all links (link and image field) to https
-  function addHttpsToLink(linkTag) {
-    let updatedLink = linkTag;
-    if(!updatedLink) return;
-    if (!linkTag.startsWith("https://")) {
-      const wwwIndex = linkTag.indexOf("www.");
-      const httpIndex = linkTag.indexOf("http://");
-      const httpsIndex = linkTag.indexOf("https://");
-      const startIndex = Math.max(wwwIndex, httpIndex, httpsIndex);
-      if (startIndex !== -1) {
-        if (startIndex === httpIndex) {
-          updatedLink = `https://${linkTag.substring(startIndex + 7)}`;
-        } else {
-          updatedLink = `https://${linkTag.substring(startIndex)}`;
-        }
-      } else {
-        updatedLink = `https://${linkTag}`;
-      }
-    }
-    return updatedLink;
 }
+
+
+  // Convert all links (link and image field) to https
+ function addHttpsToLink(linkTag) {
+  let updatedLink = linkTag;
+  if (!updatedLink) return;
+  if (!linkTag.startsWith("https://")) {
+    const startIndex = linkTag.search(/^(ht(p|ps):\/\/|htp:\/\/www\.|htps?:\/\/www\.|http:\/\/|http:\/\/www\.)/i);
+    if (startIndex !== -1) {
+      updatedLink = `https://${linkTag.substring(startIndex).replace(/^(ht(p|ps):\/\/|htp:\/\/www\.|htps?:\/\/www\.|http:\/\/|http:\/\/www\.)/i, "")}`;
+    } else {
+      updatedLink = `https://${linkTag}`;
+    }
+  }
+  return updatedLink;
+}
+
+
     
   const handleSubmit = async (event) => {
     setLoading(true);
