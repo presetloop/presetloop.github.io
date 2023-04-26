@@ -75,15 +75,15 @@ function handleImageInputChange(event) {
 }
 
 // Convert all links (link and image field) to https
- function addHttpsToLink(linkTag) {
-  let updatedLink = linkTag;
+ function addHttpsToLink(linkX) {
+  let updatedLink = linkX;
   if (!updatedLink) return;
-  if (!linkTag.startsWith("https://")) {
-    const startIndex = linkTag.search(/^(ht(p|ps):\/\/|htp:\/\/www\.|htps?:\/\/www\.|http:\/\/|http:\/\/www\.)/i);
+  if (!linkX.startsWith("https://")) {
+    const startIndex = linkX.search(/^(ht(p|ps):\/\/|htp:\/\/www\.|htps?:\/\/www\.|http:\/\/|http:\/\/www\.)/i);
     if (startIndex !== -1) {
-      updatedLink = `https://${linkTag.substring(startIndex).replace(/^(ht(p|ps):\/\/|htp:\/\/www\.|htps?:\/\/www\.|http:\/\/|http:\/\/www\.)/i, "")}`;
+      updatedLink = `https://${linkX.substring(startIndex).replace(/^(ht(p|ps):\/\/|htp:\/\/www\.|htps?:\/\/www\.|http:\/\/|http:\/\/www\.)/i, "")}`;
     } else {
-      updatedLink = `https://${linkTag}`;
+      updatedLink = `https://${linkX}`;
     }
   }
   return updatedLink;
