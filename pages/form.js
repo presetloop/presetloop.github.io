@@ -51,6 +51,7 @@ function handleChange(event) {
   }
 }
 
+// Check for chosen image format
 const validImageFormats = ['.png', '.jpg', '.gif'];
 function handleImageInputChange(event) {
   const { value } = event.target;
