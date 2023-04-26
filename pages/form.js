@@ -94,7 +94,7 @@ const handleSubmit = async (event) => {
   event.preventDefault();
   
   // Check if required fields are filled
-  if (!title || !content || !imageErrorMessage === "Images must be .png, .jpg, or .gif.") {
+  if (!title || !content) {
     setLoading(false);
     setDisableSubmitBtn(true);
     setContentErrorMessage("Please fill in all required fields");
