@@ -30,12 +30,12 @@ function handleChange(event) {
   const regex = /((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?)/gi;
   
   // Check if title/content fields contains a URL and render error message
-  if (value.match(regex) || value.includes("www.")) {
+  if (value.match(regex) || value.includes("www.") || value.includes("ww.") || value.includes("w.")) {
     if (name === "Title") {
-      setTitleErrorMessage("Titles cannot contain URLs or '.' characters.");
+      setTitleErrorMessage("Titles cannot contain URLs");
       setDisableSubmitBtn(true);
     } else {
-      setContentErrorMessage("Content cannot contain URLs or '.' characters.");
+      setContentErrorMessage("Content cannot contain URLs");
       setDisableSubmitBtn(true);
     }
   } else {
@@ -74,22 +74,25 @@ function handleImageInputChange(event) {
   }
 }
 
-// Convert all links (link and image field) to https
- function addHttpsToLink(linkX) {
+// Convert all links (linkTag and imgHref field) to https
+function addHttpsToLink(linkX) {
   let updatedLink = linkX;
   if (!updatedLink) return;
+  const pattern = /^(htps?:\/\/(ww?\.)*|htp:\/\/(ww?\.)*|http:\/\/(ww?\.)*|w\.)/i;
   if (!linkX.startsWith("https://")) {
-    const startIndex = linkX.search(/^(ht(p|ps):\/\/|htp:\/\/www\.|htps?:\/\/www\.|http:\/\/|http:\/\/www\.)/i);
-    if (startIndex !== -1) {
-      updatedLink = `https://${linkX.substring(startIndex).replace(/^(ht(p|ps):\/\/|htp:\/\/www\.|htps?:\/\/www\.|http:\/\/|http:\/\/www\.)/i, "")}`;
+    (updatedLink = `https://${linkX.replace(pattern, (match) => {
+    if (match.startsWith("w")) {
+      return "www.";
     } else {
-      updatedLink = `https://${linkX}`;
+      return "";
     }
+  })}`);
   }
   return updatedLink;
 }
 
 
+// Submit form after checks
 const handleSubmit = async (event) => {
   event.preventDefault();
   
