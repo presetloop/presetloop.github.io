@@ -28,28 +28,39 @@ function MyForm() {
 function handleChange(event) {
   const { name, value } = event.target;
   const regex = /((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?)/gi;
-  // Check if title/content fields contains URL or '.' and render error message
-  if (value.match(regex) || value.includes(".")) {
+  
+  // Check if title/content fields contains a URL and render error message
+  if (value.match(regex) || value.includes("www.")) {
     if (name === "Title") {
       setTitleErrorMessage("Titles cannot contain URLs or '.' characters.");
+      setDisableSubmitBtn(true);
     } else {
       setContentErrorMessage("Content cannot contain URLs or '.' characters.");
+      setDisableSubmitBtn(true);
     }
   } else {
     if (name === "Title") {
       setTitleErrorMessage("");
       setTitle(value);
+      setDisableSubmitBtn(false);
     } else {
       setContentErrorMessage("");
       setContent(value);
+      setDisableSubmitBtn(false);
     }
   }
 }
 
 const validImageFormats = ['.png', '.jpg', '.gif'];
-
 function handleImageInputChange(event) {
   const { value } = event.target;
+  if (value === "") {
+    setImgHref("");
+    setDisableSubmitBtn(false);
+    setImageErrorMessage("");
+    return;
+  }
+
   const imageFormat = validImageFormats.some((format) => value.toLowerCase().endsWith(format));
 
   if (!imageFormat) {
@@ -78,28 +89,52 @@ function handleImageInputChange(event) {
   return updatedLink;
 }
 
+
+const handleSubmit = async (event) => {
+  event.preventDefault();
   
-  const handleSubmit = async (event) => {
-    setLoading(true);
-    setDisableSubmitBtn(false);
-    event.preventDefault();
-    const formData = new FormData();
-    formData.append('title', DOMPurify.sanitize(title));
-    formData.append('linkTag', DOMPurify.sanitize(addHttpsToLink(linkTag)));
-    formData.append('imgHref', DOMPurify.sanitize(addHttpsToLink(imgHref)));
-    formData.append('content', DOMPurify.sanitize(content));
+  // Check if required fields are filled
+  if (!title || !content || !imageErrorMessage === "Images must be .png, .jpg, or .gif.") {
+    setLoading(false);
+    setDisableSubmitBtn(true);
+    setContentErrorMessage("Please fill in all required fields");
+    return;
+  }
+  
+  // Check if there's an image error message
+  if (imageErrorMessage) {
+    setLoading(false);
+    setDisableSubmitBtn(true);
+    return;
+  }
+
+  // Proceed with form submission
+  setLoading(true);
+  setDisableSubmitBtn(false);
+  
+  const formData = new FormData();
+  formData.append('title', DOMPurify.sanitize(title));
+  formData.append('linkTag', DOMPurify.sanitize(addHttpsToLink(linkTag)));
+  formData.append('imgHref', DOMPurify.sanitize(addHttpsToLink(imgHref)));
+  formData.append('content', DOMPurify.sanitize(content));
+  
+  try {
     const response = await fetch('https://toot.olk1.com/api/form.php', {
       method: 'POST',
       body: formData
     });
-    router.push("/")
+    router.push("/");
     // const data = await response.json();
     setLoading(false);
     // Prevent double tap submit
     setTimeout(() => {
       setDisableSubmitBtn(true);
     }, 3000);
-  };
+  } catch (error) {
+    setLoading(false);
+    console.error(error);
+  }
+};
 
   return (
     <div className="max-w-[700px] w-[95%] m-auto">
@@ -114,7 +149,7 @@ function handleImageInputChange(event) {
         </label>
         <input
           ref={titleField}
-          required 
+          required
           className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="title"
           type="text"
@@ -160,6 +195,7 @@ function handleImageInputChange(event) {
           Content
         </label>
         <textarea
+          required
           className="appearance-none border rounded w-full h-48 py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           id="content"
           placeholder="Enter some content"
