@@ -8,11 +8,13 @@ function MyForm() {
 
   const [title, setTitle] = useState('');
   const [linkTag, setLinkTag] = useState('');
-  const [imgHref, setimgHref] = useState('');
+  const [imgHref, setImgHref] = useState('');
   const [content, setContent] = useState('');
   const [loading, setLoading] = useState(false);
+  const [disableSubmitBtn, setDisableSubmitBtn] = useState(false);
   const [titleErrorMessage, setTitleErrorMessage] = useState("");
   const [contentErrorMessage, setContentErrorMessage] = useState("");
+  const [imageErrorMessage, setImageErrorMessage] = useState("");
 
   // To get input autofocus working
   useEffect(() => {
@@ -44,6 +46,22 @@ function handleChange(event) {
   }
 }
 
+const validImageFormats = ['.png', '.jpg', '.gif'];
+
+function handleImageInputChange(event) {
+  const { value } = event.target;
+  const imageFormat = validImageFormats.some((format) => value.toLowerCase().endsWith(format));
+
+  if (!imageFormat) {
+    setImageErrorMessage("Images must be .png, .jpg, or .gif.");
+    setImgHref(value);
+    setDisableSubmitBtn(true);
+  } else {
+    setImageErrorMessage("");
+    setImgHref(value);
+    setDisableSubmitBtn(false);
+  }
+}
 
 // Convert all links (link and image field) to https
  function addHttpsToLink(linkTag) {
@@ -63,7 +81,7 @@ function handleChange(event) {
   
   const handleSubmit = async (event) => {
     setLoading(true);
-    
+    setDisableSubmitBtn(false);
     event.preventDefault();
     const formData = new FormData();
     formData.append('title', DOMPurify.sanitize(title));
@@ -77,6 +95,10 @@ function handleChange(event) {
     router.push("/")
     // const data = await response.json();
     setLoading(false);
+    // Prevent double tap submit
+    setTimeout(() => {
+      setDisableSubmitBtn(true);
+    }, 3000);
   };
 
   return (
@@ -128,8 +150,9 @@ function handleChange(event) {
           type="text"
           placeholder="Enter an external image link (optional)"
           value={imgHref}
-          onChange={(e) => setimgHref(e.target.value.trim())}
+          onChange={handleImageInputChange}
         />
+        {imageErrorMessage && <p className="text-red-500 text-md">{imageErrorMessage}</p>}
       </div>
       
       <div className="mb-2">
@@ -147,11 +170,13 @@ function handleChange(event) {
         {contentErrorMessage && <p className="text-red-500 text-md">{contentErrorMessage}</p>}
       </div>
       <div className="flex items-center justify-between">
-        <button
+      { !disableSubmitBtn ? <button
           className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
-          type="submit">
-          {loading ? 'Tooting...' : 'Toot'}
-        </button>
+          type="submit">{loading ? 'Tooting...' : 'Toot'}</button> 
+        : <button disabled
+          className="bg-blue-100 hover:bg-blue-100 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          type="submit">Toot</button> 
+      } 
       </div>
     </form>
  
