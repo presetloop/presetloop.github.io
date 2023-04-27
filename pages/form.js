@@ -13,8 +13,9 @@ function MyForm() {
   const [loading, setLoading] = useState(false);
   const [disableSubmitBtn, setDisableSubmitBtn] = useState(false);
   const [titleErrorMessage, setTitleErrorMessage] = useState("");
-  const [contentErrorMessage, setContentErrorMessage] = useState("");
+  const [linkErrorMessage, setLinkErrorMessage] = useState("");
   const [imageErrorMessage, setImageErrorMessage] = useState("");
+  const [contentErrorMessage, setContentErrorMessage] = useState("");
 
   // To get input autofocus working
   useEffect(() => {
@@ -51,31 +52,56 @@ function handleChange(event) {
   }
 }
 
+
+// Check linkTag has a valid URL
+const handleLinkTagChange = (e) => {
+  const url = e.target.value.trim();
+  
+  const pattern = /^(https?:\/\/)?[\w\-]+(\.[\w\-]+)+[/#?]?.*$/i;
+
+  if (!pattern.test(url)) {
+    setLinkTag(url);
+    setLinkErrorMessage('Please enter a valid URL');
+    setDisableSubmitBtn(true);
+  } else {
+    setLinkTag(url);
+    setLinkErrorMessage('');
+    setDisableSubmitBtn(false);
+  }
+
+  if(url === ""){
+    setLinkTag("");
+    setLinkErrorMessage("");
+    setDisableSubmitBtn(false);
+  }
+};
+
+
 // Check for chosen image format
 const validImageFormats = ['.png', '.jpg', '.gif'];
 function handleImageInputChange(event) {
-  const { value } = event.target;
-  if (value === "") {
+  const url = event.target.value.trim();
+  if (url === "") {
     setImgHref("");
     setDisableSubmitBtn(false);
     setImageErrorMessage("");
     return;
   }
 
-  const imageFormat = validImageFormats.some((format) => value.toLowerCase().endsWith(format));
+  const imageFormat = validImageFormats.some((format) => url.toLowerCase().endsWith(format));
 
   if (!imageFormat) {
     setImageErrorMessage("Images must be .png, .jpg, or .gif.");
-    setImgHref(value);
+    setImgHref(url);
     setDisableSubmitBtn(true);
   } else {
     setImageErrorMessage("");
-    setImgHref(value);
+    setImgHref(url);
     setDisableSubmitBtn(false);
   }
 }
 
-// Convert all links (linkTag and imgHref field) to https
+// Convert all links (linkTag and imgHref field) to https (onSubmit)
 function addHttpsToLink(linkX) {
   let updatedLink = linkX;
   if (!updatedLink) return;
@@ -175,8 +201,10 @@ const handleSubmit = async (event) => {
           type="text"
           placeholder="Enter a link (optional)"
           value={linkTag}
-          onChange={(e) => setLinkTag(e.target.value.trim())}
+          // onChange={(e) => setLinkTag(e.target.value.trim())}
+          onChange={handleLinkTagChange}
           />
+        {linkErrorMessage && <p className="text-red-500 text-md">{linkErrorMessage}</p>}  
       </div>
       
       <div className="mb-2">
