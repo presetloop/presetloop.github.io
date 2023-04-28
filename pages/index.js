@@ -49,7 +49,7 @@ export default function Home() {
   }
 
   return (
-    <div className="opacity-10 max-w-[700px] w-[95%] m-auto" ref={element1Ref}>
+    <div className="max-w-[700px] w-[95%] m-auto" ref={element1Ref}>
       {!loading ? (
         <>
           {loggedIn && (
@@ -57,6 +57,11 @@ export default function Home() {
               <a className="block" href="/form">
                 <p className="my-4 text-xl text-blue-700">Toot?</p>
               </a>
+              
+              <a className="block" href="/search">
+                <p className="my-4 text-xl text-blue-700">Search</p>
+              </a>
+              
               <LogoutBtn />
             </div>
           )}
