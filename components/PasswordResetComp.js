@@ -95,7 +95,7 @@ function PasswordResetComp({ apiUrl }) {
       {data && <p className="mt-2 text-blue-500">{data}</p>}
       {errorMessage && <p className="text-red-500">{errorMessage}</p>}
       
-      <button className="my-3 bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit">
+      <button className="my-3 border-slate-900 border-2 hover:bg-slate-900 hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150" type="submit">
         {loading ? 'Sending...' : 'Send password reset link'}
       </button>
     </form>

@@ -30,6 +30,8 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
             validUrl.isWebUri(imgHref) &&
             DOMPurify.sanitize(imgHref).replace(/^https?:\/\//i, 'https://')
           }
+          width="100%"
+          height= "275px"
           alt={item?.title || 'No Image Available'}
         />
       </a>
@@ -47,6 +49,8 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
             validUrl.isWebUri(imgHref) &&
             DOMPurify.sanitize(imgHref).replace(/^https?:\/\//i, 'https://')
           }
+          width="100%"
+          height= "275px"
           alt={item?.title || 'No Image Available'}
         />
       </a>
@@ -64,6 +68,8 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
           validUrl.isWebUri(imgHref) &&
           DOMPurify.sanitize(imgHref).replace(/^https?:\/\//i, 'https://')
         }
+        width="100%"
+        height= "275px"
         alt={item?.title || 'No Image Available'}
       />
     </a>

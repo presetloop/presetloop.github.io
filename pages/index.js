@@ -43,21 +43,28 @@ export default function Home() {
       setLoading(false);
     } catch (error) {
       console.log('Print the error:', error);
+    } finally {
       setLoading(false);
     }
   }
 
-  return loggedIn !== undefined ? (
+
+  if (loggedIn === undefined) {
+    return <p className='max-w-[1473px] w-[95%] m-auto'>Loading...</p>;
+  }
+
+  return (
     <div className="mt-8 border-t-2 border-slate-900 max-w-[1473px] w-[95%] m-auto" ref={element1Ref}>
+
       {loggedIn ? (
         <div className="flex gap-2 justify-between">
           <a className="block" href="/form">
-            <p className="mt-1 -rotate-1 bg-[#1A0123] px-12 text-lg text-white hover:pl-10 hover:pr-10">{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
+            <p className="mt-1 -rotate-1 bg-[#1A0123] px-6 sm:px-12 text-lg text-white hover:pl-10 hover:pr-10 ease-in-out duration-300">{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
           </a>
 
           <div className="flex gap-2">
             <a className="block" href="/search">
-              <p className="border-slate-900 border-2 -mt-7 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white">Search</p>
+              <p className="border-slate-900 border-2 -mt-7 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300">Search</p>
             </a>
             <LogoutBtn />
           </div>
@@ -65,15 +72,15 @@ export default function Home() {
       ) : (
         <div className="flex gap-2 justify-between">
           <a className="block" href="/login">
-            <p className="border-slate-900 border-2 -mt-7 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white">{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
+            <p className="-mt-7 border-slate-900 border-2 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300">{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
           </a>
           
             <div className="flex gap-2">
             <a className="block" href="/login">
-              <p className="border-slate-900 border-2 -mt-7 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white">Login</p>
+              <p className="border-slate-900 border-2 -mt-7 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300">Login</p>
             </a>
-            <a className="block" href="/register">
-              <p className="border-slate-900 border-2 -mt-7 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white">Register</p>
+            <a className="hidden sm:block" href="/register">
+              <p className="border-slate-900 border-2 -mt-7 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300">Register</p>
             </a>
           </div>
         </div>
@@ -86,7 +93,5 @@ export default function Home() {
         ))}
       </div>
     </div>
-  ) : (
-    <p className='max-w-[1473px] w-[95%] m-auto'>Loading...</p>
   );
 }

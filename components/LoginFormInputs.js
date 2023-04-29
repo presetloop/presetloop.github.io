@@ -4,25 +4,24 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
     <div className="max-w-[700px] w-[95%] m-auto">
       
       <div className="flex align-middle justify-between my-4">
-        <p className="border-red-500 border-b-2 text-lg text-slate-600">LOGIN</p>
+        <p className="border-[#F90B0D] border-b-2 text-lg text-slate-600">LOGIN</p>
         
         <div className="flex align-middle">
-          <p className="text-lg text-slate-600">No account?</p>
+          <p className="hidden sm:block text-lg text-slate-600">No account?</p>
           <a className="ml-2 block text-lg text-blue-700" href="/register">
             Register Here
           </a>
         </div>
       </div>
 
+
       <form onSubmit={handleSubmit}>
-        <div className="mb-2">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="email">
-            Email:
-          </label>
+
+        <div className="relative">
           <input
             ref={titleField}
             required
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="appearance-none border-slate-900 mb-4 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Enter your email"
             type="email"
             name="email"
@@ -32,13 +31,10 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
           />
         </div>
 
-        <div className="mb-4">
-          <label className="block text-gray-700 font-bold mb-2" htmlFor="password">
-            Password:
-          </label>
+        <div className="relative">
           <input
             required
-            className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            className="appearance-none border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Enter your password"
             type="password"
             name="password"
@@ -46,13 +42,13 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
             onChange={(event) => setPassword(event.target.value.trim())}
             // pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
           />
+        {errorMessage && <p className="absolute bottom-[5px] left-0 mb-0 text-red-500 text-md">{errorMessage}</p>}
         </div>
 
-        {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
         <div className="flex items-center justify-between">
           <input
-            className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+            className="border-slate-900 border-2 hover:bg-slate-900 hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150"
             type="submit"
             value={loading ? 'Logging in...' : 'Login'}
             disabled={loading}

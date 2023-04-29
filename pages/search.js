@@ -91,18 +91,15 @@ function Search() {
   return (
     <div className="max-w-[700px] w-[95%] m-auto">
 
-    <div className="flex justify-end">
-      <a className="block my-4 text-xl text-blue-700" href="/">View all</a>
+    <div className="flex justify-end w-full border-t-2 border-slate-900">
+      <a className="block my-0 bg-[#1A0123] px-12 text-lg text-white ease ease-in-out duration-300 hover:pl-8 hover:pr-8" href="/">View all</a>
     </div>
 
-    <div className="mb-2">
-      <label className="block text-gray-700 font-bold mb-2" htmlFor="title">
-        Search
-      </label>
+    <div className="relative">
       <input
         ref={searchField}
         required
-        className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="appearance-none border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         id="title"
         type="text"
         placeholder="Enter a search query"
@@ -110,16 +107,15 @@ function Search() {
         value={searchTerm} 
         onChange={handleInputChange}
       />
-      {searchErrorMessage && <p className="text-red-500 text-md">{searchErrorMessage}</p>}
+      {searchErrorMessage && <p className="absolute bottom-[5px] left-0 mb-0 text-red-500 text-md">{searchErrorMessage}</p>}
     </div>
-    
 
     <div onClick={handleSearch} className="flex items-center justify-between">
       { !disableSearchBtn ? <button
-          className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="border-slate-900 border-2 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300"
           type="submit">{loading ? 'Searching...' : 'Search'}</button> 
         : <button disabled
-          className="bg-blue-100 hover:bg-blue-100 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline"
+          className="border-slate-900 border-2 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300"
           type="submit">Toot</button> 
       }
       {/* {searchErrorMessage && <p className="text-red-500 text-md">{searchErrorMessage}</p>}  */}
@@ -132,8 +128,13 @@ function Search() {
         {searchResults.map(result => (
           <div key={result.id}>
             {/* <a href={isValidHref ? href : null}> */}
-            <a href={`/post?id=${result.id}`} target="_blank">
-              <p className="bg-slate-100 w-fit px-4 p-2 md:px-8 md:p-4 mb-4 text-xl">{DOMPurify.sanitize(result.title)}</p>
+            <a href={`/post?id=${result.id}`}>
+              <div className='flex my-8 items-center'>
+                <img className="mr-4 h-10 w-10 rounded-full" src={result.imgHref} alt="Search result" />
+                <p className="w-fit text-xl">
+                  {DOMPurify.sanitize(result.title)}
+                </p>
+              </div>
             </a>
           </div>
         ))}

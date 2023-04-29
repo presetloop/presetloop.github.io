@@ -60,10 +60,10 @@ function RegistrationForm({apiUrl}) {
       <div className="max-w-[700px] w-[95%] m-auto">
 
       <div className="flex align-middle justify-between my-4">
-        <p className="border-red-500 border-b-2 text-lg text-slate-600">REGISTER</p>
+        <p className="border-[#F90B0D] border-b-2 text-lg text-slate-600">REGISTER</p>
         
         <div className="flex align-middle">
-          <p className="text-lg text-slate-600">Already registered?</p>
+          <p className="hidden sm:block text-lg text-slate-600">Already registered?</p>
           <a className="ml-2 block text-lg text-blue-700" href="/login">
             Login here
           </a>
@@ -71,12 +71,12 @@ function RegistrationForm({apiUrl}) {
       </div>
     
         <form onSubmit={handleSubmit}>
-          <div className="mb-2">
-            <label className="block text-gray-700 font-bold mb-2"  htmlFor="email">Email:</label>
+          
+          <div className="relative">
             <input
               ref={titleField}
               required
-              className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+              className="appearance-none border-slate-900 mb-4 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
               placeholder="Enter your email"
               type="email"
               name="email"
@@ -86,11 +86,10 @@ function RegistrationForm({apiUrl}) {
             />
           </div>
 
-            <div className="mb-2">
-              <label className="block text-gray-700 font-bold mb-2"  htmlFor="password">Password:</label>
+            <div className="relative">
               <input
                 required
-                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="appearance-none border-slate-900 mb-4 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Enter a password"
                 type="password"
                 name="password"
@@ -99,14 +98,14 @@ function RegistrationForm({apiUrl}) {
                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
               />
             
-            <span className="block mt-2 text-slate-400 text-sm">Password must be a minimum of 8 characters containing one uppercase letter, one lowercase letter, at least one number and one special character (e.g., !, @, #, $, %, ^, &, *)</span>
+            <span className="block my-2 text-slate-400 text-sm">Password must be a minimum of 8 characters containing one uppercase letter, one lowercase letter, at least one number and one special character (e.g., !, @, #, $, %, ^, &, *)</span>
             </div>
 
             {data && <p className="mt-2 text-blue-500">{data.success}</p>}
             {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
             <div className="flex items-center justify-between">
-              <input className="bg-blue-500 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded focus:outline-none focus:shadow-outline" type="submit" 
+              <input className="my-2 border-slate-900 border-2 hover:bg-slate-900 hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150" type="submit" 
               value={loading ? 'Registering...' : 'Register'} />
             </div>
         </form>

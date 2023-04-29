@@ -3,7 +3,7 @@ export default function FormInputs({handleSubmit, titleField, title, handleChang
     <div className="max-w-[700px] w-[95%] m-auto">
 
     <div className="flex justify-end w-full border-t-2 border-slate-900">
-      <a className="block my-0 bg-[#1A0123] px-12 text-lg text-white hover:pl-8 hover:pr-8" href="/">View all</a>
+      <a className="block my-0 bg-[#1A0123] px-12 text-lg text-white ease ease-in-out duration-300 hover:pl-8 hover:pr-8" href="/">View all</a>
     </div>
     <form onSubmit={handleSubmit}>
     
@@ -65,10 +65,10 @@ export default function FormInputs({handleSubmit, titleField, title, handleChang
 
     <div className="mt-2 flex items-center justify-between">
     { !disableSubmitBtn ? <button
-        className="border-slate-900 border-2 hover:bg-slate-900 hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline"
+        className="border-slate-900 border-2 hover:bg-slate-900 hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150"
         type="submit">{loading ? 'Tooting...' : 'Toot'}</button> 
       : <button disabled
-        className="border-slate-100 border-2 text-slate-200 font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline"
+        className="border-slate-900 border-2 hover:bg-slate-900 hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150"
         type="submit">Toot</button> 
     } 
     </div>
