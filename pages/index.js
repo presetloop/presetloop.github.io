@@ -13,12 +13,14 @@ export default function Home() {
   const element1Ref = useRef(null);
 
   useEffect(() => {
+  if (element1Ref.current) {
     gsap.fromTo(
       element1Ref.current,
       { opacity: 0, y: 10 },
       { opacity: 1, y: 0, duration: 1, ease: Power1.easeInOut }
     );
-  }, []);
+  }
+}, []);
 
   useEffect(() => {
     fetchData();
@@ -54,7 +56,7 @@ export default function Home() {
   }
 
   return (
-    <div className="mt-8 border-t-2 border-slate-900 max-w-[1473px] w-[95%] m-auto" ref={element1Ref}>
+    <div className="mt-8 border-t-2 border-slate-900 max-w-[1473px] w-[95%] m-auto">
 
       {loggedIn ? (
         <div className="flex gap-2 justify-between">
@@ -87,11 +89,14 @@ export default function Home() {
       )}
 
       {/* spacing */}
-      <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-2 gap-y-4 sm:gap-y-6 pt-2 sm:pt-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-        {data?.map(({ id, title, imgHref, content_excerpt }) => (
+      {data.length > 0 && (
+      <div ref={element1Ref} className="mx-auto grid max-w-2xl grid-cols-1 gap-x-2 gap-y-4 sm:gap-y-6 pt-2 sm:pt-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+        {data.map(({ id, title, imgHref, content_excerpt }) => (
           <HomeListItem key={id} id={id} title={title} contentExcerpt={content_excerpt} imgHref={imgHref} loggedIn={loggedIn} />
         ))}
       </div>
+    )}
+
     </div>
   );
 }

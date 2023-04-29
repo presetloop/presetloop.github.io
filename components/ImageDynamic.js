@@ -14,7 +14,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
       const img = new Image();
       img.src = imgHref;
       img.onload = () => {
-        setClassName(img.height < 275 ? 'object-fit' : 'max-h-64 w-[700px]');
+        setClassName(img.height < 275 ? 'object-contain' : 'object-cover');
       };
     }
   }, [imgHref]);
@@ -24,14 +24,13 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
       <a href={DOMPurify.sanitize(`${baseUrl}/login`).replace(/^https?:\/\//i, 'http://')}
          rel="noopener noreferrer">
         <img
-          className={`mt-4 cursor-pointer object-cover ${className}`}
+          className={`mt-4 cursor-pointer ${className} h-[275px] w-[700px]`}
           src={
             imgHref &&
             validUrl.isWebUri(imgHref) &&
             DOMPurify.sanitize(imgHref).replace(/^https?:\/\//i, 'https://')
           }
-          width="100%"
-          height= "275px"
+          loading="lazy"
           alt={item?.title || 'No Image Available'}
         />
       </a>
@@ -43,14 +42,13 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
       <a href={DOMPurify.sanitize(`${baseUrl}/post?id=${id}`).replace(/^https?:\/\//i, 'http://')}
          rel="noopener noreferrer">
         <img
-          className={`mt-4 cursor-pointer object-cover ${className}`}
+          className={`mt-4 cursor-pointer ${className} h-[275px] w-[700px]`}
           src={
             imgHref &&
             validUrl.isWebUri(imgHref) &&
             DOMPurify.sanitize(imgHref).replace(/^https?:\/\//i, 'https://')
           }
-          width="100%"
-          height= "275px"
+          loading="lazy"
           alt={item?.title || 'No Image Available'}
         />
       </a>
@@ -62,14 +60,13 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
        target="_blank"
        rel="noopener noreferrer">
       <img
-        className={`mt-4 cursor-pointer object-cover ${className}`}
+        className={`mt-4 cursor-pointer ${className} h-[275px] w-[700px]`}
         src={
           imgHref &&
           validUrl.isWebUri(imgHref) &&
           DOMPurify.sanitize(imgHref).replace(/^https?:\/\//i, 'https://')
         }
-        width="100%"
-        height= "275px"
+        loading="lazy"
         alt={item?.title || 'No Image Available'}
       />
     </a>
