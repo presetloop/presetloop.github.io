@@ -1,5 +1,7 @@
 import { useState } from 'react';
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 function LogoutBtn() {
 
   const [loggingOut, setLoggingOut] = useState(false);
@@ -8,7 +10,7 @@ function LogoutBtn() {
     setLoggingOut(true);
     
     try {
-      const res = await fetch('https://toot.olk1.com/api/logout.php');
+      const res = await fetch(`${apiUrl}/logout.php`);
       const json = await res.json();
       
       if(json.logged_in == false){
@@ -26,9 +28,11 @@ function LogoutBtn() {
   }
 
   return (
-    <a className="cursor-pointer block my-4 text-xl text-blue-700" disabled={loggingOut} onClick={handleLogout}>
-      {loggingOut ? 'Logging out...' : 'Logout'}
-    </a>
+    <p className='-mt-1 cursor-pointer bg-[#F90B0D] px-4'>
+      <a className="block mt-1 text-lg text-white hover:text-black" disabled={loggingOut} onClick={handleLogout}>
+        {loggingOut ? 'Logging out...' : 'Logout'}
+      </a>
+    </p>
   );
 }
 

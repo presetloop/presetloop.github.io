@@ -78,7 +78,7 @@ function Post() {
 
             <div className='flex justify-center'>
               {item.imgHref && (
-                <ImageDynamic item={item}/>
+                <ImageDynamic item={item} isLoggedIn={true}/>
               )}
             </div>
             
