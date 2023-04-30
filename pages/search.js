@@ -130,7 +130,10 @@ function Search() {
             {/* <a href={isValidHref ? href : null}> */}
             <a href={`/post?id=${result.id}`}>
               <div className='flex my-8 items-center'>
-                <img className="mr-4 h-10 w-10 rounded-full" src={result.imgHref} alt="Search result" />
+                {
+                  result.imgHref ? <img className="mr-4 h-10 w-10 rounded-full" src={result.imgHref} alt="Search result" />
+                  : <img alt="Post Preview Image" className="mr-4 h-10 w-10 rounded-full" src="https://org.olk1.com/picz/1682816223.jpg" />
+                }
                 <p className="w-fit text-xl">
                   {DOMPurify.sanitize(result.title)}
                 </p>

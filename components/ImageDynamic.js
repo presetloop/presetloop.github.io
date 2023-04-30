@@ -19,6 +19,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
     }
   }, [imgHref]);
 
+// images when not logged in
   if (!isLoggedIn) {
     return (
       <a href={DOMPurify.sanitize(`${baseUrl}/login`).replace(/^https?:\/\//i, 'http://')}
@@ -37,6 +38,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
     );
   }
 
+// home screen index images when logged in
   if (isHomeImg) {
     return (
       <a href={DOMPurify.sanitize(`${baseUrl}/post?id=${id}`).replace(/^https?:\/\//i, 'http://')}
@@ -54,13 +56,13 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
       </a>
     );
   }
-
+// logged in article images
   return (
     <a href={DOMPurify.sanitize(imgHref).replace(/^https?:\/\//i, 'https://')}
        target="_blank"
        rel="noopener noreferrer">
       <img
-        className={`mt-4 cursor-pointer ${className} h-[275px] w-[700px]`}
+        className={`sm:mt-4 rotate-1 cursor-pointer ${className} w-[48rem] max-w-none`}
         src={
           imgHref &&
           validUrl.isWebUri(imgHref) &&
