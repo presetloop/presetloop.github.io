@@ -7,7 +7,9 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeImg = false, id }) {
   const [className, setClassName] = useState('');
-
+  
+  const convertToHttps = "http";
+  // CHANGE to https BEFORE BUILD AND DEPLOY
   const imgHref = item && item.imgHref || item;
 
   useEffect(() => {
@@ -23,7 +25,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
 // images when not logged in (redirects to /login)
   if (!isLoggedIn) {
     return (
-      <a href={DOMPurify.sanitize(`${baseUrl}/login`).replace(/^https?:\/\//i, 'http://')}
+      <a href={DOMPurify.sanitize(`${baseUrl}/login`).replace(/^http?:\/\//i, convertToHttps)}
          rel="noopener noreferrer">
         
         { imgHref ? ( 
@@ -32,7 +34,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
             src={
               imgHref &&
               validUrl.isWebUri(imgHref) &&
-              DOMPurify.sanitize(imgHref).replace(/^https?:\/\//i, 'https://')
+              DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)
             }
             loading="lazy"
             alt={item?.title || 'No Image Available'}/>
@@ -47,7 +49,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
 // home screen index images when logged in (link to post id)
   if (isHomeImg) {
     return (
-      <a href={DOMPurify.sanitize(`${baseUrl}/post?id=${id}`).replace(/^https?:\/\//i, 'http://')}
+      <a href={DOMPurify.sanitize(`${baseUrl}/post?id=${id}`).replace(/^http?:\/\//i, convertToHttps)}
          rel="noopener noreferrer">
         
         { imgHref ? ( 
@@ -56,7 +58,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
             src={
               imgHref &&
               validUrl.isWebUri(imgHref) &&
-              DOMPurify.sanitize(imgHref).replace(/^https?:\/\//i, 'https://')
+              DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)
             }
             loading="lazy"
             alt={item?.title || 'No Image Available'}/>
@@ -71,7 +73,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
 
 // logged in article images.
   return (
-    <a href={DOMPurify.sanitize(imgHref).replace(/^https?:\/\//i, 'https://')}
+    <a href={DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
        target="_blank"
        rel="noopener noreferrer">
       
@@ -88,7 +90,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
         src={
           imgHref &&
           validUrl.isWebUri(imgHref) &&
-          DOMPurify.sanitize(imgHref).replace(/^https?:\/\//i, 'https://')
+          DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)
         }
         loading="lazy"
         alt={item?.title || 'No Image Available'}
