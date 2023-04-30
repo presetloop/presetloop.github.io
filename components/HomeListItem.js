@@ -11,13 +11,6 @@ const HomeListItem = ({ id, title, imgHref, contentExcerpt, loggedIn }) => {
 
   const isValidHref = validUrl.isWebUri(href);
 
-  // function getRandomNumber() {
-  //   return Math.floor(Math.random() * 4) + 1;
-  // } 
-
-  // const randomImg = getRandomNumber();
-  // const randomImgUrl = `https://easycss.github.io/easyimage/img${randomImg}.png`;
-
   function truncateTitle(title, maxLength = null) {
     const length = maxLength ?? title.length;
     const sanitizedTitle = DOMPurify.sanitize(title.slice(0, length));
@@ -53,11 +46,7 @@ const HomeListItem = ({ id, title, imgHref, contentExcerpt, loggedIn }) => {
       <div className="relative mt-0 flex w-full min-h-[275px] justify-center items-center gap-x-4">
 
       {
-        imgHref ? (
-          <ImageDynamic item={imgHref} isLoggedIn={loggedIn} isHomeImg={loggedIn} id={id}/>
-          ) : (
-          <img alt="Post Preview Image" className="h-[275px] w-[100vw] object-cover border-gray-100 border-[1px]" src="https://org.olk1.com/picz/1682816223.jpg" /> // src={randomImgUrl}
-        ) 
+        <ImageDynamic item={imgHref} isLoggedIn={loggedIn} isHomeImg={loggedIn} id={id}/>
       }
 
 

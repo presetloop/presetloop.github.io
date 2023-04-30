@@ -7,6 +7,13 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeImg = false, id }) {
   const [className, setClassName] = useState('');
 
+  // function getRandomNumber() {
+  //   return Math.floor(Math.random() * 4) + 1;
+  // } 
+
+  // const randomImg = getRandomNumber();
+  // const randomImgUrl = `https://easycss.github.io/easyimage/img${randomImg}.png`;
+
   const imgHref = item && item.imgHref || item;
 
   useEffect(() => {
@@ -43,19 +50,25 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
     return (
       <a href={DOMPurify.sanitize(`${baseUrl}/post?id=${id}`).replace(/^https?:\/\//i, 'http://')}
          rel="noopener noreferrer">
-        <img
-          className={`mt-4 cursor-pointer ${className} h-[275px] w-[700px]`}
-          src={
-            imgHref &&
-            validUrl.isWebUri(imgHref) &&
-            DOMPurify.sanitize(imgHref).replace(/^https?:\/\//i, 'https://')
-          }
-          loading="lazy"
-          alt={item?.title || 'No Image Available'}
-        />
+        
+        { imgHref ? ( 
+          <img
+            className={`mt-4 cursor-pointer ${className} h-[275px] w-[700px]`}
+            src={
+              imgHref &&
+              validUrl.isWebUri(imgHref) &&
+              DOMPurify.sanitize(imgHref).replace(/^https?:\/\//i, 'https://')
+            }
+            loading="lazy"
+            alt={item?.title || 'No Image Available'}/>
+          ) : (
+            <img alt="Post Preview Image" className="h-[275px] w-[100vw] object-cover border-gray-100 border-[1px]" src="https://org.olk1.com/picz/1682816223.jpg" /> // src={randomImgUrl}
+          )
+        }
       </a>
     );
   }
+
 // logged in article images
   return (
     <a href={DOMPurify.sanitize(imgHref).replace(/^https?:\/\//i, 'https://')}
