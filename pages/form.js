@@ -32,7 +32,7 @@ function handleChange(event) {
   const regex = /((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?)/gi;
   
   // Check if title/content fields contains a URL and render error message
-  if (value.match(regex) || value.includes("www.") || value.includes("ww.") || value.includes("w.")) {
+  if (value.match(regex) || value.includes("www.") || value.includes("ww.") || value.includes("w.") || value.includes("w.") || value.includes(".")) {
     if (name === "Title") {
       setTitleErrorMessage("Titles cannot contain URLs");
       setDisableSubmitBtn(true);
