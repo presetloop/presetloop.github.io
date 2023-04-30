@@ -37,7 +37,7 @@ export default function Home() {
       }
 
       const responseData = response.data;
-
+      
       const loggedIn = responseData.logged_in && localStorage.getItem('session', `process.env.NEXT_PUBLIC_SESSION`);
       setLoggedIn(loggedIn);
       setData(responseData.posts);
@@ -91,8 +91,8 @@ export default function Home() {
       {/* spacing */}
       {data.length > 0 && (
       <div ref={element1Ref} className="mx-auto grid max-w-2xl grid-cols-1 gap-x-2 gap-y-4 sm:gap-y-6 pt-2 sm:pt-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
-        {data.map(({ id, title, imgHref, content_excerpt }) => (
-          <HomeListItem key={id} id={id} title={title} contentExcerpt={content_excerpt} imgHref={imgHref} loggedIn={loggedIn} />
+        {data.map(({ id, title, linkTag, imgHref, content_excerpt }) => (
+          <HomeListItem key={id} id={id} title={title} contentExcerpt={content_excerpt} linkTag={linkTag} imgHref={imgHref} loggedIn={loggedIn} />
         ))}
       </div>
     )}

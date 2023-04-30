@@ -4,7 +4,7 @@ import ImageDynamic from './ImageDynamic';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-const HomeListItem = ({ id, title, imgHref, contentExcerpt, loggedIn }) => {
+const HomeListItem = ({ id, title, linkTag, imgHref, contentExcerpt, loggedIn }) => {
   const postUrl = `${baseUrl}/post?id=${id}`;
   const loginUrl = `${baseUrl}/login`;
   const href = loggedIn ? postUrl : loginUrl;
@@ -31,18 +31,19 @@ const HomeListItem = ({ id, title, imgHref, contentExcerpt, loggedIn }) => {
         <time dateTime={null} className="text-gray-500">
           {generateRandomDate()}
         </time>
-        <a
-          href={isValidHref ? href : null}
-          className="relative z-10 bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100"
-        >
-          {truncateTitle(title, 30)}
-        </a>
+          
+      {linkTag ? 
+        (<a
+          href={isValidHref ? href : null} className="relative z-10 bg-gray-50 px-3 py-1.5 font-medium text-gray-600 hover:bg-gray-100">{truncateTitle(linkTag, 25)}</a>
+        ) : (":)")
+      }
+        
       </div>
       <div className="group relative">
         <h3 className="mt-2 text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
           <a href={isValidHref ? href : null}>
             <span className="absolute inset-0" />
-            {truncateTitle(title, 20)}
+            {truncateTitle(title, 25)}
           </a>
         </h3>
         <p className="mt-2 line-clamp-3 text-sm leading-6 text-gray-600">
