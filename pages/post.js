@@ -49,7 +49,7 @@ function Post() {
     return (
       <div className="max-w-[700px] w-[95%] m-auto">
         <p>Post no longer exists or perhaps it never did?</p>
-        <p className="mt-2 border-slate-900 border-2 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300 cursor-pointer" onClick={handleClick}>Go back &larr;</p>
+        <p className="w-fit mt-2 border-slate-900 border-2 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300 cursor-pointer" onClick={handleClick}>Go back &larr;</p>
       </div>
     );
   }
@@ -137,7 +137,7 @@ function Post() {
 
       <div className={`${getRandomClass(random100)} -ml-12 -mt-16 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden`}>
         
-        { item.imgHref && (<ImageDynamic item={item} isLoggedIn={true}/> )}
+        { (<ImageDynamic item={item} isLoggedIn={true}/> )}
 
       </div>
 

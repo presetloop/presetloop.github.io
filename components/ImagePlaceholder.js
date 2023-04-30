@@ -9,7 +9,7 @@ function shuffleArray(array) {
   return array;
 }
 
-export default function ImagePlaceholder({ imgkey }) {
+export default function ImagePlaceholder({ imgkey, height, width=null, rotate=null }) {
   const [randomImgUrl, setRandomImgUrl] = useState('');
   
   useEffect(() => {
@@ -23,7 +23,15 @@ export default function ImagePlaceholder({ imgkey }) {
   }, [imgkey]);
 
   return (
-    <img alt="Post Preview Image" className="h-[275px] w-[100vw] object-cover border-gray-100 border-[1px]" src={randomImgUrl} imgKey={imgkey} /> 
+    
+    <img
+      alt="Post Preview Image"
+      style={{ height: height, width: width, transform: rotate }}
+      className="sm:mt-4 cursor-pointer ${className} object-cover border-gray-700 border-0"
+      // w-[100vw]
+      src={randomImgUrl}
+      imgKey={imgkey}
+    />
   );
 }
 

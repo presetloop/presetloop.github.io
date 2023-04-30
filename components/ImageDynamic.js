@@ -20,7 +20,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
     }
   }, [imgHref]);
 
-// images when not logged in
+// images when not logged in (redirects to /login)
   if (!isLoggedIn) {
     return (
       <a href={DOMPurify.sanitize(`${baseUrl}/login`).replace(/^https?:\/\//i, 'http://')}
@@ -37,14 +37,14 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
             loading="lazy"
             alt={item?.title || 'No Image Available'}/>
           ) : (
-            <ImagePlaceholder imgKey={Math.random()} />
+            <ImagePlaceholder imgkey={Math.random()} height="275px" />
           )
         }
       </a>
     );
   }
 
-// home screen index images when logged in
+// home screen index images when logged in (link to post id)
   if (isHomeImg) {
     return (
       <a href={DOMPurify.sanitize(`${baseUrl}/post?id=${id}`).replace(/^https?:\/\//i, 'http://')}
@@ -61,18 +61,28 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
             loading="lazy"
             alt={item?.title || 'No Image Available'}/>
           ) : (
-            <ImagePlaceholder imgkey={Math.random()} />
+            // remove width prop to keep the placeholder image square
+            <ImagePlaceholder imgkey={Math.random()} height="275px" width="100vw" />
           )
         }
       </a>
     );
   }
 
-// logged in article images
+// logged in article images.
   return (
     <a href={DOMPurify.sanitize(imgHref).replace(/^https?:\/\//i, 'https://')}
        target="_blank"
        rel="noopener noreferrer">
+      
+      { !item.imgHref ? (
+        <ImagePlaceholder 
+          imgkey={Math.random()} 
+          height="770px"
+          rotate="rotate(1deg)"
+        />
+      ) : ( 
+        
       <img
         className={`sm:mt-4 rotate-1 cursor-pointer ${className} w-[48rem] max-w-none`}
         src={
@@ -82,7 +92,8 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
         }
         loading="lazy"
         alt={item?.title || 'No Image Available'}
-      />
+      /> )
+      }
     </a>
   );
 }
