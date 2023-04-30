@@ -54,6 +54,24 @@ function Post() {
     );
   }
 
+  function generateRandomDate() {
+  const a = (Math.floor(Math.random() * 28) + 1).toString().padStart(2, '0'); // Random number between 1-28
+  const b = (Math.floor(Math.random() * 12) + 1).toString().padStart(2, '0'); // Random number between 01-12
+  const c = Math.floor(Math.random() * (2023 - 1996 + 1)) + 1996; // Random number between 1996-2023
+  return `${a}:${b}:${c}`;
+}
+
+  // const og = ["blue-300", "red-50", "pink-400", "yellow-100", "red-100", "green-100"];
+  const random50 = ["bg-blue-50", "bg-red-50", "bg-pink-50", "bg-yellow-50", "bg-green-50", "bg-purple-50", "bg-indigo-50", "bg-gray-50"];
+  const random100 = ["bg-blue-100", "bg-red-100", "bg-pink-100", "bg-yellow-100", "bg-green-100", "bg-purple-100", "bg-indigo-100", "bg-gray-100"];
+  const random300 = ["bg-blue-300", "bg-red-300", "bg-pink-300", "bg-yellow-300", "bg-green-300", "bg-purple-300", "bg-indigo-300", "bg-gray-300"];
+  const random400 = ["bg-blue-400", "bg-red-400", "bg-pink-400", "bg-yellow-400", "bg-green-400", "bg-purple-400", "bg-indigo-400", "bg-gray-400"];
+
+  function getRandomClass(classesArray) {
+    const randomIndex = Math.floor(Math.random() * classesArray.length);
+    return classesArray[randomIndex];
+  }
+
   return (
     <>
 
@@ -61,7 +79,7 @@ function Post() {
   <div className="z-10 relative mt-8 border-t-2 border-slate-900 max-w-[1473px] w-[95%] m-auto">
     <div className="flex gap-2 justify-between">
       
-      <a className="block -mt-2 pt-1.5 rotate-0 bg-blue-300 px-2 sm:px-6 text-lg text-white ease ease-in-out duration-300 md:hover:pl-8 md:hover:pr-8" href="/">View all</a>
+      <a className={`${getRandomClass(random300)} block -mt-2 pt-1.5 rotate-0 px-2 sm:px-6 text-lg text-white ease ease-in-out duration-300 md:hover:pl-8 md:hover:pr-8`} href="/">View all</a>
       
       <div className="flex gap-2">
         
@@ -80,24 +98,27 @@ function Post() {
 
 
 {/* content */}
-    <div className="z-2 -mt-8 sm:-mt-4 bg-red-50 relative overflow-hidden px-6 py-12 lg:overflow-visible lg:px-0">
+    <div className={`${getRandomClass(random50)} z-2 -mt-8 sm:-mt-4 relative overflow-hidden px-6 py-12 lg:overflow-visible lg:px-0`}>
 
-    
     {data.map(item => (
 
     <div key={item.id} className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-10">
       
        
-        <div className="bg-pink-400 lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
+        <div className={`${getRandomClass(random400)} lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8`}>
 
-      <div className="bg-yellow-100 lg:pr-4">
+      <div className={`${getRandomClass(random100)} lg:pr-4`}>
         
           <div className="lg:max-w-lg">
-            <p className="pl-2 text-base font-semibold leading-7 text-red-300">29.04.23</p>
+            <p className="pl-2 text-base font-semibold leading-7 text-red-300">
+            <time dateTime={null} className="bg-gray-100 text-gray-500">
+              {generateRandomDate()}
+            </time>
+            </p>
             <h1 className="pl-2 pr-2 mt-3 text-3xl font-bold text-right text-gray-900 sm:text-4xl">{DOMPurify.sanitize(item.title)}</h1>
 
             {item.linkTag && (
-              <p className="bg-red-100 cursor-pointer mt-6 text-md leading-8 text-gray-700">
+              <p className={`${getRandomClass(random100)} cursor-pointer mt-6 text-md leading-8 text-gray-700`}>
                 <span className="text-pink-400">&rarr;</span>
                 <a className="pl-2 md:hover:text-indigo-400" href={
                   item.linkTag &&
@@ -114,7 +135,7 @@ function Post() {
 
 
 
-      <div className="bg-green-100 -ml-12 -mt-16 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden">
+      <div className={`${getRandomClass(random100)} -ml-12 -mt-16 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden`}>
         
         { item.imgHref && (<ImageDynamic item={item} isLoggedIn={true}/> )}
 
