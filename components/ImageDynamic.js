@@ -6,7 +6,7 @@ import ImagePlaceholder from '@/components/ImagePlaceholder';
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
 export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeImg = false, id }) {
-  const [className, setClassName] = useState('');
+  const [className, setClassName] = useState('object-cover');
   
   const convertToHttps = "http://"; // CHANGE to https:// BEFORE BUILD AND DEPLOY
   const imgHref = item && item.imgHref || item;
@@ -19,7 +19,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
         setClassName(img.height < 275 ? 'object-contain' : 'object-cover');
       };
     }
-  }, [imgHref]);
+  }, [imgHref, validUrl]);
 
 // images when not logged in (redirects to /login)
   if (!isLoggedIn) {
@@ -29,7 +29,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
         
         { imgHref ? ( 
           <img
-            className={`mt-4 cursor-pointer ${className} h-[275px] w-[700px]`}
+            className={`transition-all duration-500 mt-4 cursor-pointer ${className} h-[275px] w-[700px]`}
             src={
               imgHref &&
               validUrl.isWebUri(imgHref) &&
@@ -38,7 +38,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
             loading="lazy"
             alt={item?.title || 'No Image Available'}/>
           ) : (
-            <ImagePlaceholder imgkey={Math.random()} height="275px" />
+            <ImagePlaceholder width={"100vw"} className={className} imgkey={Math.random()} height={"275px"} />
           )
         }
       </a>
@@ -63,7 +63,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
             alt={item?.title || 'No Image Available'}/>
           ) : (
             // remove width prop to keep the placeholder image square
-            <ImagePlaceholder imgkey={Math.random()} height="275px" width="100vw" />
+            <ImagePlaceholder className={className} imgkey={Math.random()} height={"275px"} width={"100vw"} />
           )
         }
       </a>
@@ -78,9 +78,10 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
       
       { !item.imgHref ? (
         <ImagePlaceholder 
+          className={className}
           imgkey={Math.random()} 
-          height="770px"
-          rotate="rotate(1deg)"
+          height={"770px"}
+          rotate={"rotate(1deg)"}
         />
       ) : ( 
         
