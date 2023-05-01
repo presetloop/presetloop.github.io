@@ -28,7 +28,6 @@ export default function ImagePlaceholder({ imgkey, height, className, width=null
       alt="Post Preview Image"
       style={{ height: height, width: width, transform: rotate }}
       className={`sm:mt-4 cursor-pointer ${className} object-cover border-gray-700 border-0`}
-      // w-[100vw]
       src={randomImgUrl}
       imgkey={imgkey}
     />
