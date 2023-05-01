@@ -15,7 +15,7 @@ function LogoutBtn() {
       
       if(json.logged_in == false){
         setLoggingOut(true);
-        localStorage.removeItem("session", "jelli");;
+        localStorage.removeItem("session", process.env.NEXT_PUBLIC_SESSION);;
         window.location.href = '/';
       }
       

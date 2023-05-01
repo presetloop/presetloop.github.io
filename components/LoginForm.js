@@ -52,7 +52,9 @@ function LoginForm({ apiUrl }) {
           const loggedIn = responseData.message == 'Login successful and Session cookie set successfully';
         
           if (loggedIn) {
-            localStorage.setItem("session", "jelli");
+            
+            localStorage.setItem('session', JSON.stringify({ value: process.env.NEXT_PUBLIC_SESSION, timestamp: Date.now() }));
+
             router.push('/');
           } else {
             router.push('/login');

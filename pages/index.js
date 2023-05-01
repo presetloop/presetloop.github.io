@@ -28,29 +28,35 @@ export default function Home() {
   }, []);
 
   async function fetchData() {
-    setLoading(true);
+  setLoading(true);
 
-    try {
-      const response = await axios.get(`${apiUrl}/index.php`);
-
-      if (!response) {
-        throw new Error('No data received from server');
-      }
-
-      const responseData = response.data;
-      
-      const loggedIn = responseData.logged_in && localStorage.getItem('session', `process.env.NEXT_PUBLIC_SESSION`);
-      setLoggedIn(loggedIn);
-      setData(responseData.posts);
-
-      setLoading(false);
-    } catch (error) {
-      console.log('Print the error:', error);
-    } finally {
-      setLoading(false);
+  try {
+    const response = await axios.get(`${apiUrl}/index.php`);
+    
+    if (!response) {
+      throw new Error('No data received from server');
     }
-  }
+    
+    const responseData = response.data;
+    
+    const sessionData = JSON.parse(localStorage.getItem("session", process.env.NEXT_PUBLIC_SESSION));
+    
+    const loggedIn = responseData.logged_in && sessionData && Date.now() - sessionData.timestamp < 86400000; // 24 Hours / 60000 is 1 minute(for testing)
+    
+    if (!loggedIn) {
+      localStorage.removeItem("session", process.env.NEXT_PUBLIC_SESSION);
+    }
 
+    setLoggedIn(loggedIn);
+    setData(responseData.posts);
+
+    setLoading(false);
+
+  } catch (error) {
+    console.log('Print the error:', error);
+    setLoading(false);
+  }
+  }
 
   if (loggedIn === undefined) {
     return <p className='max-w-[1473px] w-[95%] m-auto'>Loading...</p>;
