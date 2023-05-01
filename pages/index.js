@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { gsap, Power1 } from 'gsap';
+import CountdownTimer from '@/components/CountdownTimer';
 import LogoutBtn from '@/components/LogoutBtn';
 import HomeListItem from '@/components/HomeListItem';
 import Footer from '@/components/Footer';
@@ -64,14 +65,19 @@ export default function Home() {
 
   return (
     <>
-    <div className="mt-8 border-t-2 border-slate-900 max-w-[1473px] w-[95%] m-auto">
-
+    <div className="relative mt-8 border-t-2 border-slate-900 max-w-[1473px] w-[95%] m-auto">
       {loggedIn ? (
-        <div className="flex gap-2 justify-between">
-          <a className="block" href="/form">
-            <p className="mt-1 -rotate-1 bg-[#1A0123] px-6 sm:px-12 text-lg text-white hover:pl-10 hover:pr-10 ease-in-out duration-300">{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
-          </a>
+      <>
+        <div className="absolute -top-7 left-0 bg-green-50">
+          <CountdownTimer />
+        </div>
 
+        <div className="flex gap-2 justify-between">
+          
+            <a className="block" href="/form">
+              <p className="mt-1 -rotate-1 bg-[#1A0123] px-6 sm:px-12 text-lg text-white hover:pl-10 hover:pr-10 ease-in-out duration-300">{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
+            </a>
+            
           <div className="flex gap-2">
             <a className="block" href="/search">
               <p className="border-slate-900 border-2 -mt-7 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300">Search</p>
@@ -79,6 +85,7 @@ export default function Home() {
             <LogoutBtn />
           </div>
         </div>
+      </>
       ) : (
         <div className="flex gap-2 justify-between">
           <a className="block" href="/login">
