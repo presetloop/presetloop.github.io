@@ -8,8 +8,7 @@ const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeImg = false, id }) {
   const [className, setClassName] = useState('');
   
-  const convertToHttps = "http";
-  // CHANGE to https BEFORE BUILD AND DEPLOY
+  const convertToHttps = "http://"; // CHANGE to https:// BEFORE BUILD AND DEPLOY
   const imgHref = item && item.imgHref || item;
 
   useEffect(() => {

@@ -30,7 +30,7 @@ export default function ImagePlaceholder({ imgkey, height, width=null, rotate=nu
       className="sm:mt-4 cursor-pointer ${className} object-cover border-gray-700 border-0"
       // w-[100vw]
       src={randomImgUrl}
-      imgKey={imgkey}
+      imgkey={imgkey}
     />
   );
 }
