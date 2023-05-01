@@ -83,14 +83,11 @@ function ResetPasswordComp({ apiUrl }) {
       <div className="max-w-[700px] w-[95%] m-auto">
         <form onSubmit={handleResetPassword}>
             
-            <div className="mb-0">
-            <label className="block text-gray-700 font-bold mb-2">
-              Email:
-            </label>
+            <div className="relative">
               <input 
                 ref={titleField}
                 required 
-                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="appearance-none border-slate-900 mb-4 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Enter your email"
                 type="email" 
                 value={email} 
@@ -99,13 +96,10 @@ function ResetPasswordComp({ apiUrl }) {
               />
             </div>
 
-            <div className="mb-0">
-            <label className="mt-2 block text-gray-700 font-bold mb-2">
-              New Password:
-            </label>
+            <div className="relative">
               <input 
                 required 
-                className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+                className="appearance-none border-slate-900 mb-4 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
                 placeholder="Enter a new password"
                 type="password" 
                 value={newPassword} 
@@ -113,13 +107,13 @@ function ResetPasswordComp({ apiUrl }) {
                 pattern="^(?=.*[a-z])(?=.*[A-Z])(?=.*\d)(?=.*[@$!%*?&])[A-Za-z\d@$!%*?&]{8,}$"
                 />
             
-            <span className="block my-2 text-slate-400 text-sm">Password must be a minimum of 8 characters containing one uppercase letter, one lowercase letter, at least one number and one special character (e.g., !, @, #, $, %, ^, &, *)</span>
+            {data && <p className="mt-2 text-blue-500 absolute -bottom-[10px] left-0 mb-0 text-md">{data}</p>}
+            {errorMessage && <p className="absolute -bottom-[35px] left-0 mb-0 text-red-500 text-md">{errorMessage}</p>}
             </div>
 
-            {data && <p className="mt-2 text-blue-500">{data}</p>}
-            {errorMessage && <p className="text-red-500">{errorMessage}</p>}
+            <p className="mt-8 text-slate-400 text-sm">Password must be a minimum of 8 characters containing one uppercase letter, one lowercase letter, at least one number and one special character (e.g., !, @, #, $, %, ^, &, *)</p>
 
-            <button className="my-2 border-slate-900 border-2 hover:bg-slate-900 hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150" type="submit">
+            <button className="mt-4 border-slate-900 border-2 hover:bg-slate-900 hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150" type="submit">
               {loading ? 'Reseting...' : 'Reset Password'}
             </button>
         </form>

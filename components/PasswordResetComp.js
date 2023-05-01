@@ -78,13 +78,11 @@ function PasswordResetComp({ apiUrl }) {
 
   return (
     <form className="max-w-[700px] w-[95%] m-auto" onSubmit={handleSubmit}>
-      <label className="block text-gray-700 font-bold mb-2">
-        Email:
-      </label>
+      <div className="relative">
         <input 
           ref={titleField}
           required
-          className="appearance-none border rounded w-full py-2 px-3 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className="appearance-none border-slate-900 mb-4 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
           placeholder="Enter your email"
           type="email" 
           value={email} 
@@ -92,10 +90,11 @@ function PasswordResetComp({ apiUrl }) {
           pattern="\S+@\S+\.\S+"
         />
 
-      {data && <p className="mt-2 text-blue-500">{data}</p>}
-      {errorMessage && <p className="text-red-500">{errorMessage}</p>}
-      
-      <button className="my-3 border-slate-900 border-2 hover:bg-slate-900 hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150" type="submit">
+      {data && <p className="mt-2 text-blue-500 absolute -bottom-[10px] left-0 mb-0 text-md">{data}</p>}
+      {errorMessage && <p className="absolute -bottom-[35px] left-0 mb-0 text-red-500 text-md">{errorMessage}</p>}
+      </div>
+
+      <button className="my-10 border-slate-900 border-2 hover:bg-slate-900 hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150" type="submit">
         {loading ? 'Sending...' : 'Send password reset link'}
       </button>
     </form>
