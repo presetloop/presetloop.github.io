@@ -9,6 +9,7 @@ function LoginForm({ apiUrl }) {
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const [inputFieldType, setInputFieldType] = useState(false);
   const [errorMessage, setErrorMessage] = useState('');
   const [loading, setLoading] = useState(false);
 
@@ -69,7 +70,7 @@ function LoginForm({ apiUrl }) {
   };
 
   return (
-    <LoginFormInputs titleField={titleField} handleSubmit={handleSubmit} email={email} setEmail={setEmail} password={password} setPassword={setPassword} loading={loading} errorMessage={errorMessage} />
+    <LoginFormInputs titleField={titleField} handleSubmit={handleSubmit} email={email} setEmail={setEmail} password={password} setPassword={setPassword} loading={loading} errorMessage={errorMessage} inputFieldType={inputFieldType} setInputFieldType={setInputFieldType} />
   );
 }
 

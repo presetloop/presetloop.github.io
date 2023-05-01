@@ -3,6 +3,7 @@ import axios from 'axios';
 import { gsap, Power1 } from 'gsap';
 import LogoutBtn from '@/components/LogoutBtn';
 import HomeListItem from '@/components/HomeListItem';
+import Footer from '@/components/Footer';
 
 export default function Home() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -56,6 +57,7 @@ export default function Home() {
   }
 
   return (
+    <>
     <div className="mt-8 border-t-2 border-slate-900 max-w-[1473px] w-[95%] m-auto">
 
       {loggedIn ? (
@@ -89,7 +91,7 @@ export default function Home() {
       )}
 
       {/* spacing */}
-      {data.length > 0 && (
+    {data.length > 0 && (
       <div ref={element1Ref} className="mx-auto grid max-w-2xl grid-cols-1 gap-x-2 gap-y-4 sm:gap-y-6 pt-2 sm:pt-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
         {data.map(({ id, title, linkTag, imgHref, content_excerpt }) => (
           <HomeListItem key={id} id={id} title={title} contentExcerpt={content_excerpt} linkTag={linkTag} imgHref={imgHref} loggedIn={loggedIn} />
@@ -97,6 +99,13 @@ export default function Home() {
       </div>
     )}
 
+    <div className="flex justify-center text-xl my-16">
+      <p className="cursor-pointer block my-0 bg-[#1A0123] px-8 text-lg text-white ease ease-in-out duration-300 hover:pl-12 hover:pr-12">
+        Load more...
+      </p>
     </div>
+    </div>{/* \container */}
+    <Footer />
+    </>
   );
 }
