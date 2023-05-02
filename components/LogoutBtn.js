@@ -28,9 +28,9 @@ function LogoutBtn() {
   }
 
   return (
-    <p className='-mt-1 cursor-pointer bg-[#F90B0D] px-4'>
-      <a className="block mt-1 text-lg text-white hover:text-black ease-in-out hover:scale-105 hover:transition-all duration-300" disabled={loggingOut} onClick={handleLogout}>
-        {loggingOut ? 'Logging out...' : 'Logout'}
+    <p className='-mt-1 cursor-pointer bg-[#F90B0D] px-2 sm:px-4'>
+      <a className="block pt-1 mt-0.5 sm:-mt-[0.5px] text-sm sm:text-lg text-white hover:text-black ease-in-out sm:hover:scale-105 sm:hover:transition-all duration-300" disabled={loggingOut} onClick={handleLogout}>
+        {loggingOut && window.innerWidth < 480 ? 'Out...' : loggingOut ? 'Logging out...' : window.innerWidth < 480 ? 'Logout' : 'Logout'}
       </a>
     </p>
   );

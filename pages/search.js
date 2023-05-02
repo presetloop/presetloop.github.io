@@ -92,7 +92,7 @@ function Search() {
     <div className="max-w-[700px] w-[95%] m-auto">
 
     <div className="flex justify-end w-full border-t-2 border-slate-900">
-      <a className="block my-0 bg-[#1A0123] px-12 text-lg text-white ease ease-in-out duration-300 hover:pl-8 hover:pr-8" href="/">View all</a>
+      <a className="block my-0 bg-[#1A0123] px-12 text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8" href="/">View all</a>
     </div>
 
     <div className="relative">

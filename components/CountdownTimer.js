@@ -34,9 +34,9 @@ export default function CountdownTimer() {
   return (
     <div>
       {timeRemaining > 0 ? (
-        <span>Session expires in {formatTime(Math.floor(timeRemaining / 1000))}</span>
+        <span className="text-sm sm:text-[16px]">{window.innerWidth < 480 ? "" : "Session expires in"} {formatTime(Math.floor(timeRemaining / 1000))}</span>
       ) : (
-        <span className='text-red-500'>Session expired</span>
+        <span className='text-red-500 text-xs sm:text-[16px]'>Session expired</span>
       )}
     </div>
   );

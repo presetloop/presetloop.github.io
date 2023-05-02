@@ -78,17 +78,17 @@ function Post() {
 {/* navigation */}
   <div className="z-10 relative mt-8 border-t-2 border-slate-900 max-w-[1473px] w-[95%] m-auto">
     <div className="flex gap-2 justify-between">
-      
-      <a className={`${getRandomClass(random300)} block -mt-2 pt-1.5 rotate-0 px-2 sm:px-6 text-lg text-white ease ease-in-out duration-300 md:hover:pl-8 md:hover:pr-8`} href="/">View all</a>
+
+      <a className={`${getRandomClass(random300)} block -mt-2 pt-2 sm:pt-1.5 rotate-0 px-2 sm:px-6 text-sm sm:text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8`} href="/">View all</a>
       
       <div className="flex gap-2">
         
         <a className="block" href="/search">
-          <p className="border-slate-900 border-2 -mt-7 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300">Search</p>
+          <p className="border-slate-900 border-2 -mt-6 px-1 text-md sm:-mt-7 sm:px-4 sm:text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300">Search</p>
         </a>  
 
         <a className="block" href="/form">
-          <p className="mt-1 -rotate-1 bg-[#1A0123] px-6 sm:px-12 text-lg text-white md:hover:pl-10 md:hover:pr-10 ease-in-out duration-300">{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
+          <p className="mt-1 -rotate-1 bg-[#1A0123] px-2 sm:px-12 text-md sm:text-lg text-white sm:hover:pl-10 sm:hover:pr-10 ease-in-out duration-300">{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
         </a>
 
       </div>
@@ -110,12 +110,12 @@ function Post() {
       <div className={`${getRandomClass(random100)} lg:pr-4`}>
         
           <div className="lg:max-w-lg">
-            <p className="pl-2 text-base font-semibold leading-7 text-red-300">
+            <p className="pl-2 text-xs sm:text-base font-semibold leading-7 text-red-300">
             <time dateTime={null} className="bg-gray-100 text-gray-500">
               {generateRandomDate()}
             </time>
             </p>
-            <h1 className="pl-2 pr-2 mt-3 text-3xl font-bold text-right text-gray-900 sm:text-4xl">{DOMPurify.sanitize(item.title)}</h1>
+            <h1 className="pl-2 pr-2 mt-3 text-2xl font-bold text-right text-gray-900 sm:text-3xl md:sm:text-4xl">{DOMPurify.sanitize(item.title)}</h1>
 
             {item.linkTag && (
               <p className={`${getRandomClass(random100)} cursor-pointer mt-6 text-md leading-8 text-gray-700`}>

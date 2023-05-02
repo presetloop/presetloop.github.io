@@ -39,7 +39,7 @@ function DeleteBtn(props) {
   return (
     
       <p className="-mt-1 px-4 border-t-2 border-[#F90B0D] w-[95%] cursor-pointer">
-        <a className="block p-2 bg-[#F90B0D] w-fit text-md text-white hover:text-black ease-in-out hover:scale-105 hover:transition-all duration-300" onClick={handleClick}>
+        <a className="block p-1 sm:p-2 bg-[#F90B0D] w-fit text-sm sm:text-md text-white sm:hover:text-black ease-in-out sm:hover:scale-105 sm:hover:transition-all duration-300" onClick={handleClick}>
           {loading ? 'DELETING...' : 'DELETE'}
         </a>
      </p>

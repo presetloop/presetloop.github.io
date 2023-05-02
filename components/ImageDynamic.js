@@ -78,15 +78,14 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
       
       { !item.imgHref ? (
         <ImagePlaceholder 
-          className={className}
+          className={`${className} mx-auto`}
           imgkey={Math.random()} 
-          height={"770px"}
+          height={window.innerWidth < 800 ? "275px" : "770px"}
           rotate={"rotate(1deg)"}
         />
       ) : ( 
-        
       <img
-        className={`sm:mt-4 rotate-1 cursor-pointer ${className} w-[48rem] max-w-none`}
+        className={`sm:mt-4 rotate-1 cursor-pointer ${className} md:w-[48rem] max-w-none ${window.innerWidth < 800 ? 'h-[275px] w-[700px]' : ''}`}
         src={
           imgHref &&
           validUrl.isWebUri(imgHref) &&
