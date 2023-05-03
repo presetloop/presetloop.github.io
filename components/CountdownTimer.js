@@ -1,10 +1,16 @@
-import React, { useState, useEffect } from 'react';
+import { useState, useEffect } from 'react';
+import getSessionData from '@/helpers/getSessionData';
 
 export default function CountdownTimer() {
   const [timeRemaining, setTimeRemaining] = useState(0);
 
   useEffect(() => {
-    const sessionData = JSON.parse(localStorage.getItem("session", process.env.NEXT_PUBLIC_SESSION));
+    if (typeof window === 'undefined') {
+      return;
+    }
+
+    const { sessionData } = getSessionData();
+
     if (sessionData) {
       const timeRemaining = sessionData.timestamp + 86400000 - Date.now();
       if (timeRemaining > 0) {
@@ -18,6 +24,7 @@ export default function CountdownTimer() {
     // No session data or expired session
     setTimeRemaining(0);
   }, []);
+
 
   function formatTime(time) {
     const hours = Math.floor(time / 3600);

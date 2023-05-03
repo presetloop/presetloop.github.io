@@ -1,31 +1,37 @@
 import { useState } from 'react';
+import getSessionData from '@/helpers/getSessionData';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 function LogoutBtn() {
-
   const [loggingOut, setLoggingOut] = useState(false);
 
   async function handleLogout() {
     setLoggingOut(true);
-    
+
     try {
       const res = await fetch(`${apiUrl}/logout.php`);
       const json = await res.json();
-      
-      if(json.logged_in == false){
+
+      if (json.logged_in == false) {
         setLoggingOut(true);
-        localStorage.removeItem("session", process.env.NEXT_PUBLIC_SESSION);;
+
+        // Check if localStorage is available
+        if (typeof window !== 'undefined' && window.localStorage) {
+          const { sessionData, sessionKey } = getSessionData();
+          if (sessionData) {
+            localStorage.removeItem(sessionKey);
+          }
+        }
+
         window.location.href = '/';
       }
-      
-      } catch (error) {
-          console.error(error);
-          setLoggingOut(false);
-      }
-
-      // document.cookie = `${loggedOut}=; expires=Thu, 01 Jan 1970 00:00:00 UTC; path=/;`;
+    } catch (error) {
+      console.error(error);
+      setLoggingOut(false);
+    }
   }
+
 
   return (
     <p className='-mt-1 cursor-pointer bg-[#F90B0D] px-2 sm:px-4'>

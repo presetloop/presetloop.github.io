@@ -1,3 +1,4 @@
+import getSessionData from '@/helpers/getSessionData';
 import validUrl from 'valid-url';
 import DOMPurify from 'dompurify';
 import { useState, useEffect, useRef } from 'react';
@@ -22,12 +23,17 @@ function Search() {
   const [disableSearchBtn, setDisableSearchBtn] = useState(false);
 
   // If not logged in, redirect.
-  useEffect(() => {    
-    if(!localStorage.getItem("session", "jelli")){
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const sessionData = getSessionData();
+      if (!sessionData) {
         router.push('/login');
         return;
       } 
+    }
   }, []);
+
+
   
   // Autofocus search field on load
   useEffect(() => {

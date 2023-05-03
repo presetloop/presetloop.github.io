@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import { gsap, Power1 } from 'gsap';
+import getSessionData from '@/helpers/getSessionData';
 import CountdownTimer from '@/components/CountdownTimer';
 import LogoutBtn from '@/components/LogoutBtn';
 import HomeListItem from '@/components/HomeListItem';
@@ -39,14 +40,30 @@ export default function Home() {
     }
     
     const responseData = response.data;
-    
-    const sessionData = JSON.parse(localStorage.getItem("session", process.env.NEXT_PUBLIC_SESSION));
-    
-    const loggedIn = responseData.logged_in && sessionData && Date.now() - sessionData.timestamp < 86400000; // 24 Hours / 60000 is 1 minute(for testing)
-    
-    if (!loggedIn) {
-      localStorage.removeItem("session", process.env.NEXT_PUBLIC_SESSION);
+
+    let loggedIn = false;
+    if (typeof window !== 'undefined') {
+      const sessionInfo = getSessionData();
+      if (sessionInfo) {
+        const { sessionData } = sessionInfo;
+
+        loggedIn = responseData.logged_in && sessionData && Date.now() - sessionData.timestamp < 86400000; // 24 Hours / 60000 is 1 minute(for testing)
+
+        if (!loggedIn) {
+          const sessionKeys = Object.keys(localStorage).filter(key => key.startsWith('myapp-session-'));
+          if (sessionKeys.length > 0) {
+            const latestSessionKey = sessionKeys.sort().reverse()[0];
+            localStorage.removeItem(latestSessionKey); // Remove the session data using the key
+          }
+        }
+      } 
+      // else{
+      //   console.log("No session data")
+      // }
     }
+
+
+
 
     setLoggedIn(loggedIn);
     setData(responseData.posts);

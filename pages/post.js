@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+import getSessionData from '@/helpers/getSessionData';
 import DOMPurify from 'dompurify';
 import validUrl from 'valid-url';
 import DeleteBtn from '../components/DeleteBtn';
@@ -20,22 +21,22 @@ function Post() {
 
   async function fetchData() {
     try {
-      const res = await fetch(`${apiUrl}/post.php?id=${id}`);
-      const json = await res.json();
-      
-      if(!localStorage.getItem("session", "jelli")){
+      const sessionData = getSessionData();
+      if (!sessionData) {
         router.push('/login');
         return;
       }
-      
+    
+      const res = await fetch(`${apiUrl}/post.php?id=${id}`);
+      const json = await res.json();
       setData(json);
-
       setLoading(false);
     } catch (error) {
       console.log('Print the error:', error);
       setLoading(false);
     }
   }
+
 
   if (loading) {
     return <div className="max-w-[700px] w-[95%] m-auto">Loading...</div>;

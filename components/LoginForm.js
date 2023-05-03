@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import generateUniqueKey from '@/helpers/generateUniqueKey';
 import LoginFormInputs from './LoginFormInputs'
 
 function LoginForm({ apiUrl }) {
@@ -31,40 +32,40 @@ function LoginForm({ apiUrl }) {
       setLoading(false);
       return;
     }
-
     try {
-      console.log('Sending login request');
+      // console.log('Sending login request');
       const response = await axios.post(`${apiUrl}/login.php`, {
         email: email,
         password: password,
       });
-      console.log('Login request response:', response);
+      // console.log('Login request response:', response);
 
       const responseData = response.data;
-      console.log('Login response data:', responseData);
+      // console.log('Login response data:', responseData);
       if (!responseData) {
         throw new Error('No data received from server');
       }
 
       if (responseData.success) {
+        const loggedIn = responseData.message === 'Login successful and Session cookie set successfully';
 
-          console.log('Updating login status');
-          const loggedIn = responseData.message == 'Login successful and Session cookie set successfully';
-        
-          if (loggedIn) {
-            
-            localStorage.setItem('session', JSON.stringify({ value: process.env.NEXT_PUBLIC_SESSION, timestamp: Date.now() }));
-
-            router.push('/');
-          } else {
-            router.push('/login');
+        if (loggedIn) {
+          // imported helper function
+          const uniqueKey = generateUniqueKey('myapp-session');
+          if (typeof window !== 'undefined' && window.localStorage) {
+            localStorage.setItem(uniqueKey, JSON.stringify({ value: process.env.NEXT_PUBLIC_SESSION, timestamp: Date.now() }));
           }
-
+          router.push('/');
+        } else {
+          router.push('/login');
+        }
       } else {
         setErrorMessage('Invalid email or password');
       }
+
+
     } catch (error) {
-      console.error(error);
+      // console.error(error);
       setErrorMessage(error.message);
     } finally {
       setLoading(false);
