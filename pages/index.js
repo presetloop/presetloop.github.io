@@ -129,8 +129,9 @@ export default function Home() {
         </div>
       )}
 
+{/* MAIN CONTENT */}
   {data.length > 0 && (
-    // gsap animation compensation
+    // for gsap
     <div className={`${loadContent ? "hidden" : "block"}`}>
       
       {/* grid layout and spacing */}
@@ -156,7 +157,7 @@ export default function Home() {
       </div>
     )}
     
-
+{/* for gsap */}
 <div className={`${loadContent ? "hidden" : "block"}`}>
       <div className="flex justify-center text-xl my-16">
         <p className="cursor-pointer block my-0 bg-[#1A0123] px-8 text-lg text-white ease ease-in-out duration-300 hover:pl-12 hover:pr-12">
@@ -168,6 +169,7 @@ export default function Home() {
 
 </div>
 
+{/* for gsap */}
 <div className={`${loadContent ? "hidden" : "block"}`}>
       {data && <Footer />}
 </div>
