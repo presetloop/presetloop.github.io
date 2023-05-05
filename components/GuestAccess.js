@@ -1,7 +1,17 @@
-import { useRef } from "react";
+import { useRef, useState, useEffect } from "react";
 
 export default function GuestAccess({ setEmail, setPassword, setInputFieldType }) {
   const guestRef = useRef(null);
+  const [isClient, setIsClient] = useState(false);
+  const [isMobile, setIsMobile] = useState(false);
+
+  useEffect(() => {
+    setIsClient(true);
+    const handleResize = () => setIsMobile(window.innerWidth < 640);
+    window.addEventListener("resize", handleResize);
+    handleResize(); // Set initial value on component mount
+    return () => window.removeEventListener("resize", handleResize);
+  }, []);
 
   const handleCopy = () => {
     setEmail(process.env.NEXT_PUBLIC_LOGIN_TODAYSEMAIL);
@@ -27,7 +37,15 @@ export default function GuestAccess({ setEmail, setPassword, setInputFieldType }
             </button>
           </div>
          
-          {window.innerWidth < 480 ? <p className="text-center text-slate-800">{'\u005E\u005E\u005E'} 24 Hour Guest Pass</p> : <p className="text-slate-800">{'\u003C\u003C\u003C'} 24 Hour Guest Pass</p>}
+        { isClient && (
+          <>
+            {isMobile ? (
+              <p className="text-center text-slate-800">{'\u005E\u005E\u005E'} 24 Hour Guest Pass</p>
+            ) : (
+              <p className="text-slate-800">{'\u003C\u003C\u003C'} 24 Hour Guest Pass</p>
+            )}
+          </>
+        )}
          </div>
       </div>
     </>
