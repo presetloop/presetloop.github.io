@@ -21,7 +21,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
         { imgHref ? ( 
   
           <Image
-            className={`transition-all duration-500 mt-4 cursor-pointer ${className}`}
+            className={`transition-all duration-500 mt-3 cursor-pointer ${className}`}
             src={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
             width={700}
             height={275}
@@ -55,7 +55,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
         { imgHref ? ( 
   
           <Image
-            className={`mt-4 cursor-pointer ${className}`}
+            className={`transition-all duration-500 mt-3 cursor-pointer ${className}`}
             src={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
             width={700}
             height={275}
@@ -94,7 +94,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
         />
       ) : ( 
         <Image
-          className={`sm:mt-4 rotate-1 cursor-pointer ${className} sm:w-[48rem] max-w-[700px]`}
+          className={`transition-all duration-500 sm:mt-4 rotate-1 cursor-pointer ${className} sm:w-[48rem] max-w-[700px]`}
           src={
             imgHref &&
             validUrl.isWebUri(imgHref) &&

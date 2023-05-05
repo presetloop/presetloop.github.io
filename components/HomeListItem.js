@@ -46,29 +46,30 @@ const HomeListItem = ({ id, title, linkTag, imgHref, contentExcerpt, loggedIn })
     
 
       {/* title and content excerpt */}
-      <div className="mt-2 group">
-        <h3 className="text-lg font-semibold leading-6 text-gray-900 group-hover:text-gray-600">
+      <div className="mt-0 group">
+      
+        <h3 className="text-lg font-semibold leading-6 bg-white text-gray-900 group-hover:bg-gray-100 transition-all duration-500">
           <a href={isValidHref ? href : null}>
           <TruncatedTitle content={title} />
             {/* {DOMPurify.sanitize(truncateTitle(, 10))} */}
           </a>
         </h3>
-        <div className="my-1 mb-0 text-sm leading-5 text-gray-600">
+        <div className="my-1 mb-0 text-sm leading-5 text-gray-600 group-hover:bg-gray-100 transition-all duration-500">
           <TruncatedContent content={contentExcerpt.replace(/<br\s*\/?>/gi, '')} />
         </div>
-      </div>
 
 
 
 
       {/* images */}
-      <div className="relative my-0 flex w-full min-h-[275px]">
-      {
-        <ImageDynamic item={imgHref} isLoggedIn={loggedIn} isHomeImg={loggedIn} id={id}/>
-      }
+      <div className="relative my-0 flex w-full min-h-[275px] group-hover:bg-gray-100 transition-all duration-500">
+        {
+          <ImageDynamic item={imgHref} isLoggedIn={loggedIn} isHomeImg={loggedIn} id={id}/>
+        }
       </div>
     
-    
+      </div>{/* \group for hover accent */}
+
     </section>
   );
 };
