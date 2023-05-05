@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
+import { gsap, Sine } from 'gsap';
 import getSessionData from '@/helpers/getSessionData';
 import DOMPurify from 'dompurify';
 import validUrl from 'valid-url';
@@ -13,11 +14,34 @@ function Post() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
+
+  const element2Ref = useRef(null);
+
   useEffect(() => {    
     if (id) {
-      fetchData();
+      setTimeout(() => {
+        fetchData();
+      }, 500);
     }
   }, [id]);
+
+  useEffect(() => {
+    if(data && !loading && element2Ref.current){
+
+        gsap.fromTo(
+          element2Ref.current,
+          { opacity: 0, y: 100 },
+          { 
+            opacity: 1, y: 0, duration: .15, ease: Sine.easeIn,
+            onComplete: () => {
+
+              gsap.set('.main', { visibility: 'visible' });
+            }
+          }
+        );
+
+    }
+  }, [loading]);
 
   async function fetchData() {
     try {
@@ -39,7 +63,7 @@ function Post() {
 
 
   if (loading) {
-    return <div className="max-w-[700px] w-[95%] m-auto">Loading...</div>;
+    return <p className={`transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[8vw]`}>Loading...</p>;
   }
 
   function handleClick() {
@@ -73,8 +97,8 @@ function Post() {
     return classesArray[randomIndex];
   }
 
-  return (
-    <>
+return (
+<>
 
 {/* navigation */}
   <div className="z-10 relative mt-8 border-t-2 border-slate-900 max-w-[1473px] w-[95%] m-auto">
@@ -98,12 +122,17 @@ function Post() {
 
 
 
-{/* content */}
-    <div className={`${getRandomClass(random50)} z-2 -mt-8 sm:-mt-4 relative overflow-hidden px-6 py-12 lg:overflow-visible lg:px-0`}>
+{/* MAIN CONTENT */}
+  
+    {/* // for gsap */}
+    <div style={{ visibility: 'hidden' }} className={`main`}>
 
-    {data.map(item => (
+    <div ref={element2Ref}>
 
-    <div key={item.id} className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-10">
+  {data?.map(item => (
+    <div key={item.id} className={`${getRandomClass(random50)} z-2 -mt-8 sm:-mt-4 relative overflow-hidden px-6 py-12 lg:overflow-visible lg:px-0`}>
+
+    <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-10">
       
        
         <div className={`${getRandomClass(random400)} lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8`}>
@@ -157,8 +186,13 @@ function Post() {
           </div>
         </div>  
     </div>
-    ))}
-    </div>
+  </div>
+  
+))}
+</div>
+
+      </div>
+    
 
     </>
   );

@@ -8,7 +8,7 @@
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 }
 body {
-  padding: 1rem;
+  padding: 2rem;
   font-family: var(--font-mono);
   overflow-x: hidden;
   overflow-y: scroll;
@@ -19,11 +19,11 @@ body::-webkit-scrollbar {
 }
 
 body::-webkit-scrollbar-track {
-  background: #f1f1f1;
+  background: #fff;
 }
 
 body::-webkit-scrollbar-thumb {
-  background-color: #888;
+  background-color: #fff;
   border-radius: 1em;
 }
 

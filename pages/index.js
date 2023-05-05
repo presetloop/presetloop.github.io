@@ -17,7 +17,9 @@ export default function Home() {
   const element1Ref = useRef(null);
 
   useEffect(() => {
-    fetchData();
+    setTimeout(() => {
+      fetchData();
+    }, 1);
   }, []);
 
   useEffect(() => {
@@ -34,7 +36,7 @@ export default function Home() {
           }
         );
       }
-      }, 500);
+      }, 100);
     }
   }, [loading]);
 
@@ -71,9 +73,6 @@ export default function Home() {
       // }
     }
 
-
-
-
     setLoggedIn(loggedInSession);
     setData(responseData.posts);
 
@@ -85,12 +84,15 @@ export default function Home() {
   }
   }
 
-  if (loggedIn === undefined) {
-    return <p className='max-w-[1473px] w-[95%] m-auto'>Loading...</p>;
-  }
+const fadeIn = `${loading ? 'bg-opacity-0' : 'bg-opacity-100'}`;
 
-  return (
-    <>
+if (loggedIn === undefined) {
+  return <p className={`transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[8vw]`}>Loading...</p>;
+}
+
+
+return (
+  <div className={`${fadeIn} transition-all duration-1000`}>
     <div className="relative mt-8 border-t-2 border-slate-900 max-w-[1473px] w-[95%] m-auto">
       {loggedIn ? (
       <>
@@ -157,23 +159,22 @@ export default function Home() {
       </div>
     )}
     
-{/* for gsap */}
-<div className={`${loadContent ? "hidden" : "block"}`}>
-      <div className="flex justify-center text-xl my-16">
-        <p className="cursor-pointer block my-0 bg-[#1A0123] px-8 text-lg text-white ease ease-in-out duration-300 hover:pl-12 hover:pr-12">
-          Load more...
-        </p>
-      </div>
-      
-      </div>{/* \container */}
+  {/* for gsap */}
+    <div className={`${loadContent ? "hidden" : "block"}`}>
+        <div className="flex justify-center text-xl my-16">
+          <p className="cursor-pointer block my-0 bg-[#1A0123] px-8 text-lg text-white ease ease-in-out duration-300 hover:pl-12 hover:pr-12">
+            Load more...
+          </p>
+        </div>    
+    </div>
 
-</div>
+  </div>{/* \container */}
 
-{/* for gsap */}
-<div className={`${loadContent ? "hidden" : "block"}`}>
-      {data && <Footer />}
-</div>
+  {/* for gsap */}
+  <div className={`${loadContent ? "hidden" : "block"}`}>
+        {data && <Footer />}
+  </div>
     
-    </>
-  );
+</div>
+);
 }
