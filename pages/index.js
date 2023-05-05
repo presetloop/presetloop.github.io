@@ -145,7 +145,7 @@ export default function Home() {
             gap-y-4 
             grid-cols-1 
             sm:gap-y-6 
-            sm:pt-8 
+            sm:pt-6 
             sm:grid-cols-2
             lg:mx-0 
             lg:max-w-none 
