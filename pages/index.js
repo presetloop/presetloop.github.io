@@ -122,7 +122,21 @@ export default function Home() {
 
       {/* spacing */}
     {data.length > 0 && (
-      <div ref={element1Ref} className="mx-auto grid max-w-2xl grid-cols-1 gap-x-2 gap-y-4 sm:gap-y-6 pt-2 sm:pt-8 lg:mx-0 lg:max-w-none lg:grid-cols-3">
+      <div ref={element1Ref} 
+        className="
+          max-w-2xl 
+          mx-auto 
+          grid 
+          pt-4 
+          gap-x-6 
+          gap-y-4 
+          grid-cols-1 
+          sm:gap-y-6 
+          sm:pt-8 
+          sm:grid-cols-2
+          lg:mx-0 
+          lg:max-w-none 
+          lg:grid-cols-3">
         {data.map(({ id, title, linkTag, imgHref, content_excerpt }) => (
           <HomeListItem key={id} id={id} title={title} contentExcerpt={content_excerpt} linkTag={linkTag} imgHref={imgHref} loggedIn={loggedIn} />
         ))}

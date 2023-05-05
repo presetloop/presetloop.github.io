@@ -1,4 +1,5 @@
 import { useEffect, useState } from 'react';
+import Image from 'next/image';
 import DOMPurify from 'dompurify';
 import validUrl from 'valid-url';
 import ImagePlaceholder from '@/components/ImagePlaceholder';
@@ -11,16 +12,6 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
   const convertToHttps = "http://"; // CHANGE to https:// BEFORE BUILD AND DEPLOY
   const imgHref = item && item.imgHref || item;
 
-  useEffect(() => {
-    if (imgHref && validUrl.isWebUri(imgHref)) {
-      const img = new Image();
-      img.src = imgHref;
-      img.onload = () => {
-        setClassName(img.height < 275 ? 'object-contain' : 'object-cover');
-      };
-    }
-  }, [imgHref, validUrl]);
-
 // images when not logged in (redirects to /login)
   if (!isLoggedIn) {
     return (
@@ -28,15 +19,25 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
          rel="noopener noreferrer">
         
         { imgHref ? ( 
-          <img
-            className={`transition-all duration-500 mt-4 cursor-pointer ${className} h-[275px] w-[700px]`}
-            src={
-              imgHref &&
-              validUrl.isWebUri(imgHref) &&
-              DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)
-            }
-            loading="lazy"
-            alt={item?.title || 'No Image Available'}/>
+  
+          <Image
+            className={`transition-all duration-500 mt-4 cursor-pointer ${className}`}
+            src={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
+            width={700}
+            height={275}
+            onError={() => setClassName('object-contain')}
+            onLoad={(event) => {
+              if (event.currentTarget.height < 275) {
+                setClassName('object-contain');
+              } else {
+                setClassName('object-cover');
+              }
+            }}
+            // loading="lazy"
+            priority={true}
+            alt={item?.title || 'No Image Available'}
+          />
+
           ) : (
             <ImagePlaceholder width={"100vw"} className={className} imgkey={Math.random()} height={"275px"} />
           )
@@ -52,15 +53,23 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
          rel="noopener noreferrer">
         
         { imgHref ? ( 
-          <img
-            className={`mt-4 cursor-pointer ${className} h-[275px] w-[700px]`}
-            src={
-              imgHref &&
-              validUrl.isWebUri(imgHref) &&
-              DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)
-            }
-            loading="lazy"
-            alt={item?.title || 'No Image Available'}/>
+  
+          <Image
+            className={`mt-4 cursor-pointer ${className}`}
+            src={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
+            width={700}
+            height={275}
+            onError={() => setClassName('object-contain')}
+            onLoad={(event) => {
+              if (event.currentTarget.height < 275) {
+                setClassName('object-contain');
+              } else {
+                setClassName('object-cover');
+              }
+            }}
+            // loading="lazy"
+            alt={item?.title || 'No Image Available'}
+          />
           ) : (
             // remove width prop to keep the placeholder image square
             <ImagePlaceholder className={className} imgkey={Math.random()} height={"275px"} width={"100vw"} />
@@ -84,16 +93,21 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
           rotate={"rotate(1deg)"}
         />
       ) : ( 
-      <img
-        className={`sm:mt-4 rotate-1 cursor-pointer ${className} md:w-[48rem] max-w-none ${window.innerWidth < 800 ? 'h-[275px] w-[700px]' : ''}`}
-        src={
-          imgHref &&
-          validUrl.isWebUri(imgHref) &&
-          DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)
-        }
-        loading="lazy"
-        alt={item?.title || 'No Image Available'}
-      /> )
+        <Image
+          className={`sm:mt-4 rotate-1 cursor-pointer ${className} sm:w-[48rem] max-w-[700px]`}
+          src={
+            imgHref &&
+            validUrl.isWebUri(imgHref) &&
+            DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)
+          }
+          alt={item?.title || 'No Image Available'}
+          width={300}
+          height={275}
+          sizes="(min-width: 700px) 700px, 100vw"
+          loading="lazy"
+          layout="responsive"
+        /> 
+      )
       }
     </a>
   );
