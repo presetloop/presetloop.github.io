@@ -36,7 +36,9 @@ const HomeListItem = ({ id, title, linkTag, imgHref, contentExcerpt, loggedIn })
             {/* {DOMPurify.sanitize(truncateTitle(linkTag, 25))} */}
             <TruncatedLink content={linkTag} />
           </a>
-          ) : (":)")
+          ) : (
+            <span className="relative z-10 sm:px-3 bg-gray-50 py-1.5 font-medium text-gray-600 hover:bg-gray-100">{":)"}</span>
+            )
         }
       </div>
 
