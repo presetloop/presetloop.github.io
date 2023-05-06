@@ -11,6 +11,8 @@ export default function Home() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [loggedIn, setLoggedIn] = useState(undefined);
   const [data, setData] = useState([]);
+  const [page, setPage] = useState(1);
+  const [lastPage, setLastPage] = useState(false);
   const [loading, setLoading] = useState(false);
   const [loadContent, setLoadContent] = useState(false);
 
@@ -44,8 +46,10 @@ export default function Home() {
   setLoading(true);
 
   try {
-    const response = await axios.get(`${apiUrl}/index.php`);
-    
+    // const response = await axios.get(`${apiUrl}/index.php`);
+
+    const response = await axios.get(`${apiUrl}/index.php?page=${page}`);
+
     if (!response) {
       throw new Error('No data received from server');
     }
@@ -83,6 +87,27 @@ export default function Home() {
     setLoading(false);
   }
   }
+
+function handleFetchArticles(event) {
+  event.preventDefault();
+  const nextPage = page + 1;
+  axios
+    .get(`${apiUrl}/index.php?page=${nextPage}`)
+    .then((response) => {
+      const responseData = response.data;
+      if (responseData.posts.length === 0) {
+        setLastPage(true);
+      } else {
+        const newPosts = responseData.posts.slice(0, 2); // fetch 2 new articles
+        setData((prevPage) => [...prevPage, ...newPosts]);
+        setPage(nextPage);
+      }
+    })
+    .catch((error) => {
+      console.log(error);
+    });
+}
+
 
 const fadeIn = `${loading ? 'bg-opacity-0' : 'bg-opacity-100'}`;
 
@@ -162,17 +187,17 @@ return (
   {/* for gsap */}
     <div className={`${loadContent ? "hidden" : "block"}`}>
         <div className="flex justify-center text-xl my-16">
-          <p className="cursor-pointer block my-0 bg-[#1A0123] px-8 text-lg text-white ease ease-in-out duration-300 hover:pl-12 hover:pr-12">
-            Load more...
+          <p onClick={handleFetchArticles} className="cursor-pointer block my-0 bg-[#1A0123] px-8 text-lg text-white ease ease-in-out duration-300 hover:pl-12 hover:pr-12">
+            {!lastPage ? "Load more..." : "You have reached the end :)"}
           </p>
         </div>    
     </div>
 
   </div>{/* \container */}
 
-  {/* for gsap */}
-  <div className={`${loadContent ? "hidden" : "block"}`}>
-        {data && <Footer />}
+  {/* for gsap + push footer to bottom on screens above 640px to fill gap */}
+  <div className={`${page ===1 ? "sm:absolute sm:bottom-0 sm:left-0 sm:right-0 sm:p-[2rem]" : "block"} ${loadContent ? "hidden" : "block"}`}>
+          {data && <Footer />}
   </div>
     
 </div>
