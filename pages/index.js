@@ -185,19 +185,24 @@ return (
     )}
     
   {/* for gsap */}
-    <div className={`${loadContent ? "hidden" : "block"}`}>
-        <div className="flex justify-center text-xl my-16">
-          <p onClick={handleFetchArticles} className="cursor-pointer block my-0 bg-[#1A0123] px-8 text-lg text-white ease ease-in-out duration-300 hover:pl-12 hover:pr-12">
-            {!lastPage ? "Load more..." : "You have reached the end :)"}
-          </p>
-        </div>    
-    </div>
+      <div className={`${loadContent ? "hidden" : "block"}`}>
+          <div className="flex justify-center text-xl my-16">
+              
+              <div onClick={handleFetchArticles} className={!lastPage ? 'relative cursor-pointer my-0 bg-[#1A0123] px-8 text-lg text-white ease duration-300 hover:bg-[#1a1] hover:scale-105 hover:pl-12 hover:pr-12' : 'hover:bg-[#1A0123] hover:scale-100 hover:pl-8 hover:pr-8'}>
+                <p className={lastPage ? `load-more-btn` : ""}>
+                  {!lastPage ? "Load more..." : "You have reached the end :)"}
+                </p>
+              </div>
+
+          </div>    
+      </div>
+
 
   </div>{/* \container */}
 
   {/* for gsap + push footer to bottom on screens above 640px to fill gap */}
-  <div className={`${page ===1 ? "sm:absolute sm:bottom-0 sm:left-0 sm:right-0 sm:p-[2rem]" : "block"} ${loadContent ? "hidden" : "block"}`}>
-          {data && <Footer />}
+  <div className={window.innerHeight > 1150 ? `${page === 1 ? "sm:absolute sm:bottom-0 sm:left-0 sm:right-0 sm:p-[2rem]" : "block"} ${loadContent ? "hidden" : "block"}` : ""}>
+        {/* {data && <Footer />} */}
   </div>
     
 </div>
