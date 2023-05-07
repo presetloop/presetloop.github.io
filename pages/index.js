@@ -98,7 +98,8 @@ function handleFetchArticles(event) {
       if (responseData.posts.length === 0) {
         setLastPage(true);
       } else {
-        const newPosts = responseData.posts.slice(0, 2); // fetch 2 new articles
+        // const newPosts = responseData.posts.slice(0, 2); // fetch 2 new articles
+        const newPosts = responseData.posts; // fetch 2 new articles (API limit)
         setData((prevPage) => [...prevPage, ...newPosts]);
         setPage(nextPage);
       }
