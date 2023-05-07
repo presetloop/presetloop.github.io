@@ -189,7 +189,7 @@ return (
           <div className="flex justify-center text-xl my-16">
               
               <div onClick={handleFetchArticles} className={!lastPage ? 'relative cursor-pointer my-0 bg-[#1A0123] px-8 text-lg text-white ease duration-300 hover:bg-[#1a1] hover:scale-105 hover:pl-12 hover:pr-12' : 'hover:bg-[#1A0123] hover:scale-100 hover:pl-8 hover:pr-8'}>
-                <p className={lastPage ? `load-more-btn` : ""}>
+                <p className={lastPage ? `load-more-btn select-none` : "select-none"}>
                   {!lastPage ? "Load more..." : "You have reached the end :)"}
                 </p>
               </div>
@@ -202,7 +202,7 @@ return (
 
   {/* for gsap + push footer to bottom on screens above 640px to fill gap */}
   <div className={window.innerHeight > 1150 ? `${page === 1 ? "sm:absolute sm:bottom-0 sm:left-0 sm:right-0 sm:p-[2rem]" : "block"} ${loadContent ? "hidden" : "block"}` : ""}>
-        {/* {data && <Footer />} */}
+        {data && <Footer />}
   </div>
     
 </div>
