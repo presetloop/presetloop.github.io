@@ -21,7 +21,7 @@ function Post() {
     if (id) {
       setTimeout(() => {
         fetchData();
-      }, 500);
+      }, 0);
     }
   }, [id]);
 
