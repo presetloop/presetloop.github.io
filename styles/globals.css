@@ -36,6 +36,30 @@ body::-webkit-scrollbar-thumb {
   } 
 }
 
+
+.loadedAni {
+  animation: fadeit 1s ease-in;
+}
+
+@keyframes fadeit {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: .25;
+  }
+  50% {
+    opacity: .5;
+  }
+  75% {
+    opacity: .75;
+  }
+  100% {
+    opacity: 1;
+  }
+}
+
+
 .load-more-btn {
   color: white;
   white-space: nowrap;

@@ -22,7 +22,7 @@ const HomeListItem = ({ id, title, linkTag, imgHref, contentExcerpt, loggedIn })
 }
 
   return (
-    <section key={id} className="bg-slate-50 p-4 flex max-w-xl flex-col">
+    <section key={id} className={`bg-slate-50 p-4 flex max-w-xl flex-col`}>
 
 
       {/* date and linkTag */}
@@ -51,7 +51,6 @@ const HomeListItem = ({ id, title, linkTag, imgHref, contentExcerpt, loggedIn })
         <h3 className="text-lg font-semibold leading-6 bg-white text-gray-900 group-hover:bg-gray-100 transition-all duration-500">
           <a href={isValidHref ? href : null}>
           <TruncatedTitle content={title} />
-            {/* {DOMPurify.sanitize(truncateTitle(, 10))} */}
           </a>
         </h3>
         <div className="my-1 mb-0 text-sm leading-5 text-gray-600 group-hover:bg-gray-100 transition-all duration-500">

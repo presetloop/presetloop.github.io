@@ -1,7 +1,5 @@
 import { useState, useEffect } from 'react';
-// import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
-// import { gsap, Sine } from 'gsap';
 import getSessionData from '@/helpers/getSessionData';
 import Footer from '@/components/Footer';
 import Home from '@/components/Home';
@@ -17,34 +15,13 @@ export default function App() {
     // ^^ first load state (page 1) ^^
   const [loading, setLoading] = useState(false);
   
-  // const [loadContent, setLoadContent] = useState(false);
-  // ^^ prop sent to Home.js ^^
-
-  // const element1Ref = useRef(null);
 
   useEffect(() => {
     setTimeout(() => {
       fetchData();
-    }, 500);
+    }, 100);
   }, []);
 
-  // useEffect(() => {
-  //   if(data && !loading){
-  //     // setLoadContent(false);
-  //     setTimeout(() => {
-  //       if (element1Ref.current) {
-  //       gsap.fromTo(
-  //         element1Ref.current,
-  //         { opacity: 0, y: 100 },
-  //         { 
-  //           opacity: 1, y: 0, duration: .15, ease: Sine.easeIn,
-  //           // onComplete: () => setLoadContent(false)
-  //         }
-  //       );
-  //     }
-  //     }, 100);
-  //   }
-  // }, [loading]);
 
   async function fetchData() {
   setLoading(true);
@@ -91,28 +68,37 @@ export default function App() {
   }
   }
 
-// const fadeIn = `${loading ? 'opacity-0' : 'opacity-100'}`;
 
 if (loggedIn === undefined) {
   return <p className={`transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[8vw]`}>Loading...</p>;
 }
 
-{/* <div className={`${fadeIn} transition-all duration-0`}></div> */}
-return (
-<div>
-<div className="relative mt-8 border-t-2 border-slate-900 max-w-[1473px] w-[95%] m-auto">
-    
-    <HomeNav loggedIn={loggedIn} />
 
+return (
+<>
+<div className="relative mt-8 sm:mt-2 border-t-2 border-slate-900 max-w-[1473px] w-[95%] m-auto">
+
+
+<div className="flex flex-col min-h-screen">
+    
+    <nav className={`transition-all duration-500`}> 
+      <HomeNav loggedIn={loggedIn} />
+    </nav>
+
+    <main className={`flex-1 flex opacity-1 transition-opacity duration-500 delay-500`}>
     {/* MAIN CONTENT */}
-    {/* element1Ref={element1Ref} loadContent={loadContent} setLoadContent={setLoadContent} */}
-    <Home loggedIn={loggedIn} totalCount={totalCount} />
+      <Home loggedIn={loggedIn} totalCount={totalCount} />
+    </main>
+
+</div>
+
 
 </div>{/* \container */}
+
 
     {/* {data && <Footer />} */}
     <Footer />
   
-</div>
+</>
 );
 }
