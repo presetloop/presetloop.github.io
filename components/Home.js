@@ -10,20 +10,20 @@ export default function Home({loggedIn, totalCount }) {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
-  // useEffect(() => {
-  //   const storedData = JSON.parse(localStorage.getItem('data'));
-  //   if (storedData) {
-  //     setTimeout(() => {
-  //       setData(storedData);
-  //       const lastPage = Math.ceil(storedData.length / 2);
-  //       setPage(lastPage);
-  //     }, 100);
-  //   } else {
-  //     setTimeout(() => {
-  //       fetchNewData();
-  //     }, 100);
-  //   }
-  // }, []);
+  useEffect(() => {
+    const storedData = JSON.parse(localStorage.getItem('data'));
+    if (storedData) {
+      setTimeout(() => {
+        setData(storedData);
+        const lastPage = Math.ceil(storedData.length / 2);
+        setPage(lastPage);
+      }, 100);
+    } else {
+      setTimeout(() => {
+        fetchNewData();
+      }, 100);
+    }
+  }, []);
   useEffect(() => {
     fetchNewData();
   },[])
@@ -39,7 +39,7 @@ export default function Home({loggedIn, totalCount }) {
       } else {
         const updatedData = [...data, ...newPosts];
         setData(updatedData);
-        // localStorage.setItem('data', JSON.stringify(updatedData));
+        localStorage.setItem('data', JSON.stringify(updatedData));
         setPage(pageNumber);
         if (newPosts.length === 0 || data.length + newPosts.length === totalCount) {
           setHasMore(false);
