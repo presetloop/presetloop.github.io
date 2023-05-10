@@ -23,7 +23,7 @@ if (windowWidth < 640) {
   } else if (windowWidth < 1150) {
     return truncateString(cleanContentExcerpt, 29);
   } else if (windowWidth < 1190) {
-    return truncateString(cleanContentExcerpt, 35);
+    return truncateString(cleanContentExcerpt, 33);
   } else if (windowWidth < 1220) {
     return truncateString(cleanContentExcerpt, 33);
   } else if (windowWidth < 1295) {

@@ -10,21 +10,23 @@ export default function Home({loggedIn, totalCount }) {
   const [loading, setLoading] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
+  // useEffect(() => {
+  //   const storedData = JSON.parse(localStorage.getItem('data'));
+  //   if (storedData) {
+  //     setTimeout(() => {
+  //       setData(storedData);
+  //       const lastPage = Math.ceil(storedData.length / 2);
+  //       setPage(lastPage);
+  //     }, 100);
+  //   } else {
+  //     setTimeout(() => {
+  //       fetchNewData();
+  //     }, 100);
+  //   }
+  // }, []);
   useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem('data'));
-    if (storedData) {
-      setTimeout(() => {
-        setData(storedData);
-        const lastPage = Math.ceil(storedData.length / 2);
-        setPage(lastPage);
-      }, 100);
-    } else {
-      setTimeout(() => {
-        fetchNewData();
-      }, 100);
-    }
-  }, []);
-
+    fetchNewData();
+  },[])
 
   async function fetchNewData(pageNumber = 1) {
     setLoading(true);
@@ -37,7 +39,7 @@ export default function Home({loggedIn, totalCount }) {
       } else {
         const updatedData = [...data, ...newPosts];
         setData(updatedData);
-        localStorage.setItem('data', JSON.stringify(updatedData));
+        // localStorage.setItem('data', JSON.stringify(updatedData));
         setPage(pageNumber);
         if (newPosts.length === 0 || data.length + newPosts.length === totalCount) {
           setHasMore(false);
@@ -78,7 +80,7 @@ loading && <p className={`text-green-400 transition-all duration-5000 flex items
         sm:gap-y-6 
         sm:pt-6 
         sm:grid-cols-2
-        lg:mx-0{isLoggedIn} {isLoggedIn}
+        lg:mx-0
         lg:max-w-none 
         lg:grid-cols-3">
       {data.map(({ id, title, linkTag, imgHref, content_excerpt }) => (

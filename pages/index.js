@@ -61,7 +61,7 @@ export default function App() {
     setData(responseData.posts);
     setTotalCount(responseData.total_count);
     setLoading(false);
-
+    
   } catch (error) {
     console.log('Print the error:', error);
     setLoading(false);

@@ -5,6 +5,7 @@ import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 
 // const baseUrl = 'http://localhost:5000';
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 function Search() {
   const router = useRouter();
@@ -51,7 +52,7 @@ function Search() {
     setLoading(true);
 
     try {
-      const response = await fetch('https://toot.olk1.com/api/search.php', {
+      const response = await fetch(`${apiUrl}/search.php`, {
         method: 'POST',
         body: JSON.stringify({ searchTerm }),
         headers: {
@@ -97,7 +98,7 @@ function Search() {
   return (
     <div className="max-w-[700px] w-[95%] m-auto">
 
-    <div className="flex justify-end w-full border-t-2 border-slate-900">
+    <div className="flex justify-end w-full mt-2 sm:mt-0 border-t-2 border-slate-900">
       <a className="block my-0 bg-[#1A0123] px-12 text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8" href="/">View all</a>
     </div>
 
@@ -122,7 +123,7 @@ function Search() {
           type="submit">{loading ? 'Searching...' : 'Search'}</button> 
         : <button disabled
           className="border-slate-900 border-2 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300"
-          type="submit">Toot</button> 
+          type="submit">Search</button> 
       }
       {/* {searchErrorMessage && <p className="text-red-500 text-md">{searchErrorMessage}</p>}  */}
     </div>

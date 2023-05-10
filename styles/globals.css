@@ -8,6 +8,7 @@
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 }
 body {
+  @apply bg-white;
   padding: 0rem;
   font-family: var(--font-mono);
   overflow-x: hidden;

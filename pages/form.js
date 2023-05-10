@@ -4,6 +4,7 @@ import DOMPurify from 'dompurify';
 import FormInputs from '@/components/FormInputs';
 
 function MyForm() {
+  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
   const titleField = useRef(null);
 
@@ -152,7 +153,7 @@ const handleSubmit = async (event) => {
   formData.append('content', DOMPurify.sanitize(content));
   
   try {
-    const response = await fetch('https://toot.olk1.com/api/form.php', {
+    const response = await fetch(`${apiUrl}/form.php`, {
       method: 'POST',
       body: formData
     });
