@@ -4,7 +4,7 @@ import truncateString from './truncateString';
 import truncateStringArg from './truncateStringArg';
 
 function getTruncatedContent(content, windowWidth) {
-  const cleanContentExcerpt = DOMPurify.sanitize(content.replace(/<br\s*\/?>/gi, ''));
+  const cleanContentExcerpt = DOMPurify.sanitize(content?.replace(/<br\s*\/?>/gi, ''));
 
 if (windowWidth < 640) {
     return truncateStringArg(cleanContentExcerpt,97);

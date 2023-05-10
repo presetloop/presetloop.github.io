@@ -54,7 +54,7 @@ const HomeListItem = ({ id, title, linkTag, imgHref, contentExcerpt, loggedIn })
           </a>
         </h3>
         <div className="my-1 mb-0 text-sm leading-5 text-gray-600 group-hover:bg-gray-100 transition-all duration-500">
-          <TruncatedContent content={contentExcerpt.replace(/<br\s*\/?>/gi, '')} />
+          <TruncatedContent content={contentExcerpt?.replace(/<br\s*\/?>/gi, '')} />
         </div>
 
 

@@ -24,9 +24,7 @@ export default function Home({loggedIn, totalCount }) {
       }, 100);
     }
   }, []);
-  useEffect(() => {
-    fetchNewData();
-  },[])
+
 
   async function fetchNewData(pageNumber = 1) {
     setLoading(true);
