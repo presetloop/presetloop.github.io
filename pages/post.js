@@ -63,7 +63,7 @@ function Post() {
 
 
   if (loading) {
-    return <p className={`transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[8vw]`}>Loading...</p>;
+    return <p className={`text-slate-200 transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[8vw]`}>Loading...</p>;
   }
 
   function handleClick() {
@@ -125,7 +125,7 @@ return (
 {/* MAIN CONTENT */}
   
     {/* // for gsap */}
-    <div style={{ visibility: 'hidden' }} className={`main`}>
+    <div style={{ visibility: 'hidden' }} className={`main loadedAni`}>
 
     <div ref={element2Ref}>
 

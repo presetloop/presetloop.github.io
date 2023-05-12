@@ -8,66 +8,92 @@ export default function Home({loggedIn, totalCount }) {
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [progress, setProgress] = useState(false);
   const [hasMore, setHasMore] = useState(true);
 
-  useEffect(() => {
-    const storedData = JSON.parse(localStorage.getItem('data'));
-    if (storedData) {
-      setTimeout(() => {
-        setData(storedData);
-        const lastPage = Math.ceil(storedData.length / 2);
-        setPage(lastPage);
-      }, 100);
-    } else {
-      setTimeout(() => {
-        fetchNewData();
-      }, 100);
-    }
-  }, []);
+useEffect(() => {
+  const storedData = JSON.parse(localStorage.getItem('data'));
+  if (storedData && storedData.ids && storedData.page) {
+    setTimeout(() => {
+      fetchNewData(1, storedData.page);
+      setPage(storedData.page);
+    }, 0);
+  } else {
+    setTimeout(() => {
+      fetchNewData();
+    }, 0);
+  }
+}, []);
 
-
-  async function fetchNewData(pageNumber = 1) {
-    setLoading(true);
-    try {
+async function fetchNewData(startPage = 1, endPage = startPage) {
+  setLoading(true);
+  let allPosts = [];
+  const totalPages = endPage - startPage + 1;
+  let completedPages = 0;
+  try {
+    for (let pageNumber = startPage; pageNumber <= endPage; pageNumber++) {
       const response = await axios.get(`${apiUrl}/index.php?page=${pageNumber}`);
       const responseData = response.data;
       const newPosts = responseData.posts;
       if (newPosts.length === 0) {
         setHasMore(false);
+        break;
       } else {
-        const updatedData = [...data, ...newPosts];
-        setData(updatedData);
-        localStorage.setItem('data', JSON.stringify(updatedData));
+        allPosts = [...allPosts, ...newPosts];
+        localStorage.setItem('data', JSON.stringify({ ids: allPosts.map(post => post.id), page: pageNumber }));
         setPage(pageNumber);
-        if (newPosts.length === 0 || data.length + newPosts.length === totalCount) {
+        if (newPosts.length === 0 || allPosts.length === totalCount) {
           setHasMore(false);
+          break;
         }
       }
-    } catch (error) {
-      console.log('Print the error:', error);
+      completedPages++;
+      const percentComplete = Math.ceil(Math.round((completedPages / totalPages) * 10000) / 100);
+      setProgress(`${percentComplete}%`);
     }
-    setLoading(false);
+    setTimeout(() => {
+      setData(allPosts);
+    }, 300);
+  } catch (error) {
+    console.log('Print the error:', error);
   }
+  setProgress(``);
+  setLoading(false);
+}
 
-  function handleFetchArticles(event) {
-    event.preventDefault();
-    const nextPage = page + 1;
-    fetchNewData(nextPage);
-  }
+function handleFetchArticles(event) {
+  event.preventDefault();
+  const nextPage = page + 1;
+  fetchNewData(1, nextPage);
+}
 
-loading && <p className={`text-green-400 transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[8vw]`}>Loading...</p>
+
+setTimeout(() => {
+  if (!data || data.length === 0) {
+  return <p className={`text-red-400 transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[8vw]`}>Loading...</p>;
+}
+}, 1000);
+
+// loading && <p className={`transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[8vw]`}>Loading...</p>
+
 
   return (
-    <div>
+    <>
       
-  {data.length > 0 && (
+  {progress !== '' ? (
+    
+    <div className='flex justify-center -mt-[100px] mx-auto items-center h-screen'>
+      <p className="text-slate-200 transition-all duration-5000 text-8xl">  {progress}</p>
+    </div>
+
+  ) : data.length > 0 && (
     
     <div>
     
     <ul>
-  
     <div
       className="
+        loadedAni
         max-w-2xl 
         mx-auto 
         grid 
@@ -99,6 +125,6 @@ loading && <p className={`text-green-400 transition-all duration-5000 flex items
       </ul>
     </div>
    ) }
-    </div>
+    </>
   );
 }
