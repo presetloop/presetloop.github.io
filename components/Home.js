@@ -40,6 +40,7 @@ async function fetchNewData(startPage = 1, endPage = startPage) {
         break;
       } else {
         allPosts = [...allPosts, ...newPosts];
+        allPosts.sort((a, b) => a.id - b.id); // sort the allPosts array by ID
         localStorage.setItem('data', JSON.stringify({ ids: allPosts.map(post => post.id), page: pageNumber }));
         setPage(pageNumber);
         if (newPosts.length === 0 || allPosts.length === totalCount) {
