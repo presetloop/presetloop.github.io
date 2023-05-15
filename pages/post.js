@@ -1,6 +1,5 @@
 import { useRouter } from 'next/router';
-import { useState, useEffect, useRef } from 'react';
-import { gsap, Sine } from 'gsap';
+import { useState, useEffect } from 'react';
 import getSessionData from '@/helpers/getSessionData';
 import DOMPurify from 'dompurify';
 import validUrl from 'valid-url';
@@ -15,8 +14,6 @@ function Post() {
   const [loading, setLoading] = useState(true);
 
 
-  const element2Ref = useRef(null);
-
   useEffect(() => {    
     if (id) {
       setTimeout(() => {
@@ -25,23 +22,6 @@ function Post() {
     }
   }, [id]);
 
-  useEffect(() => {
-    if(data && !loading && element2Ref.current){
-
-        gsap.fromTo(
-          element2Ref.current,
-          { opacity: 0, y: 100 },
-          { 
-            opacity: 1, y: 0, duration: .15, ease: Sine.easeIn,
-            onComplete: () => {
-
-              gsap.set('.main', { visibility: 'visible' });
-            }
-          }
-        );
-
-    }
-  }, [loading]);
 
   async function fetchData() {
     try {
@@ -124,10 +104,7 @@ return (
 
 {/* MAIN CONTENT */}
   
-    {/* // for gsap */}
-    <div style={{ visibility: 'hidden' }} className={`main loadedAni`}>
-
-    <div ref={element2Ref}>
+    <div className={`main loadedAni`}>
 
   {data?.map(item => (
     <div key={item.id} className={`${getRandomClass(random50)} z-2 -mt-8 sm:-mt-4 relative overflow-hidden px-6 py-12 lg:overflow-visible lg:px-0`}>
@@ -189,7 +166,7 @@ return (
   </div>
   
 ))}
-</div>
+
 
       </div>
     
