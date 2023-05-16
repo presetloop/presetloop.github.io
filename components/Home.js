@@ -53,7 +53,7 @@ async function fetchNewData(startPage = 1, endPage = startPage) {
       setProgress(`${percentComplete}%`);
     }
     setTimeout(() => {
-      setData(allPosts);
+      setData(allPosts.reverse());
     }, 300);
   } catch (error) {
     console.log('Print the error:', error);
