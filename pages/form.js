@@ -135,7 +135,7 @@ const handleSubmit = async (event) => {
     return;
   }
   
-  // Check if there's an image error message
+  // Check if there's a link/image error message
   if (linkErrorMessage || imageErrorMessage) {
     setLoading(false);
     setDisableSubmitBtn(true);

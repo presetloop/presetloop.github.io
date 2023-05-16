@@ -1,13 +1,15 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import {useRouter} from 'next/router';
 import axios from 'axios';
 import DOMPurify from 'dompurify';
 import getSessionData from '@/helpers/getSessionData';
+import EditFormInputs from '@/components/EditFormInputs';
 
 function EditPost() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
   const { id } = router.query;
+  const titleField = useRef(null);
 
   const [data, setData] = useState(null);
 
@@ -15,7 +17,12 @@ function EditPost() {
   const [linkTag, setLinkTag] = useState("");
   const [imgHref, setImgHref] = useState("");
   const [content, setContent] = useState("");
-  
+
+  const [titleErrorMessage, setTitleErrorMessage] = useState("");
+  const [linkErrorMessage, setLinkErrorMessage] = useState("");
+  const [imageErrorMessage, setImageErrorMessage] = useState("");
+  const [contentErrorMessage, setContentErrorMessage] = useState("");
+
   const [loading, setLoading] = useState(false);
   const [disableSubmitBtn, setDisableSubmitBtn] = useState(false);
 
@@ -25,10 +32,23 @@ function EditPost() {
     }
   }, [id]);
 
+  // To get input autofocus working
+  useEffect(() => {
+    if (titleField.current) {
+      titleField.current.focus();
+    }
+  }, []);
+
+// Fetch post data from the backend
     async function fetchData(){
-      // Fetch post data from the backend
       try {
-        const response = await axios.get(`${apiUrl}/post.php?id=${id}`);
+        const sessionData = getSessionData();
+        if (!sessionData) {
+          router.push('/login');
+          return;
+        }
+
+      const response = await axios.get(`${apiUrl}/post.php?id=${id}`);
       
       if (!response) {
         throw new Error('No data received from server');
@@ -42,16 +62,131 @@ function EditPost() {
     }
 
 
+// Remove urls from title and content fields
+function handleChange(event) {
+  const { name, value } = event.target;
+  const regex = /((http|https):\/\/(\w+:{0,1}\w*@)?(\S+)(:[0-9]+)?(\/|\/([\w#!:.?+=&%@!\-\/]))?)/gi;
+  
+  // Check if title/content fields contains a URL and render error message
+  // if (value.match(regex) || value.includes("www.") || value.includes("ww.") || value.includes("w.") || value.includes("w.") || value.includes(".")) {
+  if (value.match(regex) || value.match(/\.\w/i) || value.match(/w{0,3}\.\w/i)) {
+    if (name === "Title") {
+      setTitleErrorMessage("Titles cannot contain URLs");
+      setDisableSubmitBtn(true);
+    } else {
+      setContentErrorMessage("Content cannot contain URLs");
+      setDisableSubmitBtn(true);
+    }
+  } else {
+    if (name === "Title") {
+      setTitleErrorMessage("");
+      setTitle(value);
+      setDisableSubmitBtn(false);
+    } else {
+      setContentErrorMessage("");
+      setContent(value);
+      setDisableSubmitBtn(false);
+    }
+  }
+}
+
+// Check linkTag has a valid URL
+const handleLinkTagChange = (e) => {
+  const url = e.target.value.trim();
+  
+  const pattern = /^(https?:\/\/)?[\w\-]+(\.[\w\-]+)+[/#?]?.*$/i;
+
+  if (!pattern.test(url)) {
+    setLinkTag(url);
+    setLinkErrorMessage('Please enter a valid URL');
+    setDisableSubmitBtn(true);
+  } else {
+    setLinkTag(url);
+    setLinkErrorMessage('');
+    setDisableSubmitBtn(false);
+  }
+
+  if(url === ""){
+    setLinkTag("");
+    setLinkErrorMessage("");
+    setDisableSubmitBtn(false);
+  }
+};
+
+
+// Check for chosen image format
+const validImageFormats = ['.png', '.jpg', '.gif'];
+function handleImageInputChange(event) {
+  const url = event.target.value.trim();
+  if (url === "") {
+    setImgHref("");
+    setDisableSubmitBtn(false);
+    setImageErrorMessage("");
+    return;
+  }
+
+  const imageFormat = validImageFormats.some((format) => url.toLowerCase().endsWith(format));
+
+  if (!imageFormat) {
+    setImageErrorMessage("Images must be .png, .jpg, or .gif.");
+    setImgHref(url);
+    setDisableSubmitBtn(true);
+  } else {
+    setImageErrorMessage("");
+    setImgHref(url);
+    setDisableSubmitBtn(false);
+  }
+}
+
+
+// Convert all links (linkTag and imgHref field) to https (onSubmit)
+function addHttpsToLink(linkX) {
+  let updatedLink = linkX;
+  if (!updatedLink) return;
+  // const pattern = /^(htps?:\/\/(ww?\.)*|htp:\/\/(ww?\.)*|http:\/\/(ww?\.)*|w\.)/i;
+const pattern = /^(htps?:\/\/(ww?\.)*|htp:\/\/(ww?\.)*|http:\/\/(ww?\.)*|w{1,2}\.)/i;
+  if (!linkX.startsWith("https://")) {
+    (updatedLink = `https://${linkX.replace(pattern, (match) => {
+    if (match.startsWith("w")) {
+      return "www.";
+    } else {
+      return "";
+    }
+  })}`);
+  }
+  return updatedLink;
+}
+
   const handleSubmit = async (e) => {
     e.preventDefault();
 
-    // Send updated post data to the backend
-    const postData = {
-      title,
-      linkTag,
-      imgHref,
-      content
-    };
+    // Check if required fields are filled
+  if (!title || !content) {
+    setLoading(false);
+    setDisableSubmitBtn(true);
+    setContentErrorMessage("Please fill in all required fields");
+    return;
+  }
+  
+  // Check if there's a link/image error message
+  if (linkErrorMessage || imageErrorMessage) {
+    setLoading(false);
+    setDisableSubmitBtn(true);
+    return;
+  }
+
+  // Proceed with form submission
+  setLoading(true);
+  setDisableSubmitBtn(false);
+  
+  // Send updated post data to the backend  
+  const formData = {
+    'title': DOMPurify.sanitize(title),
+    'linkTag': DOMPurify.sanitize(addHttpsToLink(linkTag)),
+    'imgHref': DOMPurify.sanitize(addHttpsToLink(imgHref)),
+    'content': DOMPurify.sanitize(content)
+  }
+  
 
     try {
     const response = await fetch(`${apiUrl}/edit.php?id=${id}`, {
@@ -59,7 +194,7 @@ function EditPost() {
       headers: {
         'Content-Type': 'application/json',
       },
-      body: JSON.stringify(postData),
+      body: JSON.stringify(formData),
     });
     // console.log(response);
     
@@ -78,98 +213,17 @@ function EditPost() {
 
   // Handle case when post data is not yet fetched
   if (data?.title === null || data?.linkTag === null|| data?.imgHref === null|| data?.content === null) {
-    return <div>Loading...</div>;
+    return <p className={`text-slate-200 transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[8vw]`}>Loading...</p>;
   }
 
+  // if (loading) {
+  //   return <p className={`text-slate-200 transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[8vw]`}>Loading...</p>;
+  // }
 
   return (
-    
-    <div className="max-w-[700px] w-[95%] m-auto">
+
+    <EditFormInputs data={data} titleField={titleField} title={title} handleChange={handleChange} titleErrorMessage={titleErrorMessage} handleLinkTagChange={handleLinkTagChange} linkTag={linkTag} linkErrorMessage={linkErrorMessage} imgHref={imgHref} handleImageInputChange={handleImageInputChange} imageErrorMessage={imageErrorMessage} content={content} contentErrorMessage={contentErrorMessage} disableSubmitBtn={disableSubmitBtn} loading={loading} handleSubmit={handleSubmit} />
   
-    <div className="flex justify-end w-full mt-2 sm:mt-0 mb-4 sm:mb-2 border-t-2 border-slate-900">
-      <a className="block my-0 bg-[#1A0123] px-12 text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8" href="/">View all</a>
-    </div>
-
-
-
-  <form onSubmit={handleSubmit}>
-      {/* TITLE */}
-    <div className="relative">
-      <input
-        required
-        className="appearance-none border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        id="title"
-        type="text"
-        placeholder={data?.title}
-        name="Title"
-        value={title}
-        onChange={(e) => setTitle(e.target.value)}
-      />
-      {/* {titleErrorMessage && <p className="absolute bottom-[5px] left-0 mb-0 text-red-500 text-md">{titleErrorMessage}</p>} */}
-    </div>
-    
-      {/* LINKTAG */}
-    <div className="relative">
-      <input
-        className="appearance-none border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        id="linkTag"
-        type="text"
-        placeholder={data ? data?.linkTag || "Enter a link (optional)" : "Enter a link (optional)"}
-        name="LinkTag"
-        value={linkTag}
-        onChange={(e) => setLinkTag(e.target.value)}
-      />
-      {/* errors */}
-    </div>
-    
-      {/* IMGHREF */}
-    <div className="relative">
-      <input
-        className="appearance-none border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        id="imgHref"
-        type="text"
-        placeholder={typeof window !== 'undefined' && window.innerWidth < 480 ? (!data ? "External image link (optional)" : "Enter an external image link (optional)") : (data?.imgHref || "Enter an external image link (optional)")}
-        name="ImgHref"
-        value={imgHref}
-        onChange={(e) => setImgHref(e.target.value)}
-      />
-      {/* errors */}
-    </div>
-
-    {/* CONTENT */}
-    <div className="relative">
-      <textarea
-        required
-        className="appearance-none border-slate-900 mt-9 border-[1px] w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-64 md:h-96 focus:shadow-outline"
-        id="content"
-        placeholder={data?.content}
-        name="Content"
-        value={content}
-        onChange={(e) => setContent(e.target.value)}
-      />
-      {/* {contentErrorMessage && <p className="absolute bottom-[5px] left-2 mb-0 text-red-500 text-md">{contentErrorMessage}</p>} */}
-    </div>
-
-
-      <div className="mt-2 flex items-center justify-between">
-    { !disableSubmitBtn ? <button
-        className="border-slate-900 border-2 hover:bg-slate-900 hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150"
-        type="submit">{loading ? 'Bedlam...' : 'Deploy'}</button> 
-      : <button disabled
-        className="border-slate-900 border-2 hover:bg-slate-900 hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150"
-        type="submit">Deploy</button> 
-    }
-    </div>
- 
-    </form>
-
-
-  
-     
-
-  </div>
-
- 
   );
 }
 
