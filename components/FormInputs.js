@@ -27,7 +27,7 @@ export default function FormInputs({handleSubmit, titleField, title, handleChang
     <div className="relative">
       <input
         className="appearance-none border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-        id="title"
+        id="linkTag"
         type="text"
         placeholder="Enter a link (optional)"
         value={linkTag}
@@ -40,7 +40,7 @@ export default function FormInputs({handleSubmit, titleField, title, handleChang
     <div className="relative">
     <input
       className="appearance-none border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-      id="title"
+      id="imgHref"
       type="text"
       placeholder={typeof window !== 'undefined' && window.innerWidth < 480 ? "External image link (optional)" : "Enter an external image link (optional)"}
       value={imgHref}

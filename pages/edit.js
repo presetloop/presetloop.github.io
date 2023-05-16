@@ -10,8 +10,12 @@ function EditPost() {
   const { id } = router.query;
 
   const [data, setData] = useState(null);
+
   const [title, setTitle] = useState("");
+  const [linkTag, setLinkTag] = useState("");
+  const [imgHref, setImgHref] = useState("");
   const [content, setContent] = useState("");
+  
   const [loading, setLoading] = useState(false);
   const [disableSubmitBtn, setDisableSubmitBtn] = useState(false);
 
@@ -37,17 +41,16 @@ function EditPost() {
       }
     }
 
-  const handleContentChange = (e) => {
-    setContent(e.target.value);
-  };
 
   const handleSubmit = async (e) => {
     e.preventDefault();
 
     // Send updated post data to the backend
     const postData = {
-      title: title,
-      content: content,
+      title,
+      linkTag,
+      imgHref,
+      content
     };
 
     try {
@@ -74,7 +77,7 @@ function EditPost() {
 };
 
   // Handle case when post data is not yet fetched
-  if (data?.title === null || data?.content === null) {
+  if (data?.title === null || data?.linkTag === null|| data?.imgHref === null|| data?.content === null) {
     return <div>Loading...</div>;
   }
 
@@ -103,6 +106,34 @@ function EditPost() {
         onChange={(e) => setTitle(e.target.value)}
       />
       {/* {titleErrorMessage && <p className="absolute bottom-[5px] left-0 mb-0 text-red-500 text-md">{titleErrorMessage}</p>} */}
+    </div>
+    
+      {/* LINKTAG */}
+    <div className="relative">
+      <input
+        className="appearance-none border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="linkTag"
+        type="text"
+        placeholder={data ? data?.linkTag || "Enter a link (optional)" : "Enter a link (optional)"}
+        name="LinkTag"
+        value={linkTag}
+        onChange={(e) => setLinkTag(e.target.value)}
+      />
+      {/* errors */}
+    </div>
+    
+      {/* IMGHREF */}
+    <div className="relative">
+      <input
+        className="appearance-none border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        id="imgHref"
+        type="text"
+        placeholder={typeof window !== 'undefined' && window.innerWidth < 480 ? (!data ? "External image link (optional)" : "Enter an external image link (optional)") : (data?.imgHref || "Enter an external image link (optional)")}
+        name="ImgHref"
+        value={imgHref}
+        onChange={(e) => setImgHref(e.target.value)}
+      />
+      {/* errors */}
     </div>
 
     {/* CONTENT */}
