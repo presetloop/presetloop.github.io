@@ -4,6 +4,7 @@ import getSessionData from '@/helpers/getSessionData';
 import DOMPurify from 'dompurify';
 import validUrl from 'valid-url';
 import DeleteBtn from '../components/DeleteBtn';
+import EditBtn from '../components/EditBtn';
 import ImageDynamic from '../components/ImageDynamic';
 
 function Post() {
@@ -159,6 +160,7 @@ return (
 
           <div className="-ml-2 flex justify-start mt-10">
             <DeleteBtn id={item.id} />
+            <EditBtn id={item.id} />
           </div>
           </div>
         </div>  
