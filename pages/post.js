@@ -28,6 +28,7 @@ function Post() {
 
   async function fetchData() {
     try {
+      // If not logged in, redirect.
       const getCookie = getAdminCookie();
       const sessionData = getSessionData();
       if ((!sessionData === true) && !getCookie) {

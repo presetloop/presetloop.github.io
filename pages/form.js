@@ -1,5 +1,7 @@
 import { useState, useRef, useEffect } from 'react';
 import {useRouter} from 'next/router';
+import {getAdminCookie} from '@/helpers/handleCookies';
+import getSessionData from '@/helpers/getSessionData';
 import DOMPurify from 'dompurify';
 import FormInputs from '@/components/FormInputs';
 
@@ -18,6 +20,18 @@ function MyForm() {
   const [linkErrorMessage, setLinkErrorMessage] = useState("");
   const [imageErrorMessage, setImageErrorMessage] = useState("");
   const [contentErrorMessage, setContentErrorMessage] = useState("");
+
+  // If not logged in, redirect.
+  useEffect(() => {
+    if (typeof window !== 'undefined') {
+      const getCookie = getAdminCookie();
+      const sessionData = getSessionData();
+      if ((!sessionData === true) && !getCookie) {
+        router.push('/login');
+        return;
+      } 
+    }
+  }, []);
 
   // To get input autofocus working
   useEffect(() => {
