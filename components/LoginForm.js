@@ -3,6 +3,7 @@ import { useRouter } from 'next/router';
 import axios from 'axios';
 import generateUniqueKey from '@/helpers/generateUniqueKey';
 import LoginFormInputs from './LoginFormInputs'
+import {setCookie} from '@/helpers/handleCookies';
 
 function LoginForm({ apiUrl }) {
   const titleField = useRef(null);
@@ -45,9 +46,17 @@ function LoginForm({ apiUrl }) {
       if (!responseData) {
         throw new Error('No data received from server');
       }
+      
+      // Admin Login
+      if (responseData.success && responseData.admin === "admin") {
+        // console.log(responseData.admin)
+        setCookie("admin", "adminOnly", 1)
+        router.push('/');
+      } 
 
+      // Guest Login
       if (responseData.success) {
-        const loggedIn = responseData.message === 'Login successful and Session cookie set successfully';
+        const loggedIn = responseData.message === 'Login successful';
 
         if (loggedIn) {
           // imported helper function

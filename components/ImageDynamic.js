@@ -1,4 +1,4 @@
-import { useEffect, useState } from 'react';
+import { useState } from 'react';
 import Image from 'next/image';
 import DOMPurify from 'dompurify';
 import validUrl from 'valid-url';
@@ -6,14 +6,15 @@ import ImagePlaceholder from '@/components/ImagePlaceholder';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeImg = false, id }) {
+export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn = false, isHomeImg = false, isAdminImg = false, id }) {
+
   const [className, setClassName] = useState('object-cover');
   
   const convertToHttps = "http://"; // CHANGE to https:// BEFORE BUILD AND DEPLOY
   const imgHref = item && item.imgHref || item;
 
 // images when not logged in (redirects to /login)
-  if (!isLoggedIn) {
+  if ((!isLoggedIn === true) && !isAdmin) {
     return (
       <a href={DOMPurify.sanitize(`${baseUrl}/login`).replace(/^http?:\/\//i, convertToHttps)}
          rel="noopener noreferrer">
@@ -47,7 +48,7 @@ export default function ImageDynamic({ item = null, isLoggedIn = false, isHomeIm
   }
 
 // home screen index images when logged in (link to post id)
-  if (isHomeImg) {
+  if (isHomeImg || isAdminImg) {
     return (
       <a href={DOMPurify.sanitize(`${baseUrl}/post?id=${id}`).replace(/^http?:\/\//i, convertToHttps)}
          rel="noopener noreferrer">

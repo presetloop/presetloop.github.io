@@ -1,6 +1,6 @@
 import { useState } from 'react';
 import getSessionData from '@/helpers/getSessionData';
-
+import {removeCookie} from '@/helpers/handleCookies';
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 function LogoutBtn() {
@@ -12,14 +12,20 @@ function LogoutBtn() {
     try {
       const res = await fetch(`${apiUrl}/logout.php`);
       const json = await res.json();
-
-      if (json.logged_in == false) {
+   
+      if (json.admin === false || json.guest_login === false) {
         setLoggingOut(true);
+        
+        if(typeof window !== 'undefined'){
+          removeCookie('admin');
+          // window.location.href = '/';
+        }
 
         // Check if localStorage is available
         if (typeof window !== 'undefined' && window.localStorage) {
-          const { sessionData, sessionKey } = getSessionData();
-          if (sessionData) {
+          const sessionDataObj = getSessionData();
+          if (sessionDataObj && sessionDataObj.sessionData) {
+            const { sessionData, sessionKey } = sessionDataObj;
             localStorage.removeItem(sessionKey);
           }
         }

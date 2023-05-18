@@ -7,10 +7,10 @@ import TruncatedContent from '@/helpers/TruncatedContent';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-const HomeListItem = ({ id, title, linkTag, imgHref, contentExcerpt, loggedIn }) => {
+const HomeListItem = ({ id, title, linkTag, imgHref, contentExcerpt, isAdmin, loggedIn }) => {
   const postUrl = `${baseUrl}/post?id=${id}`;
   const loginUrl = `${baseUrl}/login`;
-  const href = loggedIn ? postUrl : loginUrl;
+  const href = isAdmin || loggedIn ? postUrl : loginUrl;
 
   const isValidHref = validUrl.isWebUri(href);
 
@@ -25,7 +25,7 @@ const HomeListItem = ({ id, title, linkTag, imgHref, contentExcerpt, loggedIn })
     <section key={id} className={`bg-slate-50 p-4 flex max-w-xl flex-col`}>
 
 
-      {/* date and linkTag */}
+      {/* DATE AND URL (linkTag) */}
       <div className="flex flex-col sm:flex-row sm:items-center gap-x-4 text-xs">
         <time dateTime={null} className="text-gray-500">
           {DOMPurify.sanitize(generateRandomDate())}
@@ -45,7 +45,7 @@ const HomeListItem = ({ id, title, linkTag, imgHref, contentExcerpt, loggedIn })
 
     
 
-      {/* title and content excerpt */}
+      {/* TITLE AND CONTENT EXCERPT */}
       <div className="mt-0 group">
       
         <h3 className="text-lg font-semibold leading-6 bg-white text-gray-900 group-hover:bg-gray-100 transition-all duration-500">
@@ -60,10 +60,10 @@ const HomeListItem = ({ id, title, linkTag, imgHref, contentExcerpt, loggedIn })
 
 
 
-      {/* images */}
+      {/* IMAGES */}
       <div className="relative my-0 flex w-full min-h-[275px] group-hover:bg-gray-100 transition-all duration-500">
         {
-          <ImageDynamic item={imgHref} isLoggedIn={loggedIn} isHomeImg={loggedIn} id={id}/>
+          <ImageDynamic item={imgHref} isAdmin={isAdmin} isLoggedIn={loggedIn} isAdminImg={isAdmin} isHomeImg={loggedIn} id={id}/>
         }
       </div>
     

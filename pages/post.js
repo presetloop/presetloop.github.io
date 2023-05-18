@@ -1,5 +1,6 @@
 import { useRouter } from 'next/router';
 import { useState, useEffect } from 'react';
+import {getAdminCookie} from '@/helpers/handleCookies';
 import getSessionData from '@/helpers/getSessionData';
 import DOMPurify from 'dompurify';
 import validUrl from 'valid-url';
@@ -26,11 +27,12 @@ function Post() {
 
   async function fetchData() {
     try {
-      const sessionData = getSessionData();
-      if (!sessionData) {
-        router.push('/login');
-        return;
-      }
+      // const getCookie = getAdminCookie();
+      // const sessionData = getSessionData();
+      // if (!sessionData || !getCookie) {
+      //   router.push('/login');
+      //   return;
+      // }
     
       const res = await fetch(`${apiUrl}/post.php?id=${id}`);
       const json = await res.json();

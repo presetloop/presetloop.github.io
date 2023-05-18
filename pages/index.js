@@ -1,5 +1,6 @@
 import { useState, useEffect } from 'react';
 import axios from 'axios';
+import {getAdminCookie} from '@/helpers/handleCookies';
 import getSessionData from '@/helpers/getSessionData';
 import Footer from '@/components/Footer';
 import Home from '@/components/Home';
@@ -8,20 +9,20 @@ import HomeNav from '@/components/HomeNav';
 export default function App() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [totalCount, setTotalCount] = useState(undefined);
+
   const [loggedIn, setLoggedIn] = useState(undefined);
+  const [isAdmin, setIsAdmin] = useState(false);
     // ^^ props sent to Home.js ^^
   const [data, setData] = useState([]);
   const [page, setPage] = useState(1);
     // ^^ first load state (page 1) ^^
   const [loading, setLoading] = useState(false);
-  
 
   useEffect(() => {
     setTimeout(() => {
       fetchData();
     }, 100);
   }, []);
-
 
   async function fetchData() {
   setLoading(true);
@@ -35,14 +36,18 @@ export default function App() {
     }
     
     const responseData = response.data;
+    
+    if (responseData.admin_login && getAdminCookie()) {
+      setIsAdmin(true);
+    }
 
-    let loggedInSession = false;
+    let loggedInSession = null;
     if (typeof window !== 'undefined') {
       const sessionInfo = getSessionData();
       if (sessionInfo) {
         const { sessionData } = sessionInfo;
 
-        loggedInSession = responseData.logged_in && sessionData && Date.now() - sessionData.timestamp < 86400000; // 24 Hours / 60000 is 1 minute(for testing)
+        loggedInSession = responseData.guest_login && sessionData && Date.now() - sessionData.timestamp < 86400000; // 24 Hours / 60000 is 1 minute(for testing)
 
         if (!loggedInSession) {
           const sessionKeys = Object.keys(localStorage).filter(key => key.startsWith('myapp-session-'));
@@ -56,18 +61,16 @@ export default function App() {
       //   console.log("No session data")
       // }
     }
-
     setLoggedIn(loggedInSession);
     setData(responseData.posts);
     setTotalCount(responseData.total_count);
     setLoading(false);
-    
+
   } catch (error) {
     console.log('Print the error:', error);
     setLoading(false);
   }
   }
-
 
 if (loggedIn === undefined) {
   return <p className={`text-slate-200 transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[8vw]`}>Loading...</p>;
@@ -80,14 +83,14 @@ return (
 
 
 <div className="flex flex-col min-h-screen">
-    
     <nav className={`transition-all duration-500`}> 
-      <HomeNav loggedIn={loggedIn} />
+      <HomeNav isAdmin={isAdmin} loggedIn={loggedIn} />
     </nav>
 
     <main className={`flex-1 flex opacity-1 transition-opacity duration-500 delay-500`}>
+    
     {/* MAIN CONTENT */}
-      <Home loggedIn={loggedIn} totalCount={totalCount} />
+      <Home isAdmin={isAdmin} loggedIn={loggedIn} totalCount={totalCount} />
     </main>
 
 </div>

@@ -2,7 +2,7 @@ import { useState, useEffect } from 'react';
 import axios from 'axios';
 import HomeListItem from '@/components/HomeListItem';
 
-export default function Home({loggedIn, totalCount }) {
+export default function Home({isAdmin, loggedIn, totalCount }) {
 
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [page, setPage] = useState(1);
@@ -109,7 +109,7 @@ setTimeout(() => {
         lg:max-w-none 
         lg:grid-cols-3">
       {data.map(({ id, title, linkTag, imgHref, content_excerpt }) => (
-        <HomeListItem key={id} id={id} title={title} contentExcerpt={content_excerpt} linkTag={linkTag} imgHref={imgHref} loggedIn={loggedIn} />
+        <HomeListItem key={id} id={id} title={title} contentExcerpt={content_excerpt} linkTag={linkTag} imgHref={imgHref} isAdmin={isAdmin} loggedIn={loggedIn} />
       ))}
     </div>
 

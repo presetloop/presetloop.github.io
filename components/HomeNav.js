@@ -1,14 +1,15 @@
 import CountdownTimer from '@/components/CountdownTimer';
 import LogoutBtn from '@/components/LogoutBtn';
 
-export default function HomeNav({loggedIn}) {
+export default function HomeNav({isAdmin, loggedIn}) {
   return (
     <>
-    { loggedIn ? (
+      {loggedIn && <div className="absolute -top-7 left-0 bg-green-50">
+        <CountdownTimer /></div>
+      }
+
+    { isAdmin || loggedIn ? (
       <>
-        <div className="absolute -top-7 left-0 bg-green-50">
-          <CountdownTimer />
-        </div>
 
         <div className="flex gap-2 justify-between">
           
