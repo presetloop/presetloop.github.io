@@ -1,7 +1,6 @@
 import { useState, useRef, useEffect } from 'react';
 import {useRouter} from 'next/router';
 import {getAdminCookie} from '@/helpers/handleCookies';
-import getSessionData from '@/helpers/getSessionData';
 import DOMPurify from 'dompurify';
 import FormInputs from '@/components/FormInputs';
 
@@ -25,8 +24,7 @@ function MyForm() {
   useEffect(() => {
     if (typeof window !== 'undefined') {
       const getCookie = getAdminCookie();
-      const sessionData = getSessionData();
-      if ((!sessionData === true) && !getCookie) {
+      if (!getCookie) {
         router.push('/login');
         return;
       } 
