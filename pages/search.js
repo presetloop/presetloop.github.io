@@ -1,3 +1,4 @@
+import {getAdminCookie} from '@/helpers/handleCookies';
 import getSessionData from '@/helpers/getSessionData';
 import validUrl from 'valid-url';
 import DOMPurify from 'dompurify';
@@ -19,6 +20,7 @@ function Search() {
   // const [loggedIn, setLoggedIn] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [formSubmitted, setFormSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [searchErrorMessage, setSearchErrorMessage] = useState(false);
   const [disableSearchBtn, setDisableSearchBtn] = useState(false);
@@ -26,8 +28,9 @@ function Search() {
   // If not logged in, redirect.
   useEffect(() => {
     if (typeof window !== 'undefined') {
+      const getCookie = getAdminCookie();
       const sessionData = getSessionData();
-      if (!sessionData) {
+      if ((!sessionData === true) && !getCookie) {
         router.push('/login');
         return;
       } 
@@ -43,7 +46,9 @@ function Search() {
     }
   }, []);
 
-  async function handleSearch() {
+  async function handleSearch(e) {
+    e.preventDefault();
+
     if(searchTerm === ""){
       setSearchErrorMessage("Enter a search term above")
       // setDisableSearchBtn(true);
@@ -63,6 +68,7 @@ function Search() {
       const results = await response.json();
       // console.log(results)
       setSearchResults(results);
+      setFormSubmitted(true);
       setLoading(false);
       setSearchTerm("");
       setSearchErrorMessage("")
@@ -81,19 +87,6 @@ function Search() {
   if (loading) {
     return <div className="max-w-[700px] w-[95%] m-auto">Loading...</div>;
   }
-
-  // function handleClick() {
-  //   router.push('/');
-  // }
-
-  // if (!searchResults || searchResults.length === 0) {
-  //   return (
-  //     <div className="max-w-[700px] w-[95%] m-auto">
-  //       <p>Post no longer exists or perhaps it never did?</p>
-  //       <p className="mt-2 text-md text-blue-500 cursor-pointer" onClick={handleClick}>Go back &larr;</p>
-  //     </div>
-  //   );
-  // }
 
   return (
     <div className="max-w-[700px] w-[95%] m-auto">
@@ -132,7 +125,7 @@ function Search() {
 
     {/* Render results */}
       <ul className='mt-4'>
-        {searchResults.map(result => (
+        {searchResults.length !== 0 ? searchResults.map(result => (
           <div key={result.id}>
             {/* <a href={isValidHref ? href : null}> */}
             <a href={`/post?id=${result.id}`}>
@@ -147,7 +140,9 @@ function Search() {
               </div>
             </a>
           </div>
-        ))}
+        )) : (
+          formSubmitted && <p>Currently there are no articles with that title.</p>
+        )}
       </ul>
     </div>
   );

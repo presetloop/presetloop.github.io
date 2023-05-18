@@ -2,6 +2,7 @@ import { useState, useEffect, useRef } from 'react';
 import {useRouter} from 'next/router';
 import axios from 'axios';
 import DOMPurify from 'dompurify';
+import {getAdminCookie} from '@/helpers/handleCookies';
 import getSessionData from '@/helpers/getSessionData';
 import EditFormInputs from '@/components/EditFormInputs';
 
@@ -42,8 +43,9 @@ function EditPost() {
 // Fetch post data from the backend
     async function fetchData(){
       try {
+        const getCookie = getAdminCookie();
         const sessionData = getSessionData();
-        if (!sessionData) {
+        if ((!sessionData === true) && !getCookie) {
           router.push('/login');
           return;
         }

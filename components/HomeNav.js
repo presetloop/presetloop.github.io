@@ -13,7 +13,7 @@ export default function HomeNav({isAdmin, loggedIn}) {
 
         <div className="flex gap-2 justify-between">
           
-            <a className="block" href="/form">
+            <a className="block" href={isAdmin ? "/form" : "/"}>
               <p className="mt-1 -rotate-1 bg-[#1A0123] px-2 sm:px-12 text-md sm:text-lg text-white sm:hover:pl-10 sm:hover:pr-10 ease-in-out duration-300">{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
             </a>
             

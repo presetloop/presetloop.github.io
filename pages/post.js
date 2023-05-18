@@ -12,6 +12,7 @@ function Post() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
   const { id } = router.query;
+  const [admin, setAdmin] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
@@ -27,13 +28,15 @@ function Post() {
 
   async function fetchData() {
     try {
-      // const getCookie = getAdminCookie();
-      // const sessionData = getSessionData();
-      // if (!sessionData || !getCookie) {
-      //   router.push('/login');
-      //   return;
-      // }
-    
+      const getCookie = getAdminCookie();
+      const sessionData = getSessionData();
+      if ((!sessionData === true) && !getCookie) {
+        router.push('/login');
+        return;
+      }
+      if(getCookie){
+        setAdmin(true)
+      }
       const res = await fetch(`${apiUrl}/post.php?id=${id}`);
       const json = await res.json();
       setData(json);
@@ -95,7 +98,7 @@ return (
           <p className="border-slate-900 border-2 -mt-6 px-1 text-md sm:-mt-7 sm:px-4 sm:text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300">Search</p>
         </a>  
 
-        <a className="block" href="/form">
+        <a className="block" href={admin ? "/form" : "/"}>
           <p className="mt-1 -rotate-1 bg-[#1A0123] px-2 sm:px-12 text-md sm:text-lg text-white sm:hover:pl-10 sm:hover:pr-10 ease-in-out duration-300">{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
         </a>
 
@@ -160,10 +163,12 @@ return (
               
             </div>
 
-          <div className="-ml-2 flex justify-start mt-10">
-            <DeleteBtn id={item.id} />
-            <EditBtn id={item.id} />
+          { admin && (
+            <div className="-ml-2 flex justify-start mt-10">
+              <DeleteBtn id={item.id} />
+              <EditBtn id={item.id} />
           </div>
+          )}
           </div>
         </div>  
     </div>
