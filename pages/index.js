@@ -54,7 +54,7 @@ export default function App() {
         const { sessionData } = sessionInfo;
 
         guestLoginSession = responseData.guest_login && sessionData && Date.now() - sessionData.timestamp < 86400000; 
-        // 86400000 is 24 Hours / 60000 is 1 minute(for testing)
+        // 86400000 is 24 Hours / 60000 is 1 minute / 10000 is 10 seconds
         
         userLoginSession = responseData.user_login && sessionData && Date.now() - sessionData.timestamp < 2592000000; 
         // 1 month in milliseconds
