@@ -1,13 +1,10 @@
-import CountdownTimer from '@/components/CountdownTimer';
 import LogoutBtn from '@/components/LogoutBtn';
 
 export default function HomeNav({isAdmin, loggedIn}) {
+  
   return (
     <>
-      {loggedIn && <div className="absolute -top-7 left-0 bg-green-50">
-        <CountdownTimer /></div>
-      }
-
+     
     { isAdmin || loggedIn ? (
       <>
 

@@ -1,15 +1,19 @@
+import { useContext, useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
+import IsGuestContext from '@/helpers/IsGuestContext';
+import CountdownTimer from '@/components/CountdownTimer';
 import {getAdminCookie} from '@/helpers/handleCookies';
 import getSessionData from '@/helpers/getSessionData';
-import validUrl from 'valid-url';
 import DOMPurify from 'dompurify';
-import { useState, useEffect, useRef } from 'react';
-import { useRouter } from 'next/router';
+// import validUrl from 'valid-url';
 
 // const baseUrl = 'http://localhost:5000';
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 function Search() {
   const router = useRouter();
+  const { isGuest } = useContext(IsGuestContext);
+  const [admin, setAdmin] = useState(false);
   // const postUrl = `${baseUrl}/post?id=${id}`;
   // const loginUrl = `${baseUrl}/login`;
   // const href = loggedIn ? postUrl : loginUrl;
@@ -34,6 +38,9 @@ function Search() {
         router.push('/login');
         return;
       } 
+      if(getCookie){
+        setAdmin(true)
+      }
     }
   }, []);
 
@@ -85,14 +92,22 @@ function Search() {
   };
 
   if (loading) {
-    return <div className="max-w-[700px] w-[95%] m-auto">Loading...</div>;
+    return <p className={`text-slate-200 transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[8vw]`}>Loading...</p>;
   }
 
-  return (
-    <div className="max-w-[700px] w-[95%] m-auto">
+
+return (
+<>
+    <div className="relative max-w-[700px] w-[95%] m-auto">
+
+    { isGuest && <div className="absolute -top-6 left-0 bg-green-50">
+      <CountdownTimer /></div>
+    }
 
     <div className="flex justify-end w-full mt-2 sm:mt-0 border-t-2 border-slate-900">
+      
       <a className="block my-0 bg-[#1A0123] px-12 text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8" href="/">View all</a>
+      
     </div>
 
     <div className="relative">
@@ -145,6 +160,7 @@ function Search() {
         )}
       </ul>
     </div>
+</>
   );
 }
 

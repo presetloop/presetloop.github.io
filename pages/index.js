@@ -1,15 +1,18 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useContext } from 'react';
+import IsGuestContext from '@/helpers/IsGuestContext';
 import axios from 'axios';
 import {getAdminCookie} from '@/helpers/handleCookies';
 import getSessionData from '@/helpers/getSessionData';
-import Footer from '@/components/Footer';
-import Home from '@/components/Home';
+import CountdownTimer from '@/components/CountdownTimer';
 import HomeNav from '@/components/HomeNav';
+import Home from '@/components/Home';
+import Footer from '@/components/Footer';
 
 export default function App() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const [totalCount, setTotalCount] = useState(undefined);
 
+  const { isGuest } = useContext(IsGuestContext);
   const [loggedIn, setLoggedIn] = useState(undefined);
   const [isAdmin, setIsAdmin] = useState(false);
     // ^^ props sent to Home.js ^^
@@ -17,7 +20,7 @@ export default function App() {
   const [page, setPage] = useState(1);
     // ^^ first load state (page 1) ^^
   const [loading, setLoading] = useState(false);
-
+  
   useEffect(() => {
     setTimeout(() => {
       fetchData();
@@ -41,27 +44,39 @@ export default function App() {
       setIsAdmin(true);
     }
 
-    let loggedInSession = null;
+    let guestLoginSession = undefined;
+    let userLoginSession = undefined;
+    
     if (typeof window !== 'undefined') {
       const sessionInfo = getSessionData();
+      
       if (sessionInfo) {
         const { sessionData } = sessionInfo;
 
-        loggedInSession = responseData.guest_login && sessionData && Date.now() - sessionData.timestamp < 86400000; // 24 Hours / 60000 is 1 minute(for testing)
+        guestLoginSession = responseData.guest_login && sessionData && Date.now() - sessionData.timestamp < 86400000; 
+        // 86400000 is 24 Hours / 60000 is 1 minute(for testing)
+        
+        userLoginSession = responseData.user_login && sessionData && Date.now() - sessionData.timestamp < 2592000000; 
+        // 1 month in milliseconds
 
-        if (!loggedInSession) {
+        if (!guestLoginSession && !userLoginSession) {
+        // if (!userLoginSession) {
           const sessionKeys = Object.keys(localStorage).filter(key => key.startsWith('myapp-session-'));
           if (sessionKeys.length > 0) {
             const latestSessionKey = sessionKeys.sort().reverse()[0];
-            localStorage.removeItem(latestSessionKey); // Remove the session data using the key
+            localStorage.removeItem(latestSessionKey); // Remove the session data using the key to avoid duplication.
           }
         }
       } 
-      // else{
-      //   console.log("No session data")
-      // }
+      else{
+        // console.log("No session data")
+        guestLoginSession = false;
+        userLoginSession = false; // Set both loggedInSession and loggedInSession2 to false in the case of no session data
+      }
     }
-    setLoggedIn(loggedInSession);
+    // setLoggedIn(userLoginSession);
+    setLoggedIn(userLoginSession || guestLoginSession);
+    
     setData(responseData.posts);
     setTotalCount(responseData.total_count);
     setLoading(false);
@@ -83,6 +98,12 @@ return (
 
 
 <div className="flex flex-col min-h-screen">
+
+     { isGuest && <div className="absolute -top-7 left-0 bg-green-50">
+        <CountdownTimer /></div>
+      }
+
+
     <nav className={`transition-all duration-500`}> 
       <HomeNav isAdmin={isAdmin} loggedIn={loggedIn} />
     </nav>

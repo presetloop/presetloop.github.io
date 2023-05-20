@@ -1,11 +1,14 @@
-import { useState, useEffect, useRef } from 'react';
+import { useContext, useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
 import axios from 'axios';
+import IsGuestContext from '@/helpers/IsGuestContext';
 import generateUniqueKey from '@/helpers/generateUniqueKey';
 import LoginFormInputs from './LoginFormInputs'
 import {setCookie} from '@/helpers/handleCookies';
 
-function LoginForm({ apiUrl }) {
+export default function LoginForm({ apiUrl }) {
+  const { setIsGuest } = useContext(IsGuestContext);
+
   const titleField = useRef(null);
   const router = useRouter();
 
@@ -39,7 +42,7 @@ function LoginForm({ apiUrl }) {
         email: email,
         password: password,
       });
-      // console.log('Login request response:', response);
+      // console.table('Login request response:', response);
 
       const responseData = response.data;
       // console.log('Login response data:', responseData);
@@ -54,11 +57,19 @@ function LoginForm({ apiUrl }) {
         router.push('/');
       } 
 
-      // Guest Login
       if (responseData.success) {
-        const loggedIn = responseData.message === 'Login successful';
+        const GuestloggedIn = responseData.message === 'Guest Login successful';
+      // Guest Login
 
-        if (loggedIn) {
+        if(GuestloggedIn) {
+          setIsGuest(true);
+        } else{
+          setIsGuest(false);
+        }
+
+        const UserloggedIn = responseData.message === 'User Login successful';
+        
+        if (UserloggedIn || GuestloggedIn) {
           // imported helper function
           const uniqueKey = generateUniqueKey('myapp-session');
           if (typeof window !== 'undefined' && window.localStorage) {
@@ -82,8 +93,8 @@ function LoginForm({ apiUrl }) {
   };
 
   return (
-    <LoginFormInputs titleField={titleField} handleSubmit={handleSubmit} email={email} setEmail={setEmail} password={password} setPassword={setPassword} loading={loading} errorMessage={errorMessage} inputFieldType={inputFieldType} setInputFieldType={setInputFieldType} />
+    <>
+      <LoginFormInputs titleField={titleField} handleSubmit={handleSubmit} email={email} setEmail={setEmail} password={password} setPassword={setPassword} loading={loading} errorMessage={errorMessage} inputFieldType={inputFieldType} setInputFieldType={setInputFieldType} />
+    </>
   );
 }
-
-export default LoginForm;

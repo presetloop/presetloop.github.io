@@ -1,5 +1,7 @@
+import { useContext, useState, useEffect } from 'react';
 import { useRouter } from 'next/router';
-import { useState, useEffect } from 'react';
+import IsGuestContext from '@/helpers/IsGuestContext';
+import CountdownTimer from '@/components/CountdownTimer';
 import {getAdminCookie} from '@/helpers/handleCookies';
 import getSessionData from '@/helpers/getSessionData';
 import DOMPurify from 'dompurify';
@@ -8,9 +10,11 @@ import DeleteBtn from '../components/DeleteBtn';
 import EditBtn from '../components/EditBtn';
 import ImageDynamic from '../components/ImageDynamic';
 
+const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
 function Post() {
-  const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
+  const { isGuest } = useContext(IsGuestContext);
   const { id } = router.query;
   const [admin, setAdmin] = useState(false);
   const [data, setData] = useState([]);
@@ -90,6 +94,10 @@ return (
 {/* navigation */}
   <div className="z-10 relative mt-8 border-t-2 border-slate-900 max-w-[1473px] w-[95%] m-auto">
     <div className="flex gap-2 justify-between">
+
+      { isGuest && <div className="absolute -top-10 left-0 bg-green-50">
+        <CountdownTimer /></div>
+      }
 
       <a className={`${getRandomClass(random300)} block -mt-2 pt-2 sm:pt-1.5 rotate-0 px-2 sm:px-6 text-sm sm:text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8`} href="/">View all</a>
       
