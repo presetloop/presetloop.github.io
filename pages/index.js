@@ -53,7 +53,7 @@ export default function App() {
       if (sessionInfo) {
         const { sessionData } = sessionInfo;
 
-        guestLoginSession = responseData.guest_login && sessionData && Date.now() - sessionData.timestamp < 86400000; 
+        guestLoginSession = responseData.guest_login && sessionData && Date.now() - sessionData.timestamp < 300000; // 5 Minutes
         // 86400000 is 24 Hours / 60000 is 1 minute / 10000 is 10 seconds
         
         userLoginSession = responseData.user_login && sessionData && Date.now() - sessionData.timestamp < 2592000000; 

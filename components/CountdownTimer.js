@@ -14,8 +14,8 @@ export default function CountdownTimer() {
 
     const { sessionData } = getSessionData() || {};
 
-    if (sessionData) {
-      const timeRemaining = sessionData.timestamp + 10000 - Date.now();
+    if (sessionData) { // 300000 -> 5 Minutes
+      const timeRemaining = sessionData.timestamp + 300000 - Date.now();
       // 86400000 is 24 Hours / 60000 is 1 minute / 10000 is 10 seconds
       if (timeRemaining > 0) {
         setTimeRemaining(timeRemaining);

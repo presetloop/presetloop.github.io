@@ -40,9 +40,11 @@ export default function GuestAccess({ setEmail, setPassword, setInputFieldType }
         { isClient && (
           <>
             {isMobile ? (
-              <p className="text-center text-slate-800">{'\u005E\u005E\u005E'} 24 Hour Guest Pass</p>
+              <p className="text-center text-slate-800">5 Minute {'\u005E\u005E\u005E'} Guest Pass</p>
+              // 24 Hour Guest Pass
             ) : (
-              <p className="text-slate-800">{'\u003C\u003C\u003C'} 24 Hour Guest Pass</p>
+              <p className="text-slate-800">{'\u003C\u003C\u003C'} 5 Minute Guest Pass</p>
+              // 24 Hour Guest Pass
             )}
           </>
         )}
