@@ -92,7 +92,7 @@ return (
 <>
 
 {/* navigation */}
-  <div className="z-10 relative mt-2 border-t-2 border-slate-900 max-w-[1473px] w-[95%] m-auto">
+  <div className="z-10 relative mt-8 sm:mt-2 border-t-2 border-slate-900 max-w-[1473px] w-[95%] m-auto">
     <div className="flex gap-2 justify-between">
 
       { isGuest && <div className="z-100 absolute -top-7 left-0 bg-green-50">
