@@ -5,6 +5,7 @@ import validUrl from 'valid-url';
 import ImagePlaceholder from '@/components/ImagePlaceholder';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
+const imagePlaceholderUrl = "https://olk1.com";
 
 export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn = false, isHomeImg = false, isAdminImg = false, id }) {
 
@@ -82,7 +83,7 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
 
 // logged in article images.
   return (
-    <a href={DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
+    <a href={!item.imgHref ? imagePlaceholderUrl : DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
        target="_blank"
        rel="noopener noreferrer">
       
@@ -92,6 +93,7 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
           imgkey={Math.random()} 
           height={window.innerWidth < 800 ? "275px" : "770px"}
           rotate={"rotate(1deg)"}
+          alt={'No Image Available'}
         />
       ) : ( 
         <Image
