@@ -17,13 +17,14 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
       </div>
 
 
-      <form onSubmit={handleSubmit}>
+      <form autoComplete="off" onSubmit={handleSubmit}>
 
       <div className="relative">
         {!inputFieldType ? (
           <input
             ref={titleField}
             required
+            autoComplete="off"
             className="appearance-none border-slate-900 mb-4 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Enter your email"
             type="email"
@@ -36,6 +37,7 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
           <input
             ref={titleField}
             required
+            autoComplete="off"
             className="appearance-none border-slate-900 mb-4 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Enter your password"
             type="password"
@@ -50,6 +52,7 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
         <div className="relative">
           <input
             required
+            autoComplete="off"
             className="appearance-none border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Enter your password"
             type="password"
