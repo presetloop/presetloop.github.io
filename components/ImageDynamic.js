@@ -41,7 +41,20 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
           />
 
           ) : (
-            <ImagePlaceholder width={"100vw"} className={className} imgkey={Math.random()} height={"275px"} />
+            <ImagePlaceholder 
+              imgkey={Math.random()} 
+              // width={"100%"} 
+              // height={"95%"} 
+              onError={() => setClassName('object-contain')}
+              onLoad={(event) => {
+                if (event.currentTarget.height < 275) {
+                  setClassName('object-contain');
+                } else {
+                  setClassName('object-cover');
+                }
+              }}
+              className={`transition-all duration-500 cursor-pointer ${className}`}
+            />
           )
         }
       </a>
@@ -74,7 +87,20 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
           />
           ) : (
             // remove width prop to keep the placeholder image square
-            <ImagePlaceholder className={className} imgkey={Math.random()} height={"275px"} width={"100vw"} />
+            <ImagePlaceholder 
+              imgkey={Math.random()} 
+              // width={"100%"} 
+              // height={"95%"} 
+              onError={() => setClassName('object-contain')}
+              onLoad={(event) => {
+                if (event.currentTarget.height < 275) {
+                  setClassName('object-contain');
+                } else {
+                  setClassName('object-cover');
+                }
+              }}
+              className={`transition-all duration-500 cursor-pointer ${className}`}
+            />
           )
         }
       </a>
@@ -89,9 +115,9 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
       
       { !item.imgHref ? (
         <ImagePlaceholder 
-          className={`${className} mx-auto`}
+          className={`transition-all duration-500 sm:mt-4 cursor-pointer ${className} w-[100%] h-[100%] max-w-[700px]`}
+          // height={window.innerWidth < 800 ? "275px" : "100%"}
           imgkey={Math.random()} 
-          height={window.innerWidth < 800 ? "275px" : "770px"}
           rotate={"rotate(1deg)"}
           alt={'No Image Available'}
         />
