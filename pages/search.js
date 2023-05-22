@@ -104,7 +104,7 @@ return (
       <CountdownTimer /></div>
     }
 
-    <div className="flex justify-end w-full mt-2 sm:mt-0 border-t-2 border-slate-900">
+    <div className="flex justify-end w-full mt-8 sm:mt-2 border-t-2 border-slate-900">
       
       <a className="block my-0 bg-[#1A0123] px-12 text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8" href="/">View all</a>
       
