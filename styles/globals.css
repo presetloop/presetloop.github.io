@@ -76,3 +76,27 @@ body::-webkit-scrollbar-thumb {
     transform: translateX(115%);
   }
 }
+
+
+.guestLoginbtnAni{
+  animation: pulse 1s ease-in-out infinite;
+}
+
+@keyframes pulse {
+  0% {
+    /* transform: scale(100%); */
+  }
+  50% {
+    transform: translateY(0%);
+    border: 2px solid white;
+    /* transform: scaleY(103%); */
+  }
+  75% {
+    /* transform: scaleX(110%); */
+    transform: translateY(0%);
+  }
+  100% {
+    transform: translateY(0%);
+    /* transform: scaleY(103%); */
+  }
+}

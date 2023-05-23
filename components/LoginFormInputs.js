@@ -71,13 +71,14 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
               className="
               border-green-400 
               border-2 
-              bg-green-400 
-              hover:bg-white
-              text-white
-              hover:text-green-400
-              font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-350"
+              hover:bg-green-400 
+              bg-white
+              hover:text-white
+              text-green-400
+              font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-350
+              guestLoginbtnAni"
               type="submit"
-              value={loading ? 'Logging in......' : 'Login \u2190'}
+              value={loading ? 'Logging in...' : 'Login \u2190'}
               disabled={loading}
             />
           ) : (
