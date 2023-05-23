@@ -20,7 +20,8 @@ export async function handleLogout() {
           const sessionDataObj = getSessionData();
           if (sessionDataObj && sessionDataObj.sessionData) {
             const { sessionData, sessionKey } = sessionDataObj;
-            localStorage.removeItem(sessionKey);
+            localStorage.removeItem(sessionKey); // delete session
+            localStorage.removeItem('data'); // reset pagination
           }
         }
 
