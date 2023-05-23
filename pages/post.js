@@ -9,6 +9,7 @@ import validUrl from 'valid-url';
 import DeleteBtn from '../components/DeleteBtn';
 import EditBtn from '../components/EditBtn';
 import ImageDynamic from '../components/ImageDynamic';
+import Footer from '@/components/Footer';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -90,9 +91,12 @@ function Post() {
 
 return (
 <>
+<div className="flex flex-col h-screen">
+
+<div className='max-w-[1473px] w-[95%] m-auto flex-1'>
 
 {/* navigation */}
-  <div className="z-10 relative mt-8 sm:mt-2 border-t-2 border-slate-900 max-w-[1473px] w-[95%] m-auto">
+  <div className="z-10 relative mt-8 sm:mt-2 border-t-2 border-slate-900">
     <div className="flex gap-2 justify-between">
 
       { isGuest && <div className="z-100 absolute -top-7 left-0 bg-green-50">
@@ -185,11 +189,14 @@ return (
   
 ))}
 
-
-      </div>
-    
-
-    </>
+      </div>{/* \ MAIN CONTENT */}
+    </div>{/* \CONTAINER */}
+  
+    <div className='mt-auto'>
+      <Footer />
+    </div>
+  </div>
+</>
   );
 }
 

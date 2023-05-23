@@ -94,10 +94,11 @@ if (loggedIn === undefined) {
 
 return (
 <>
-<div className="relative mt-8 sm:mt-2 border-t-2 border-slate-900 max-w-[1473px] w-[95%] m-auto">
+<div className="flex flex-col h-screen">
 
+<div className='max-w-[1473px] w-[95%] m-auto flex-1'>
 
-<div className="flex flex-col min-h-screen">
+<div className="relative mt-8 sm:mt-2 border-t-2 border-slate-900">
 
      { isGuest && <div className="absolute -top-7 left-0 bg-green-50">
         <CountdownTimer /></div>
@@ -116,13 +117,16 @@ return (
 
 </div>
 
-
 </div>{/* \container */}
 
 
-    {/* {data && <Footer />} */}
-    <Footer />
-  
+<div className="mt-auto">
+  {/* {data && <Footer />} */}
+  <Footer />
+</div>
+
+
+</div>  
 </>
 );
 }
