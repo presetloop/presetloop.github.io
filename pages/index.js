@@ -22,9 +22,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   
   useEffect(() => {
-    setTimeout(() => {
       fetchData();
-    }, 100);
   }, []);
 
   async function fetchData() {

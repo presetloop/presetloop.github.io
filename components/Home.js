@@ -54,9 +54,9 @@ async function fetchNewData(startPage = 1, endPage = startPage) {
       const percentComplete = Math.ceil(Math.round((completedPages / totalPages) * 10000) / 100);
       setProgress(`${percentComplete}%`);
     }
-    setTimeout(() => {
-      setData(allPosts.reverse());
-    }, 300);
+    
+    setData(allPosts.reverse());
+    
   } catch (error) {
     console.log('Print the error:', error);
   }
