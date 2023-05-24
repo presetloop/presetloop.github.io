@@ -17,14 +17,13 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
       </div>
 
 
-      <form autoComplete="off" onSubmit={handleSubmit}>
+      <form onSubmit={handleSubmit}>
 
       <div className="relative">
         {!inputFieldType ? (
           <input
             ref={titleField}
             required
-            autoComplete="off"
             className="appearance-none border-slate-900 mb-4 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Enter your email"
             type="email"
@@ -34,6 +33,10 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
             pattern="\S+@\S+\.\S+"
           />
         ) : (
+          <>
+          {/* Blanks the username so browser auto fill is masked */}
+          <input className="hidden" type="hidden" tabindex="-1"/>
+          
           <input
             ref={titleField}
             required
@@ -45,6 +48,8 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
             value={password}
             onChange={(event) => setPassword(event.target.value.trim())}
           />
+
+          </>
         )}
       </div>
 
@@ -52,7 +57,6 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
         <div className="relative">
           <input
             required
-            autoComplete="off"
             className="appearance-none border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
             placeholder="Enter your password"
             type="password"
