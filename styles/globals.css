@@ -13,6 +13,7 @@ body {
   font-family: var(--font-mono);
   overflow-x: hidden;
   overflow-y: scroll;
+  overscroll-behavior: none; /* IOS */
 }
 
 body::-webkit-scrollbar {
