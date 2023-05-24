@@ -1,10 +1,13 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import HomeListItem from '@/components/HomeListItem';
 
 export default function Home({isAdmin, loggedIn, totalCount }) {
-
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
+
+  const targetRef = useRef(null);
+  const previousScrollPosition = useRef(0);
+
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(false);
@@ -14,19 +17,18 @@ export default function Home({isAdmin, loggedIn, totalCount }) {
 useEffect(() => {
   const storedData = JSON.parse(localStorage.getItem('data'));
   if (storedData && storedData.ids && storedData.page) {
-    setTimeout(() => {
-      fetchNewData(1, storedData.page);
-      setPage(storedData.page);
-    }, 0);
+    fetchNewData(1, storedData.page);
+    setPage(storedData.page);
   } else {
-    setTimeout(() => {
-      fetchNewData();
-    }, 0);
+    fetchNewData();
   }
 }, []);
 
 async function fetchNewData(startPage = 1, endPage = startPage) {
   setLoading(true);
+  
+  previousScrollPosition.current = window.scrollY;
+
   let allPosts = [];
   const totalPages = endPage - startPage + 1;
   let completedPages = 0;
@@ -62,12 +64,24 @@ async function fetchNewData(startPage = 1, endPage = startPage) {
   setLoading(false);
 }
 
+
 function handleFetchArticles(event) {
   event.preventDefault();
+  event.stopPropagation();
   const nextPage = page + 1;
   fetchNewData(1, nextPage);
+  setTimeout(() => {
+    scrollToRef();
+  }, 1000);
 }
 
+const scrollToRef = () => {
+  const scrollToPosition = previousScrollPosition.current + 300;
+  window.scrollTo({
+    top: scrollToPosition,
+    behavior: "smooth",
+  });
+};
 
 setTimeout(() => {
   if (!data || data.length === 0) {
@@ -83,8 +97,8 @@ setTimeout(() => {
       
   {progress !== '' ? (
     
-    <div className='flex justify-center -mt-[100px] mx-auto items-center h-screen'>
-      <p className="text-slate-200 transition-all duration-5000 text-8xl">  {progress}</p>
+    <div className='flex items-end mx-auto sm:justify-center sm:items-center h-screen sm:-mt-[100px]'>
+      <p className="text-slate-200 transition-all duration-5000 text-8xl">{progress}</p>
     </div>
 
   ) : data.length > 0 && (
@@ -115,7 +129,7 @@ setTimeout(() => {
 
 
     {/* LOAD MORE BUTTON */}
-      <div className="flex justify-center text-xl my-16">              
+      <div ref={targetRef} className="flex justify-center text-xl my-16">              
         <div onClick={hasMore ? handleFetchArticles : null} className={hasMore ? 'relative cursor-pointer my-0 bg-[#1A0123] px-8 text-lg text-white ease duration-300 hover:bg-[#1a1] hover:scale-105 hover:pl-12 hover:pr-12' : 'hover:bg-[#1A0123] hover:scale-100 hover:pl-8 hover:pr-8'}>
         <p className={!hasMore ? `load-more-btn select-none` : "select-none"}>
           {hasMore ? "Load more..." : "You have reached the end :)"}
