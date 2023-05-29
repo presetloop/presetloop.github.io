@@ -81,7 +81,7 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
         { imgHref ? ( 
   
           <Image
-            className={`rounded-full hover:rounded-none transition-all duration-500 mt-3 cursor-pointer ${className}`}
+            className={`relative rounded-full group-hover:rounded-none transition-all duration-1000 group-hover:duration-0 mt-3 cursor-pointer ${className}`}
             src={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
             width={700}
             height={275}

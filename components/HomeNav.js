@@ -1,6 +1,6 @@
 import LogoutBtn from '@/components/LogoutBtn';
 
-export default function HomeNav({isAdmin, loggedIn}) {
+export default function HomeNav({isGuest, isAdmin, loggedIn}) {
   
   return (
     <>
@@ -8,11 +8,20 @@ export default function HomeNav({isAdmin, loggedIn}) {
     { isAdmin || loggedIn ? (
       <>
 
-        <div className="flex gap-2 justify-between">
+      <div className="flex gap-2 justify-between">
+
+      <div className={`flex text-white sm:hover:text-black ${isGuest ? "ml-24 sm:ml-80" : ""}`}>
           
-            <a className="block" href={isAdmin ? "/form" : "/"}>
-              <p className="mt-1 -rotate-1 bg-[#1A0123] px-2 sm:px-12 text-md sm:text-lg text-white sm:hover:pl-10 sm:hover:pr-10 ease-in-out duration-300">{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
-            </a>
+      <a href={isAdmin ? "/form" : "/"}>
+          <p className='-mt-[24px] [word-spacing:-0px]'>pre</p>
+          <p className="-mt-[21px] ml-6 mr-6 px-2 bg-transparent ease-in-out duration-300">
+            <img className="h-10 w-10" src="/loop.svg" alt="Preset Loop" />
+          </p>
+          <p className='-mt-[43px] ml-[74px] [word-spacing:-0px]'>set</p> 
+      </a>
+
+      </div>      
+
             
           <div className="flex gap-2">
             <a className="block" href="/search">
@@ -36,7 +45,7 @@ export default function HomeNav({isAdmin, loggedIn}) {
             </a>
           </div>
           
-            <div className="flex gap-2">
+          <div className="flex gap-2">
             <a className="hidden sm:block" href="/register">
               <p className="border-slate-900 border-0 -mt-7 px-1 text-md text-slate-900 hover:bg-green-400 hover:text-white ease-in-out duration-300">Register</p>
             </a>

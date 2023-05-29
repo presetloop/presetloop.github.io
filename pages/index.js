@@ -103,7 +103,7 @@ return (
       }
 
     <nav className={`transition-all duration-500`}> 
-      <HomeNav isAdmin={isAdmin} loggedIn={loggedIn} />
+      <HomeNav isGuest={isGuest} isAdmin={isAdmin} loggedIn={loggedIn} />
     </nav>
 
     <main className={`flex-1 flex opacity-1 transition-opacity duration-500 delay-500`}>

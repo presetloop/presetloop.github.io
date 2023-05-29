@@ -35,7 +35,7 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
         ) : (
           <>
           {/* Blanks the username so browser auto fill is masked */}
-          <input className="hidden" type="hidden" tabindex="-1"/>
+          <input className="hidden" type="hidden" tabIndex="-1"/>
           
           <input
             ref={titleField}
