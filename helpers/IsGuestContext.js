@@ -30,24 +30,3 @@ export const IsGuestProvider = ({ children }) => {
 };
 
 export default IsGuestContext;
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
