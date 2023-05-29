@@ -92,7 +92,7 @@ if (loggedIn === undefined) {
 
 return (
 <>
-<div className="flex flex-col h-screen">
+<div className="mt-1 sm:mt-8 flex flex-col h-screen">
 
 <div className='max-w-[1473px] w-[95%] m-auto flex-1'>
 
@@ -101,7 +101,6 @@ return (
      { isGuest && <div className="absolute -top-7 left-0 bg-green-50">
         <CountdownTimer /></div>
       }
-
 
     <nav className={`transition-all duration-500`}> 
       <HomeNav isAdmin={isAdmin} loggedIn={loggedIn} />

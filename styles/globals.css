@@ -31,7 +31,7 @@ body::-webkit-scrollbar-thumb {
 
 @media screen and (min-width: 640px){
   body {
-    padding: 2rem;
+    padding: 0rem;
     font-family: var(--font-mono);
     overflow-x: hidden;
     overflow-y: scroll;

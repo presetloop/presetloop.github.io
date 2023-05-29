@@ -14,6 +14,13 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
   const convertToHttps = "http://"; // CHANGE to https:// BEFORE BUILD AND DEPLOY
   const imgHref = item && item.imgHref || item;
 
+  const getRandomValue = () => {
+    const randomNum = Math.random();
+    return randomNum > 0.5 ? 'NEW' : '';
+  };
+
+  const randomValue = getRandomValue();
+
 // images when not logged in (redirects to /login)
   if ((!isLoggedIn === true) && !isAdmin) {
     return (
@@ -23,9 +30,9 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
         { imgHref ? ( 
   
           <Image
-            className={`transition-all duration-500 mt-3 cursor-pointer ${className}`}
+            className={`relative rounded-full group-hover:rounded-none transition-all duration-1000 group-hover:duration-0 mt-3 cursor-pointer ${className}`}
             src={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
-            width={700}
+            width={500}
             height={275}
             onError={() => setClassName('object-contain')}
             onLoad={(event) => {
@@ -53,10 +60,14 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
                   setClassName('object-cover');
                 }
               }}
-              className={`transition-all duration-500 cursor-pointer ${className}`}
+              className={`relative rounded-full hover:rounded-none transition-all duration-500 hover:duration-1000 mt-3 cursor-pointer ${className}`}
             />
           )
         }
+        <span className='absolute right-0 top-3 bg-red-400 text-white text-sm px-2 py-0'>{randomValue}</span>
+        <span className='absolute left-0 bottom-0 bg-green-400 text-white text-sm px-1 py-1'><svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" strokeWidth={0} stroke="currentColor" className="w-4 h-4">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
+        </svg></span>
       </a>
     );
   }
@@ -70,7 +81,7 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
         { imgHref ? ( 
   
           <Image
-            className={`transition-all duration-500 mt-3 cursor-pointer ${className}`}
+            className={`rounded-full hover:rounded-none transition-all duration-500 mt-3 cursor-pointer ${className}`}
             src={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
             width={700}
             height={275}
@@ -99,10 +110,14 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
                   setClassName('object-cover');
                 }
               }}
-              className={`transition-all duration-500 cursor-pointer ${className}`}
+              className={`rounded-full hover:rounded-none transition-all duration-500 cursor-pointer ${className}`}
             />
           )
         }
+        <span className='absolute right-0 top-3 bg-red-400 text-white text-sm px-2 py-0'>{randomValue}</span>
+        <span className='absolute left-0 bottom-0 bg-green-400 text-white text-sm px-1 py-1'><svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" strokeWidth={0} stroke="currentColor" className="w-4 h-4">
+        <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
+        </svg></span>
       </a>
     );
   }

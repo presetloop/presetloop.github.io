@@ -23,20 +23,30 @@ export default function HomeNav({isAdmin, loggedIn}) {
         </div>
       </>
       ) : (
-        <div className="flex gap-2 justify-between">
-          <a className="block" href="/login">
-            <p className="-mt-7 border-slate-900 border-2 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300">{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
-          </a>
-          
-            <div className="flex gap-2">
-            <a className="block" href="/login">
-              <p className="border-slate-900 border-2 -mt-7 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300">Login</p>
-            </a>
-            <a className="hidden sm:block" href="/register">
-              <p className="border-slate-900 border-2 -mt-7 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300">Register</p>
+
+        <div className="flex justify-between">
+
+          <div className="flex text-white hover:text-black">
+            <a href="/login">
+              <p className='-mt-[24px] [word-spacing:-0px]'>pre</p>
+              <p className="-mt-[21px] ml-6 mr-6 px-2 bg-transparent ease-in-out duration-300">
+                <img className="h-10 w-10" src="/loop.svg" alt="Preset Loop" />
+              </p>
+              <p className='-mt-[43px] ml-[74px] [word-spacing:-0px]'>set</p>
             </a>
           </div>
+          
+            <div className="flex gap-2">
+            <a className="hidden sm:block" href="/register">
+              <p className="border-slate-900 border-0 -mt-7 px-1 text-md text-slate-900 hover:bg-green-400 hover:text-white ease-in-out duration-300">Register</p>
+            </a>
+            <a className="block" href="/login">
+              <p className="border-slate-900 border-2 -mt-7 px-4 text-md text-slate-900 hover:bg-green-400 hover:text-white ease-in-out duration-300">Login</p>
+            </a>
+          </div>
+
         </div>
+        
       )}
     </>
   )
