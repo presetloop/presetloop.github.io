@@ -16,7 +16,7 @@ export default function GuestAccess({ setEmail, setPassword, setInputFieldType }
   const handleCopy = () => {
     setEmail(process.env.NEXT_PUBLIC_LOGIN_TODAYSEMAIL);
     setPassword(process.env.NEXT_PUBLIC_LOGIN_TODAYSPASSWORD);
-    setInputFieldType(true)
+    setInputFieldType(true);
   };
 
   return (

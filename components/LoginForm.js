@@ -42,6 +42,7 @@ export default function LoginForm({ apiUrl }) {
         email: email,
         password: password,
       });
+      // console.log();
       // console.table('Login request response:', response);
 
       const responseData = response.data;
@@ -57,9 +58,9 @@ export default function LoginForm({ apiUrl }) {
         router.push('/');
       } 
 
+      // Guest Login
       if (responseData.success) {
         const GuestloggedIn = responseData.message === 'Guest Login successful';
-      // Guest Login
 
         if(GuestloggedIn) {
           setIsGuest(true);
@@ -67,6 +68,7 @@ export default function LoginForm({ apiUrl }) {
           setIsGuest(false);
         }
 
+      // Registered User Login
         const UserloggedIn = responseData.message === 'User Login successful';
         
         if (UserloggedIn || GuestloggedIn) {

@@ -60,7 +60,7 @@ async function fetchNewData(startPage = 1, endPage = startPage) {
     setData(allPosts.reverse());
     
   } catch (error) {
-    console.log('Print the error:', error);
+    console.log('Print the error!!!:', error);
   }
   setProgress(``);
   setLoading(false);

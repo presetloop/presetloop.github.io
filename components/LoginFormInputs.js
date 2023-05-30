@@ -1,7 +1,7 @@
 import GuestAccess from "./GuestAccess";
 
 const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, setPassword, inputFieldType, setInputFieldType, loading, errorMessage }) => {
-  
+  const cta = "Guest Pass GO!"  
   return (
     <div className="max-w-[700px] w-[95%] m-auto">
       
@@ -21,6 +21,7 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
 
       <div className="relative">
         {!inputFieldType ? (
+          <>
           <input
             ref={titleField}
             required
@@ -32,29 +33,8 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
             onChange={(event) => setEmail(event.target.value.trim())}
             pattern="\S+@\S+\.\S+"
           />
-        ) : (
-          <>
-          {/* Blanks the username so browser auto fill is masked */}
-          <input className="hidden" type="hidden" tabIndex="-1"/>
-          
-          <input
-            ref={titleField}
-            required
-            autoComplete="off"
-            className="appearance-none border-slate-900 mb-4 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
-            placeholder="Enter your password"
-            type="password"
-            name="password"
-            value={password}
-            onChange={(event) => setPassword(event.target.value.trim())}
-          />
 
-          </>
-        )}
-      </div>
-
-
-        <div className="relative">
+          <div className="relative">
           <input
             required
             className="appearance-none border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
@@ -68,21 +48,57 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
         {errorMessage && <p className="absolute bottom-[5px] left-0 mb-0 text-red-500 text-md">{errorMessage}</p>}
         </div>
 
+          </>
+      
+        ) : (  
+          // Guest pass activated
+          <>
+          <input
+            ref={titleField}
+            required
+            className="appearance-none border-slate-900 mb-4 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="Enter your email"
+            type="hidden"
+            name="email"
+            value={email}
+            onChange={(event) => setEmail(event.target.value.trim())}
+            pattern="\S+@\S+\.\S+"
+          />
+ 
+          <input
+            ref={titleField}
+            required
+            autoComplete="off"
+            className="appearance-none border-slate-900 mb-4 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+            placeholder="Enter your password"
+            type="hidden"
+            name="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value.trim())}
+          />
+          </>
+      
+        )}
+      </div>
 
+
+        
+        {/* Button animation for guest login */}
         <div className="flex items-center justify-between">
           {inputFieldType ? (
             <input
               className="
               border-green-400 
               border-2 
-              hover:bg-green-400 
-              bg-white
-              hover:text-white
-              text-green-400
-              font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-350
+              bg-green-400 
+              hover:bg-white
+              text-white
+              text-lg
+              hover:text-green-400
+              font-bold py-1 px-5 focus:outline-none focus:shadow-outline ease-in-out duration-350
               guestLoginbtnAni"
               type="submit"
-              value={loading ? 'Logging in...' : 'Login \u2190'}
+              value={loading ? cta+"..." : cta}
               disabled={loading}
             />
           ) : (
@@ -96,11 +112,19 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
         </div>
 
       </form>
-      <p className="mt-3">
-        <a href='/password-reset'>Forgot password?</a>
-      </p>
 
-      <GuestAccess setEmail={setEmail} setPassword={setPassword} setInputFieldType={setInputFieldType} />
+      {!inputFieldType && <p className="mt-3">
+        <a href='/password-reset'>Forgot password?</a>
+      </p>}
+      
+      {!inputFieldType && <GuestAccess setEmail={setEmail} setPassword={setPassword} setInputFieldType={setInputFieldType} />}
+      
+      {inputFieldType && <p className="mt-3">
+        The 5 Minute Guest Pass gives you full access to the entire site. A countdown timer will begin once you click the "{cta}" button, from which point you will have 5 minutes to peruse all the currently available resources.<br /><br />
+        If you like what you find, considering registering. {":)"}
+      </p>
+      }
+
     </div>// \container
   );
 };
