@@ -116,12 +116,11 @@ return (
 
 </div>{/* \container */}
 
-
-<div className="mt-auto">
-  {/* {data && <Footer />} */}
-  <Footer />
-</div>
-
+{ data &&
+  <div className="mt-auto">
+    <Footer />
+  </div>
+}
 
 </div>  
 </>
