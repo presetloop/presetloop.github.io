@@ -24,8 +24,9 @@ export async function handleLogout() {
             localStorage.removeItem('data'); // reset pagination
           }
         }
-
-        window.location.href = '/';
+        setTimeout(() => {
+          window.location.href = '/';
+        }, 1000);
       }
     } catch (error) {
       console.error(error);

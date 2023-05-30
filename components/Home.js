@@ -71,6 +71,7 @@ function handleFetchArticles(event) {
   event.preventDefault();
   event.stopPropagation();
   const nextPage = page + 1;
+
   fetchNewData(1, nextPage);
   setTimeout(() => {
     scrollToRef();

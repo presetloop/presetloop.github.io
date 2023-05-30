@@ -15,7 +15,7 @@ export default function HomeNav({isGuest, isAdmin, loggedIn}) {
       <a href={isAdmin ? "/form" : "/"}>
           <p className='-mt-[24px] [word-spacing:-0px]'>pre</p>
           <p className="-mt-[21px] ml-6 mr-6 px-2 bg-transparent ease-in-out duration-300">
-            <img className="h-10 w-10" src="/loop.svg" alt="Preset Loop" />
+            <img className="h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
           </p>
           <p className='-mt-[43px] ml-[74px] [word-spacing:-0px]'>set</p> 
       </a>
@@ -39,7 +39,7 @@ export default function HomeNav({isGuest, isAdmin, loggedIn}) {
             <a href="/login">
               <p className='-mt-[24px] [word-spacing:-0px]'>pre</p>
               <p className="-mt-[21px] ml-6 mr-6 px-2 bg-transparent ease-in-out duration-300">
-                <img className="h-10 w-10" src="/loop.svg" alt="Preset Loop" />
+                <img className="h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
               </p>
               <p className='-mt-[43px] ml-[74px] [word-spacing:-0px]'>set</p>
             </a>
