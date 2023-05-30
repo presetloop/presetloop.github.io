@@ -137,13 +137,21 @@ setTimeout(() => {
 
 
     {/* LOAD MORE BUTTON */}
-      <div ref={targetRef} className="flex justify-center text-xl mt-16 mb-60">              
-        <div onClick={hasMore ? handleFetchArticles : null} className={hasMore ? 'relative cursor-pointer my-0 bg-[#1A0123] px-8 text-lg text-white ease duration-300 hover:bg-[#1a1] hover:scale-105 hover:pl-12 hover:pr-12' : 'hover:bg-[#1A0123] hover:scale-100 hover:pl-8 hover:pr-8'}>
-        <p className={!hasMore ? `load-more-btn select-none` : "select-none"}>
-          {hasMore ? "Load more..." : "You have reached the end :)"}
-        </p>
-        </div>
-      </div>
+      { loading ? null :
+        (
+        <>
+        {data && (
+          <div ref={targetRef} className="loadedAni flex justify-center text-xl   mt-16 mb-60">              
+            <div onClick={hasMore ? handleFetchArticles : null} className={hasMore ? 'relative cursor-pointer my-0 bg-[#1A0123] px-8 text-lg text-white ease duration-300 hover:bg-[#1a1] hover:scale-105 hover:pl-12 hover:pr-12' : 'hover:bg-[#1A0123] hover:scale-100 hover:pl-8 hover:pr-8'}>
+            <p className={!hasMore ? `load-more-btn select-none` : "select-none"}>
+              {hasMore ? "Load more..." : "You have reached the end :)"}
+            </p>
+            </div>
+          </div>
+        )}
+          </>
+        )
+      }
 
       </ul>
     </div>

@@ -91,9 +91,9 @@ function Post() {
 
 return (
 <>
-<div className="flex flex-col h-screen">
+<div className="flex flex-col">
 
-<div className='max-w-[1473px] w-[95%] m-auto flex-1'>
+<div className='max-w-[1473px] w-[95%] m-auto flex-1 min-h-screen'>
 
 {/* navigation */}
   <div className="z-10 relative mt-8 sm:mt-2 border-t-2 border-slate-900">

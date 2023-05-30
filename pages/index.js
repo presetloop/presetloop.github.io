@@ -106,7 +106,7 @@ return (
       <HomeNav isGuest={isGuest} isAdmin={isAdmin} loggedIn={loggedIn} />
     </nav>
 
-    <main className={`flex-1 flex opacity-1 transition-opacity duration-500 delay-500`}>
+    <main className={`min-h-screen flex-1 flex opacity-1 transition-opacity duration-500 delay-500`}>
     
     {/* MAIN CONTENT */}
       <Home isAdmin={isAdmin} loggedIn={loggedIn} totalCount={totalCount} />
@@ -116,11 +116,13 @@ return (
 
 </div>{/* \container */}
 
-{ data &&
-  <div className="mt-auto">
-    <Footer />
-  </div>
-}
+  {/* { data &&
+    <div className="mt-auto">
+      <Footer />
+    </div>
+  } */}
+
+  {loading ? null : <Footer />}
 
 </div>  
 </>
