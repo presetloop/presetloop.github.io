@@ -100,17 +100,56 @@ return (
 <>
     <div className="relative max-w-[700px] w-[95%] m-auto">
 
+
+    <div className="flex w-full mt-8 sm:mt-10 border-t-2 border-slate-900">
+  
     { isGuest && <div className="absolute -top-6 left-0 bg-green-50">
       <CountdownTimer /></div>
     }
 
-    <div className="flex justify-end w-full mt-8 sm:mt-2 border-t-2 border-slate-900">
-      
-      <a className="block my-0 bg-[#1A0123] px-12 text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8" href="/">View all</a>
+      {isGuest ? (
+      <nav className={`w-full flex text-white sm:hover:text-black`}>
+          <div className='ml-auto pl-20 sm:pl-48'>
+          <a href={"/"}>
+            <p className='-mt-[24px] [word-spacing:-0px]'>pre</p>
+
+            <p className="-mt-[21px] ml-7 px-2 bg-transparent ease-in-out duration-300">
+              <img className="h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
+            </p>
+
+            <p className='-mt-[43px] ml-20 [word-spacing:-0px]'>set</p> 
+          </a>
+          </div>
+          <div className='ml-auto'>
+            <a className="block my-0 bg-[#1A0123] px-4 sm:px-12 text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8" href="/">View all</a>
+          </div>
+      </nav>
+      ) : (
+      <nav className={`w-full flex space-between text-white sm:hover:text-black`}>
+        <div>
+          <a href={"/"}>
+          <p className='-mt-[24px] [word-spacing:-0px]'>pre</p>
+
+          <p className="-mt-[21px] ml-7 px-2 bg-transparent ease-in-out duration-300">
+            <img className="h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
+          </p>
+
+          <p className='-mt-[43px] ml-20 [word-spacing:-0px]'>set</p> 
+        </a>
+        </div>
+
+        <div className='ml-auto'>
+          <a className="inline-block my-0 bg-[#1A0123] px-4 sm:px-12 text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8" href="/">View all</a>
+        </div>
+      </nav>
+      )}
       
     </div>
 
-    <div className="relative">
+
+
+
+    <div className="relative mt-8">
       <input
         ref={searchField}
         required

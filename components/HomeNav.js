@@ -20,7 +20,7 @@ export default function HomeNav({isGuest, isAdmin, loggedIn}) {
           <p className='-mt-[43px] ml-[74px] [word-spacing:-0px]'>set</p> 
       </a>
 
-      </div>      
+      </div>
 
             
           <div className="flex gap-2">
