@@ -2,6 +2,7 @@ import { useState } from 'react';
 import Image from 'next/image';
 import DOMPurify from 'dompurify';
 import validUrl from 'valid-url';
+import SoundFile from '@/components/SoundFile';
 import ImagePlaceholder from '@/components/ImagePlaceholder';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
@@ -14,12 +15,10 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
   const convertToHttps = "http://"; // CHANGE to https:// BEFORE BUILD AND DEPLOY
   const imgHref = item && item.imgHref || item;
 
-  const getRandomValue = () => {
+  const getRandomValue = (x,y) => {
     const randomNum = Math.random();
-    return randomNum > 0.5 ? 'NEW' : '';
+    return randomNum > 0.5 ? x : y || randomNum< 0.5 ? y : x;
   };
-
-  const randomValue = getRandomValue();
 
 // images when not logged in (redirects to /login)
   if ((!isLoggedIn === true) && !isAdmin) {
@@ -28,24 +27,25 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
          rel="noopener noreferrer">
         
         { imgHref ? ( 
-  
-          <Image
-            className={`relative rounded-md sm:group-hover:rounded-full transition-all duration-1000 group-hover:duration-0 mt-3 cursor-pointer ${className}`}
-            src={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
-            width={500}
-            height={275}
-            onError={() => setClassName('object-contain')}
-            onLoad={(event) => {
-              if (event.currentTarget.height < 275) {
-                setClassName('object-contain');
-              } else {
-                setClassName('object-cover');
-              }
-            }}
-            // loading="lazy"
-            priority={true}
-            alt={item?.title || 'No Image Available'}
-          />
+          <SoundFile isLoggedIn={isLoggedIn} soundFile={``} image={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)} />
+          
+          // <Image
+          //   className={`relative rounded-xl sm:group-hover:rounded-full transition-all duration-1000 group-hover:duration-0 mt-3 cursor-pointer ${className}`}
+          //   src={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
+          //   width={500}
+          //   height={275}
+          //   onError={() => setClassName('object-contain')}
+          //   onLoad={(event) => {
+          //     if (event.currentTarget.height < 275) {
+          //       setClassName('object-contain');
+          //     } else {
+          //       setClassName('object-cover');
+          //     }
+          //   }}
+          //   // loading="lazy"
+          //   priority={true}
+          //   alt={item?.title || 'No Image Available'}
+          // />
 
           ) : (
             <ImagePlaceholder 
@@ -64,10 +64,19 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
             />
           )
         }
-        <span className='absolute right-0 top-3 bg-red-400 text-white text-sm px-2 py-0'>{randomValue}</span>
-        <span className='absolute left-0 bottom-0 bg-green-400 text-white text-sm px-1 py-1'><svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" strokeWidth={0} stroke="currentColor" className="w-4 h-4">
+        <span className='absolute -right-0 top-1.5 text-white text-sm'>
+          <span className='p-0'>
+          {getRandomValue(
+            <span className='p-0 bg-red-400'>{""}</span>,
+            <span className='p-2 bg-green-400'>New</span>
+          )}
+          </span>
+        </span>
+
+        
+        {/* <span className='absolute left-0 bottom-0 bg-green-400 text-white text-sm px-1 py-1'><svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" strokeWidth={0} stroke="currentColor" className="w-4 h-4">
         <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
-        </svg></span>
+        </svg></span> */}
       </a>
     );
   }
@@ -75,27 +84,28 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
 // home screen index images when logged in (link to post id)
   if (isHomeImg || isAdminImg) {
     return (
-      <a href={DOMPurify.sanitize(`${baseUrl}/post?id=${id}`).replace(/^http?:\/\//i, convertToHttps)}
-         rel="noopener noreferrer">
+      <>
+      {/* <a href={DOMPurify.sanitize(`${baseUrl}/post?id=${id}`).replace(/^http?:\/\//i, convertToHttps)} rel="noopener noreferrer"> */}
         
         { imgHref ? ( 
-  
-          <Image
-            className={`relative rounded-md sm:group-hover:rounded-full transition-all duration-1000 group-hover:duration-0 mt-3 cursor-pointer ${className}`}
-            src={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
-            width={700}
-            height={275}
-            onError={() => setClassName('object-contain')}
-            onLoad={(event) => {
-              if (event.currentTarget.height < 275) {
-                setClassName('object-contain');
-              } else {
-                setClassName('object-cover');
-              }
-            }}
-            // loading="lazy"
-            alt={item?.title || 'No Image Available'}
-          />
+          <SoundFile isLoggedIn={isLoggedIn} soundFile={`/samples/frazzles_loop1.mp3`} image={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)} />
+          // <Image
+          //   className={`relative rounded-md sm:group-hover:rounded-full transition-all duration-1000 group-hover:duration-0 mt-3 cursor-pointer ${className}`}
+          //   src={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
+          //   width={700}
+          //   height={275}
+          //   onError={() => setClassName('object-contain')}
+          //   onLoad={(event) => {
+          //     if (event.currentTarget.height < 275) {
+          //       setClassName('object-contain');
+          //     } else {
+          //       setClassName('object-cover');
+          //     }
+          //   }}
+          //   // loading="lazy"
+          //   alt={item?.title || 'No Image Available'}
+          // />
+
           ) : (
             // remove width prop to keep the placeholder image square
             <ImagePlaceholder 
@@ -114,11 +124,21 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
             />
           )
         }
-        <span className='absolute right-0 top-3 bg-red-400 text-white text-sm px-2 py-0'>{randomValue}</span>
-        <span className='absolute left-0 bottom-0 bg-green-400 text-white text-sm px-1 py-1'><svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" strokeWidth={0} stroke="currentColor" className="w-4 h-4">
+        <span className='absolute -right-0 top-1.5 text-white text-sm'>
+          <span className='p-0'>
+          {getRandomValue(
+            <span className='p-0 bg-red-400'>{""}</span>,
+            <span className='p-2 bg-green-400'>New</span>
+          )}
+          </span>
+        </span>
+        
+        {/* <span className='absolute left-0 bottom-0 bg-green-400 text-white text-sm px-1 py-1'><svg xmlns="http://www.w3.org/2000/svg" fill="white" viewBox="0 0 24 24" strokeWidth={0} stroke="currentColor" className="w-4 h-4">
         <path strokeLinecap="round" strokeLinejoin="round" d="M5.25 5.653c0-.856.917-1.398 1.667-.986l11.54 6.348a1.125 1.125 0 010 1.971l-11.54 6.347a1.125 1.125 0 01-1.667-.985V5.653z" />
-        </svg></span>
-      </a>
+        </svg></span> */}
+      
+      {/* </a> */}
+      </>
     );
   }
 

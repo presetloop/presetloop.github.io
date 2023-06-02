@@ -22,11 +22,11 @@ const HomeListItem = ({ id, title, linkTag, imgHref, contentExcerpt, isAdmin, lo
 }
 
   return (
-    <section key={id} className={`group bg-white p-0 flex max-w-xl flex-col`}>
+    <section key={id} className={`group bg-[#101010] p-0 flex max-w-xl flex-col`}>
 
 
       {/* IMAGES */}
-      <div className="relative mb-8 sm:mb-4 flex w-full transition-all duration-500">
+      <div className="relative mb-5 sm:mb-4 flex w-full transition-all duration-500">
         {
           <ImageDynamic item={imgHref} isAdmin={isAdmin} isLoggedIn={loggedIn} isAdminImg={isAdmin} isHomeImg={loggedIn} id={id}/>
         }
@@ -35,33 +35,37 @@ const HomeListItem = ({ id, title, linkTag, imgHref, contentExcerpt, isAdmin, lo
       
 
       {/* DATE AND URL (linkTag) */}
-      <div className="flex flex-col sm:flex-row sm:items-center gap-x-4 pb-1.5 text-xs">
+      {/* <div className="flex flex-col sm:flex-row sm:items-center gap-x-4 pb-1.5 text-xs">
         <time dateTime={null} className="text-green-400">
           {DOMPurify.sanitize(generateRandomDate())}
         </time>
         {linkTag ? 
           (<a
-            href={isValidHref ? href : null} className="relative z-10 sm:px-3 py-1.5 sm:py-0 font-medium text-gray-600 hover:bg-gray-100">
+            href={isValidHref ? href : null} className="relative z-10 sm:px-3 py-1.5 sm:py-0 font-medium text-gray-600 hover:bg-gray-100"> */}
+
             {/* {DOMPurify.sanitize(truncateTitle(linkTag, 25))} */}
-            <TruncatedLink content={linkTag} />
+
+            {/* <TruncatedLink content={linkTag} />
           </a>
           ) : (
             <span className="relative z-10 sm:px-3 py-1.5 sm:py-0 font-medium text-gray-600">{"http://presetloop.com"}</span>
             )
         }
-      </div>
+      </div> */}
 
 
     
 
       {/* TITLE AND CONTENT EXCERPT */}
-        <h3 className="text-lg font-semibold sm:mt-2 leading-6 bg-white text-blue-500 transition-all duration-500">
+        <h3 className="text-lg font-semibold sm:mt-0 leading-6 bg-[#101010] text-white transition-all duration-500">
           <a href={isValidHref ? href : null}>
-          <TruncatedTitle content={title} />
+          {title}
+          {/* <TruncatedTitle content={title} /> */}
           </a>
         </h3>
-        <div className="mt-3.5 mb-0 text-sm leading-5 text-gray-600 transition-all duration-500">
-          <TruncatedContent content={contentExcerpt?.replace(/<br\s*\/?>/gi, '')} />
+        <div className="mt-1 mb-0 text-sm leading-5 bg-[#101010] text-white transition-all duration-500">
+          {contentExcerpt?.replace(/<br\s*\/?>/gi, '')}
+          {/* <TruncatedContent content={contentExcerpt?.replace(/<br\s*\/?>/gi, '')} /> */}
         </div>
 
 

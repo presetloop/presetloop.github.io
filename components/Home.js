@@ -101,7 +101,7 @@ setTimeout(() => {
   {progress !== '' ? (
     
     <div className='flex items-end mx-auto sm:justify-center sm:items-center h-screen sm:-mt-[100px]'>
-      <p className="text-slate-200 transition-all duration-5000 text-8xl">{progress}</p>
+      <p className="text-white transition-all duration-5000 text-8xl">{progress}</p>
     </div>
 
   ) : data.length > 0 && (
@@ -109,7 +109,7 @@ setTimeout(() => {
     <div>
       
       <div className="loadedAni flex justify-center mt-4 sm:mt-4 text-md tracking-wide">
-        <div className='-skew-x-12 bg-[#fff] px-2 py-1 border-black border-b-2 text-black'>
+        <div className='-skew-x-12 bg-[#fff] mt-4 sm:px-2 sm:py-2 text-black'>
           <div className='total-sample-sets'>
             Total Sample Sets<span className='inline-block ml-2'>({postCount})</span>
           </div>
@@ -155,9 +155,9 @@ setTimeout(() => {
         <>
         {data && (
           <div ref={targetRef} className="loadedAni flex justify-center text-xl mt-16 mb-60">              
-            <div onClick={hasMore ? handleFetchArticles : null} className={hasMore ? 'relative cursor-pointer my-0 bg-[#1A0123] px-8 text-lg text-white ease duration-300 hover:bg-[#1a1] hover:scale-105 hover:pl-12 hover:pr-12' : 'hover:bg-[#1A0123] hover:scale-100 hover:pl-8 hover:pr-8'}>
+            <div onClick={hasMore ? handleFetchArticles : null} className={hasMore ? 'relative cursor-pointer my-0 bg-[#101010] px-8 text-lg text-white ease duration-300 hover:bg-[#1a1] hover:scale-105 hover:pl-12 hover:pr-12' : 'hover:bg-[#1A0123] hover:scale-100 hover:pl-8 hover:pr-8'}>
             <p className={!hasMore ? `load-more-btn select-none` : "select-none"}>
-              {hasMore ? "Load more..." : "You have reached the end :)"}
+              {hasMore ? "Load more..." : ""}
             </p>
             </div>
           </div>

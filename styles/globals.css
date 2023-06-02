@@ -7,8 +7,9 @@
     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 }
+
 body {
-  @apply bg-white;
+  @apply bg-[#101010];
   padding: 0rem;
   font-family: var(--font-mono);
   overflow-x: hidden;
@@ -79,7 +80,7 @@ body::-webkit-scrollbar-thumb {
   color: white;
   white-space: nowrap;
   overflow: hidden;
-  animation: scroll 5s linear infinite;
+  /* animation: scroll 5s linear infinite; */
 }
 @keyframes scroll {
   0% {
