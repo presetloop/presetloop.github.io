@@ -95,6 +95,7 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
               text-white
               text-lg
               hover:text-green-400
+              mt-2
               font-bold py-1 px-5 focus:outline-none focus:shadow-outline ease-in-out duration-350
               guestLoginbtnAni"
               type="submit"
@@ -119,9 +120,9 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
       
       {!inputFieldType && <GuestAccess setEmail={setEmail} setPassword={setPassword} setInputFieldType={setInputFieldType} />}
       
-      {inputFieldType && <p className="mt-3">
+      {inputFieldType && <p className="mt-6">
         The 5 Minute Guest Pass gives you full access to the entire site. A countdown timer will begin once you click the "{cta}" button, from which point you will have 5 minutes to peruse all the currently available resources.<br /><br />
-        If you like what you find, considering registering. {":)"}
+        If you like what you find, considering becoming a <a className="inline-block text-md text-blue-700" href="/register">Registered User</a>.
       </p>
       }
 

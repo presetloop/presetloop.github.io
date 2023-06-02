@@ -61,6 +61,19 @@ body::-webkit-scrollbar-thumb {
   }
 }
 
+.total-sample-sets {
+  position: relative;
+  display: inline-block;
+  text-transform: uppercase;
+  animation: flip 60s infinite;
+  animation-delay: 0s;
+}
+@keyframes flip {
+  0%,80% {
+    transform: rotateY(360deg);
+  }
+}
+
 
 .load-more-btn {
   color: white;
@@ -68,7 +81,6 @@ body::-webkit-scrollbar-thumb {
   overflow: hidden;
   animation: scroll 5s linear infinite;
 }
-
 @keyframes scroll {
   0% {
     transform: translateX(-100%);

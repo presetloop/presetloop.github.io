@@ -30,7 +30,7 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
         { imgHref ? ( 
   
           <Image
-            className={`relative rounded-full group-hover:rounded-none transition-all duration-1000 group-hover:duration-0 mt-3 cursor-pointer ${className}`}
+            className={`relative rounded-md sm:group-hover:rounded-full transition-all duration-1000 group-hover:duration-0 mt-3 cursor-pointer ${className}`}
             src={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
             width={500}
             height={275}
@@ -60,7 +60,7 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
                   setClassName('object-cover');
                 }
               }}
-              className={`relative rounded-full hover:rounded-none transition-all duration-500 hover:duration-1000 mt-3 cursor-pointer ${className}`}
+              className={`relative rounded-md sm:group-hover:rounded-full transition-all duration-500 hover:duration-1000 mt-3 cursor-pointer ${className}`}
             />
           )
         }
@@ -81,7 +81,7 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
         { imgHref ? ( 
   
           <Image
-            className={`relative rounded-full group-hover:rounded-none transition-all duration-1000 group-hover:duration-0 mt-3 cursor-pointer ${className}`}
+            className={`relative rounded-md sm:group-hover:rounded-full transition-all duration-1000 group-hover:duration-0 mt-3 cursor-pointer ${className}`}
             src={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
             width={700}
             height={275}
@@ -110,7 +110,7 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
                   setClassName('object-cover');
                 }
               }}
-              className={`rounded-full hover:rounded-none transition-all duration-500 cursor-pointer ${className}`}
+              className={`rounded-md sm:group-hover:rounded-full transition-all duration-500 cursor-pointer ${className}`}
             />
           )
         }
