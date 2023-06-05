@@ -75,10 +75,10 @@ export default function EditFormInputs({data, handleSubmit, titleField, title, h
       <div className="mt-2 flex items-center justify-between">
     { !disableSubmitBtn ? <button
         className="border-slate-900 border-2 hover:bg-slate-900 hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150"
-        type="submit">{loading ? 'Bedlam...' : 'Deploy'}</button> 
+        type="submit">{loading ? 'Uploading...' : 'Upload'}</button> 
       : <button disabled
         className="border-slate-900 border-2 hover:bg-slate-900 hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150"
-        type="submit">Deploy</button> 
+        type="submit">Upload</button> 
     }
     </div>
  
