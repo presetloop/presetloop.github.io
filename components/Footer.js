@@ -21,6 +21,7 @@ export default function Footer() {
 
 
           <div className="my-16 flex flex-col gap-x-4 text-white tracking-tighter leading-8">
+            <p>E.U.L.A.</p>
             <p>Privacy Policy</p>
             <p>Cookie Settings</p>
             <p>
