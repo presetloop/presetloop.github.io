@@ -8,6 +8,17 @@
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
 }
 
+/* 
+COLOR SCHEME:
+  bg-[#101010]
+  #efefef <- inverse of bg
+  text-white
+  text-black
+  bg-red-400
+  bg-green-400
+ */
+
+
 body {
   @apply bg-[#101010];
   padding: 0rem;
