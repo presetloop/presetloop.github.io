@@ -64,18 +64,49 @@ const SoundFile = ({ isLoggedIn, isAdmin, soundFile, image }) => {
     };
   }, []);
 
+  // useEffect(() => {
+  //   const audio = audioRef.current;
+  //   const updatePlayingState = () => {
+  //     setIsPlaying(!audio.paused);
+  //   };
+  //   audio.addEventListener('play', updatePlayingState);
+  //   audio.addEventListener('pause', updatePlayingState);
+  //   return () => {
+  //     audio.removeEventListener('play', updatePlayingState);
+  //     audio.removeEventListener('pause', updatePlayingState);
+  //   };
+  // }, []);
+
   useEffect(() => {
-    const audio = audioRef.current;
-    const updatePlayingState = () => {
+  const audio = audioRef.current;
+
+  if (!audio) {
+    // Check if audioRef.current is null or undefined
+    return;
+  }
+
+  const updatePlayingState = () => {
+    try {
+      if (audio.error) {
+        // Handle the error condition here
+        console.error("Error loading audio:", audio.error);
+        return;
+      }
       setIsPlaying(!audio.paused);
-    };
-    audio.addEventListener('play', updatePlayingState);
-    audio.addEventListener('pause', updatePlayingState);
-    return () => {
-      audio.removeEventListener('play', updatePlayingState);
-      audio.removeEventListener('pause', updatePlayingState);
-    };
-  }, []);
+    } catch (error) {
+      // Handle any unexpected errors here
+      console.error("An error occurred:", error);
+    }
+  };
+
+  audio.addEventListener('play', updatePlayingState);
+  audio.addEventListener('pause', updatePlayingState);
+
+  return () => {
+    audio.removeEventListener('play', updatePlayingState);
+    audio.removeEventListener('pause', updatePlayingState);
+  };
+}, []);
 
   return (
     <div>
@@ -88,7 +119,7 @@ const SoundFile = ({ isLoggedIn, isAdmin, soundFile, image }) => {
 
           {/* PLAY / PAUSE */}
           <button
-            onClick={isLoggedIn || isAdmin ? toggleAudio : null}
+            onClick={(isLoggedIn || isAdmin) ? toggleAudio : null}
             className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full px-2 py-2"
           >
             {isPlaying ? (

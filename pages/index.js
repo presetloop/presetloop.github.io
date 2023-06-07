@@ -76,7 +76,6 @@ export default function App() {
     setLoggedIn(userLoginSession || guestLoginSession);
     
     setData(responseData.samplepacks);
-    console.log(data);
     setTotalCount(responseData.total_count);
     setLoading(false);
 
