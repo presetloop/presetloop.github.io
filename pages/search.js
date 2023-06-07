@@ -14,9 +14,9 @@ function Search() {
   const router = useRouter();
   const { isGuest } = useContext(IsGuestContext);
   const [admin, setAdmin] = useState(false);
-  // const postUrl = `${baseUrl}/post?id=${id}`;
+  // const samplePack = `${baseUrl}/post?id=${id}`;
   // const loginUrl = `${baseUrl}/login`;
-  // const href = loggedIn ? postUrl : loginUrl;
+  // const href = loggedIn ? samplePack : loginUrl;
 
   // const isValidHref = validUrl.isWebUri(href);
 
@@ -182,11 +182,11 @@ return (
         {searchResults.length !== 0 ? searchResults.map(result => (
           <div key={result.id}>
             {/* <a href={isValidHref ? href : null}> */}
-            <a href={`/post?id=${result.id}`}>
+            <a href={`/samplepack?id=${result.id}`}>
               <div className='flex my-8 items-center'>
                 {
                   result.imgHref ? <img className="mr-4 h-10 w-10 rounded-full" src={result.imgHref} alt="Search result" />
-                  : <img alt="Post Preview Image" className="mr-4 h-10 w-10 rounded-full" src="https://org.olk1.com/picz/1682816223.jpg" />
+                  : <img alt="Post Preview Image" className="mr-4 h-10 w-10 rounded-full" src="https://images.presetloops.com/placeholder/1682816223.jpg" />
                 }
                 <p className="w-fit text-xl">
                   {DOMPurify.sanitize(result.title)}

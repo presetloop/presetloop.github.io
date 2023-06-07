@@ -10,7 +10,7 @@ export default function Home({isAdmin, loggedIn, totalCount }) {
 
   const [page, setPage] = useState(1);
   const [data, setData] = useState([]);
-  const [postCount, setPostCount] = useState(null);
+  const [samplepackCount, setSamplepackCount] = useState(null);
   const [loading, setLoading] = useState(false);
   const [progress, setProgress] = useState(false);
   const [hasMore, setHasMore] = useState(true);
@@ -30,24 +30,24 @@ async function fetchNewData(startPage = 1, endPage = startPage) {
   
   previousScrollPosition.current = window.scrollY;
 
-  let allPosts = [];
+  let allSamplepacks = [];
   const totalPages = endPage - startPage + 1;
   let completedPages = 0;
   try {
     for (let pageNumber = startPage; pageNumber <= endPage; pageNumber++) {
       const response = await axios.get(`${apiUrl}/index.php?page=${pageNumber}`);
       const responseData = response.data;
-      const newPosts = responseData.posts;
-      setPostCount(responseData.total_count);
-      if (newPosts.length === 0) {
+      const newSamplepack = responseData.samplepacks;
+      setSamplepackCount(responseData.total_count);
+      if (newSamplepack.length === 0) {
         setHasMore(false);
         break;
       } else {
-        allPosts = [...allPosts, ...newPosts];
-        allPosts.sort((a, b) => a.id - b.id); // sort the allPosts array by ID
-        localStorage.setItem('data', JSON.stringify({ ids: allPosts.map(post => post.id), page: pageNumber }));
+        allSamplepacks = [...allSamplepacks, ...newSamplepack];
+        allSamplepacks.sort((a, b) => a.id - b.id); // sort the allSamplepacks array by ID
+        localStorage.setItem('data', JSON.stringify({ ids: allSamplepacks.map(samplepack => samplepack.id), page: pageNumber }));
         setPage(pageNumber);
-        if (newPosts.length === 0 || allPosts.length === totalCount) {
+        if (newSamplepack.length === 0 || allSamplepacks.length === totalCount) {
           setHasMore(false);
           break;
         }
@@ -57,7 +57,7 @@ async function fetchNewData(startPage = 1, endPage = startPage) {
       setProgress(`${percentComplete}%`);
     }
     
-    setData(allPosts.reverse());
+    setData(allSamplepacks.reverse());
     
   } catch (error) {
     console.log('Print the error!!!:', error);
@@ -111,7 +111,7 @@ setTimeout(() => {
       <div className="loadedAni flex justify-center mt-4 sm:mt-4 text-md tracking-wide">
         <div className='-skew-x-12 bg-[#fff] mt-4 sm:px-2 sm:py-2 text-black'>
           <div className='total-sample-sets'>
-            Total Sample Sets<span className='inline-block ml-2'>({postCount})</span>
+            Total Sample Sets<span className='inline-block ml-2'>({samplepackCount})</span>
           </div>
         </div>
       </div>
@@ -143,8 +143,8 @@ setTimeout(() => {
         xl:gap-y-10 
         xl:grid-cols-6
         ">
-      {data.map(({ id, title, linkTag, imgHref, content_excerpt }) => (
-        <HomeListItem key={id} id={id} title={title} contentExcerpt={content_excerpt} linkTag={linkTag} imgHref={imgHref} isAdmin={isAdmin} loggedIn={loggedIn} />
+      {data.map(({ id, title, linkTag, imgHref, info_excerpt, packPreviewUrl }) => (
+        <HomeListItem key={id} id={id} title={title} infoExcerpt={info_excerpt} linkTag={linkTag} imgHref={imgHref} packPreviewUrl={packPreviewUrl} isAdmin={isAdmin} loggedIn={loggedIn} />
       ))}
     </div>
 

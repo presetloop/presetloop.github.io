@@ -7,10 +7,10 @@ import TruncatedContent from '@/helpers/TruncatedContent';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
-const HomeListItem = ({ id, title, linkTag, imgHref, contentExcerpt, isAdmin, loggedIn }) => {
-  const postUrl = `${baseUrl}/post?id=${id}`;
+const HomeListItem = ({ id, title, linkTag, imgHref, infoExcerpt, packPreviewUrl, isAdmin, loggedIn }) => {
+  const samplepackUrl = `${baseUrl}/samplepack?id=${id}`;
   const loginUrl = `${baseUrl}/login`;
-  const href = isAdmin || loggedIn ? postUrl : loginUrl;
+  const href = isAdmin || loggedIn ? samplepackUrl : loginUrl;
 
   const isValidHref = validUrl.isWebUri(href);
 
@@ -28,7 +28,7 @@ const HomeListItem = ({ id, title, linkTag, imgHref, contentExcerpt, isAdmin, lo
       {/* IMAGES */}
       <div className="relative mb-5 sm:mb-4 flex w-full transition-all duration-500">
         {
-          <ImageDynamic item={imgHref} isAdmin={isAdmin} isLoggedIn={loggedIn} isAdminImg={isAdmin} isHomeImg={loggedIn} id={id}/>
+          <ImageDynamic packPreviewUrl={packPreviewUrl} item={imgHref} isAdmin={isAdmin} isLoggedIn={loggedIn} isAdminImg={isAdmin} isHomeImg={loggedIn} id={id}/>
         }
       </div>
     
@@ -45,7 +45,7 @@ const HomeListItem = ({ id, title, linkTag, imgHref, contentExcerpt, isAdmin, lo
 
             {/* {DOMPurify.sanitize(truncateTitle(linkTag, 25))} */}
 
-            {/* <TruncatedLink content={linkTag} />
+            {/* <TruncatedLink info={linkTag} />
           </a>
           ) : (
             <span className="relative z-10 sm:px-3 py-1.5 sm:py-0 font-medium text-gray-600">{"http://presetloop.com"}</span>
@@ -56,16 +56,16 @@ const HomeListItem = ({ id, title, linkTag, imgHref, contentExcerpt, isAdmin, lo
 
     
 
-      {/* TITLE AND CONTENT EXCERPT */}
+      {/* TITLE AND INFO-EXCERPT */}
         <h3 className="text-lg font-semibold sm:mt-0 leading-6 bg-[#101010] text-white transition-all duration-500">
           <a href={isValidHref ? href : null}>
           {title}
-          {/* <TruncatedTitle content={title} /> */}
+          {/* <TruncatedTitle info={title} /> */}
           </a>
         </h3>
         <div className="mt-1 mb-0 text-sm leading-5 bg-[#101010] text-white transition-all duration-500">
-          {contentExcerpt?.replace(/<br\s*\/?>/gi, '')}
-          {/* <TruncatedContent content={contentExcerpt?.replace(/<br\s*\/?>/gi, '')} /> */}
+          {infoExcerpt?.replace(/<br\s*\/?>/gi, '')}
+          {/* <TruncatedContent info={infoExcerpt?.replace(/<br\s*\/?>/gi, '')} /> */}
         </div>
 
 

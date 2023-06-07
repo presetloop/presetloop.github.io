@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-const SoundFile = ({ isLoggedIn, soundFile, image }) => {
+const SoundFile = ({ isLoggedIn, isAdmin, soundFile, image }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLooping, setIsLooping] = useState(false);
   const audioRef = useRef(null);
@@ -28,12 +28,21 @@ const SoundFile = ({ isLoggedIn, soundFile, image }) => {
     setIsLooping(!isLooping);
   };
 
-  const loopAudio = () => {
-    const audio = audioRef.current;
-    if (audio.currentTime >= audio.duration - 0.0) {
-      audio.currentTime = 0.01;
-    }
-  };
+
+  const loopAudio = (audioRef) => {
+  if (!audioRef || !audioRef.current) {
+    // Check if audioRef or audioRef.current is null or undefined
+    return;
+  }
+
+  const audio = audioRef.current;
+                                         // 0.0
+  if (audio.currentTime >= audio.duration - 0.1) {
+    // Adjusted the comparison value to give a small buffer before resetting
+    audio.currentTime = 0.01;
+  }
+};
+
 
   const stopAllAudio = () => {
     const audios = document.querySelectorAll('audio');
@@ -79,7 +88,7 @@ const SoundFile = ({ isLoggedIn, soundFile, image }) => {
 
           {/* PLAY / PAUSE */}
           <button
-            onClick={toggleAudio}
+            onClick={isLoggedIn || isAdmin ? toggleAudio : null}
             className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full px-2 py-2"
           >
             {isPlaying ? (
@@ -90,7 +99,7 @@ const SoundFile = ({ isLoggedIn, soundFile, image }) => {
           </button>
 
           {/* LOOP */}
-          {isLoggedIn && (  
+          {(isLoggedIn || isAdmin) && (  
             <button
               onClick={toggleLoop}
               className="tracking-widest absolute -bottom-1.5 -left-1.5"

@@ -13,7 +13,7 @@ import Footer from '@/components/Footer';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
-function Post() {
+function Samplepack() {
   const router = useRouter();
   const { isGuest } = useContext(IsGuestContext);
   const { id } = router.query;
@@ -43,7 +43,7 @@ function Post() {
       if(getCookie){
         setAdmin(true)
       }
-      const res = await fetch(`${apiUrl}/post.php?id=${id}`);
+      const res = await fetch(`${apiUrl}/samplepack.php?id=${id}`);
       const json = await res.json();
       setData(json);
       setLoading(false);
@@ -65,7 +65,7 @@ function Post() {
   if (!data || data.length === 0) {
     return (
       <div className="max-w-[700px] w-[95%] m-auto">
-        <p>Post no longer exists or perhaps it never did?</p>
+        <p>Samplepack no longer exists or perhaps it never did?</p>
         <p className="w-fit mt-2 border-slate-900 border-2 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300 cursor-pointer" onClick={handleClick}>Go back &larr;</p>
       </div>
     );
@@ -200,4 +200,4 @@ return (
   );
 }
 
-export default Post;
+export default Samplepack;

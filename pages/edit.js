@@ -6,7 +6,7 @@ import {getAdminCookie} from '@/helpers/handleCookies';
 import getSessionData from '@/helpers/getSessionData';
 import EditFormInputs from '@/components/EditFormInputs';
 
-function EditPost() {
+function EditSamplepack() {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
   const { id } = router.query;
@@ -40,7 +40,7 @@ function EditPost() {
     }
   }, []);
 
-// Fetch post data from the backend
+// Fetch samplepack data from the backend
     async function fetchData(){
       try {
         const getCookie = getAdminCookie();
@@ -50,7 +50,7 @@ function EditPost() {
           return;
         }
 
-      const response = await axios.get(`${apiUrl}/post.php?id=${id}`);
+      const response = await axios.get(`${apiUrl}/samplepack.php?id=${id}`);
       
       if (!response) {
         throw new Error('No data received from server');
@@ -181,7 +181,7 @@ const pattern = /^(htps?:\/\/(ww?\.)*|htp:\/\/(ww?\.)*|http:\/\/(ww?\.)*|w{1,2}\
   setLoading(true);
   setDisableSubmitBtn(false);
   
-  // Send updated post data to the backend  
+  // Send updated samplepack data to the backend  
   const formData = {
     'title': DOMPurify.sanitize(title),
     'linkTag': DOMPurify.sanitize(addHttpsToLink(linkTag)),
@@ -209,11 +209,11 @@ const pattern = /^(htps?:\/\/(ww?\.)*|htp:\/\/(ww?\.)*|http:\/\/(ww?\.)*|w{1,2}\
     setLoading(false);
     console.error(error);
   }
-  window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/post?id=${id}`;
+  window.location.href = `${process.env.NEXT_PUBLIC_BASE_URL}/samplepack?id=${id}`;
 
 };
 
-  // Handle case when post data is not yet fetched
+  // Handle case when post samplepack is not yet fetched
   if (data?.title === null || data?.linkTag === null|| data?.imgHref === null|| data?.content === null) {
     return <p className={`text-slate-200 transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[8vw]`}>Loading...</p>;
   }

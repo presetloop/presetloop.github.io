@@ -6,9 +6,9 @@ import SoundFile from '@/components/SoundFile';
 import ImagePlaceholder from '@/components/ImagePlaceholder';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-const imagePlaceholderUrl = "https://olk1.com";
+const imagePlaceholderUrl = "https://images.presetloops.com/placeholder";
 
-export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn = false, isHomeImg = false, isAdminImg = false, id }) {
+export default function ImageDynamic({ item = null, packPreviewUrl, isAdmin = false, isLoggedIn = false, isHomeImg = false, isAdminImg = false, id }) {
 
   const [className, setClassName] = useState('object-cover');
   
@@ -81,14 +81,14 @@ export default function ImageDynamic({ item = null, isAdmin = false, isLoggedIn 
     );
   }
 
-// home screen index images when logged in (link to post id)
+// home screen index images when logged in (link to samplepack id)
   if (isHomeImg || isAdminImg) {
     return (
       <>
-      {/* <a href={DOMPurify.sanitize(`${baseUrl}/post?id=${id}`).replace(/^http?:\/\//i, convertToHttps)} rel="noopener noreferrer"> */}
+      {/* <a href={DOMPurify.sanitize(`${baseUrl}/samplepack?id=${id}`).replace(/^http?:\/\//i, convertToHttps)} rel="noopener noreferrer"> */}
         
         { imgHref ? ( 
-          <SoundFile isLoggedIn={isLoggedIn} soundFile={`/samples/frazzles_loop1.mp3`} image={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)} />
+          <SoundFile isLoggedIn={isLoggedIn} isAdmin={isAdmin} soundFile={packPreviewUrl} image={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)} />
           // <Image
           //   className={`relative rounded-md sm:group-hover:rounded-full transition-all duration-1000 group-hover:duration-0 mt-3 cursor-pointer ${className}`}
           //   src={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}

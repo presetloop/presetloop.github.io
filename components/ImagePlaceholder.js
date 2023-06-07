@@ -25,7 +25,7 @@ export default function ImagePlaceholder({ imgkey, height, className, width=null
   return (
     
     <img
-      alt="Post Preview Image"
+      alt="Samplepack Preview Image"
       style={{ height: height, width: width, transform: rotate }}
       className={`mt-3 cursor-pointer ${className} object-cover`}
       src={randomImgUrl}
@@ -35,9 +35,9 @@ export default function ImagePlaceholder({ imgkey, height, className, width=null
 }
 
 const placeholderImages = [
-  "https://org.olk1.com/picz/1682816223.jpg",
-  "https://org.olk1.com/picz/1682845045.jpg",
-  "https://org.olk1.com/picz/1682845057.jpg",
-  "https://org.olk1.com/picz/1682845068.jpg"
+  "https://images.presetloops.com/placeholder/1682816223.jpg",
+  "https://images.presetloops.com/placeholder/1682845045.jpg",
+  "https://images.presetloops.com/placeholder/1682845057.jpg",
+  "https://images.presetloops.com/placeholder/1682845068.jpg"
 ];
     
