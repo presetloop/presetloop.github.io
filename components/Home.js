@@ -133,19 +133,19 @@ setTimeout(() => {
         sm:mx-0
         sm:pt-6 
         sm:gap-x-6
-        sm:gap-y-8 
+        sm:gap-y-4 
         sm:grid-cols-3
         lg:pt-8 
         lg:gap-x-8
-        lg:gap-y-10 
+        lg:gap-y-4 
         lg:grid-cols-4
         xl:pt-10 
         xl:gap-x-8
-        xl:gap-y-10 
+        xl:gap-y-4 
         xl:grid-cols-6
         ">
-      {data.map(({ id, title, linkTag, imgHref, info_excerpt, packPreviewUrl }) => (
-        <HomeListItem key={id} id={id} title={title} infoExcerpt={info_excerpt} linkTag={linkTag} imgHref={imgHref} packPreviewUrl={packPreviewUrl} isAdmin={isAdmin} loggedIn={loggedIn} />
+      {data.map(({ id, title, linkTag, imgHref, infoExcerpt, producer, genre, packPreviewUrl }) => (
+        <HomeListItem key={id} id={id} title={title} infoExcerpt={infoExcerpt} linkTag={linkTag} imgHref={imgHref} producer={producer} genre={genre} packPreviewUrl={packPreviewUrl} isAdmin={isAdmin} loggedIn={loggedIn} />
       ))}
     </div>
 
