@@ -79,7 +79,7 @@ function handleFetchArticles(event) {
 }
 
 const scrollToRef = () => {
-  const scrollToPosition = previousScrollPosition.current + 300;
+  const scrollToPosition = previousScrollPosition.current + 0;
   window.scrollTo({
     top: scrollToPosition,
     behavior: "smooth",
@@ -87,8 +87,9 @@ const scrollToRef = () => {
 };
 
 setTimeout(() => {
+  // NO DATA -> loading wont progress to render UI
   if (!data || data.length === 0) {
-  return <p className={`text-red-400 transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[8vw]`}>Loading...</p>;
+  return <p className={`text-red-400 transition-all duration-5000 flex items-center justify-center h-screen text-[8vw]`}>Loading...</p>;
 }
 }, 1000);
 
@@ -100,8 +101,8 @@ setTimeout(() => {
       
   {progress !== '' ? (
     
-    <div className='flex items-end mx-auto sm:justify-center sm:items-center h-screen sm:-mt-[100px]'>
-      <p className="text-white transition-all duration-5000 text-8xl">{progress}</p>
+    <div className="fixed inset-0 flex items-center justify-center bg-[#101010]">
+      <p className="text-white transition-all duration-5000 text-[20vw]">{progress}</p>
     </div>
 
   ) : data.length > 0 && (
