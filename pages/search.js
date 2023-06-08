@@ -100,7 +100,7 @@ return (
 <>
     <div className="relative max-w-[700px] w-[95%] m-auto">
 
-
+{/* navigation */}
     <div className="flex w-full mt-8 sm:mt-10 border-t-2 border-slate-900">
   
     { isGuest && <div className="absolute -top-6 left-0 bg-green-50">

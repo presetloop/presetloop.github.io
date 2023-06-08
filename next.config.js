@@ -3,7 +3,7 @@ const nextConfig = {
   reactStrictMode: true,
   images: {
     // unoptimized: true,
-    domains: ['presetloop.com', 'presetloops.com'],
+    domains: ['org.olk1.com', 'presetloop.com', 'presetloops.com'],
   },
   // remove Download the React DevTools for a better development message
   //  webpack: (
