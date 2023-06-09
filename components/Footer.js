@@ -4,12 +4,12 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   return (
     <>
-      <div className="loadedAni bg-black px-8 sm:px-0 py-8 sm:pt-36 sm:pb-44 flex flex-col text-center">
+      <div className="loadedAni bg-[#101010] px-8 sm:px-0 py-8 sm:pt-36 sm:pb-44 flex flex-col text-center">
  
           
           {/* LOGO */}
             <div className="flex justify-center">
-              <img className="my-8 h-40 w-40 sm:h-48 sm:w-48" src="/logo.svg" alt="Preset Loop" />
+              <img className="rounded-full my-8 h-40 w-40 sm:h-48 sm:w-48" src="/logo.svg" alt="Preset Loop" />
             </div>
   
             <div className="mb-10">
