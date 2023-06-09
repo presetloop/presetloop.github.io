@@ -144,11 +144,27 @@ export default function ImageDynamic({ item = null, packPreviewUrl, isAdmin = fa
 
 // logged in article images.
   return (
-    <a href={!item.imgHref ? imagePlaceholderUrl : DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
-       target="_blank"
-       rel="noopener noreferrer">
-      
-      { !item.imgHref ? (
+    // <a href={!item.imgHref ? imagePlaceholderUrl : DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)}
+    //    target="_blank"
+    //    rel="noopener noreferrer">
+    <>
+      { item.imgHref ? (
+        <SoundFile isLoggedIn={isLoggedIn} isAdmin={isAdmin} soundFile={packPreviewUrl || "https://samples.presetloops.com/frazzles_loop1.mp3"} image={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)} style={`max-w-[100%] h-[100%] w-[850px]`} />
+        // <Image
+        //   className={`transition-all duration-500 sm:mt-4 rotate-1 cursor-pointer ${className} sm:w-[48rem] max-w-[700px]`}
+        //   src={
+        //     imgHref &&
+        //     validUrl.isWebUri(imgHref) &&
+        //     DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)
+        //   }
+        //   alt={item?.title || 'No Image Available'}
+        //   width={300}
+        //   height={275}
+        //   sizes="(min-width: 700px) 700px, 100vw"
+        //   loading="lazy"
+        //   layout="responsive"
+        // /> 
+      ) : ( 
         <ImagePlaceholder 
           className={`transition-all duration-500 sm:mt-4 cursor-pointer ${className} w-[100%] h-[100%] max-w-[700px]`}
           // height={window.innerWidth < 800 ? "275px" : "100%"}
@@ -156,23 +172,9 @@ export default function ImageDynamic({ item = null, packPreviewUrl, isAdmin = fa
           rotate={"rotate(1deg)"}
           alt={'No Image Available'}
         />
-      ) : ( 
-        <Image
-          className={`transition-all duration-500 sm:mt-4 rotate-1 cursor-pointer ${className} sm:w-[48rem] max-w-[700px]`}
-          src={
-            imgHref &&
-            validUrl.isWebUri(imgHref) &&
-            DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)
-          }
-          alt={item?.title || 'No Image Available'}
-          width={300}
-          height={275}
-          sizes="(min-width: 700px) 700px, 100vw"
-          loading="lazy"
-          layout="responsive"
-        /> 
       )
       }
-    </a>
+      </>     
+    // </a>
   );
 }

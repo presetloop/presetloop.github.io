@@ -1,20 +1,25 @@
-import RandomWaveformSymbol from '../helpers/RandomWaveformSymbol';
+import SoundFile from '@/components/SoundFile';
+import RandomWaveformSymbol from './RandomWaveformSymbol';
 
-export default function SamplePackSample({getRandomClass}) {
+export default function SamplePackSample({getRandomClass, sampleFileName, sampleFileUrl, isLoggedIn }) {
   return (
     <>
       <div className={`${getRandomClass} flex justify-between p-2 items-center`}>
     
         <div className='rounded-full bg-white mr-2'>
-          <img className="h-8 w-8" src="/waveform.svg" alt="Preset Loop" />
+          {(isLoggedIn) && (
+            <SoundFile isLoggedIn={true} isAdmin={true} soundFile={sampleFileUrl || `${process.env.NEXT_PUBLIC_SAMPLES}/frazzles-kik-hat.mp3`} image={"/waveform.svg"} style="h-16 w-16"/>
+          )}
         </div>
 
-        <div className='flex flex-col'>
+        <div className='flex flex-col px-2'>
           <div>
-            <p className='text-md mb-1 text-white bg-[#101010]'>sampleFileName_1</p>
+            <p className='text-center text-xs pl-0 mb-0 text-slate-300'>
+              {sampleFileName || "No Sample"}
+            </p>
           </div>
-          <div className='text-left'>
-            <RandomWaveformSymbol />
+          <div>
+            <RandomWaveformSymbol containerWidth={window.innerWidth } />
           </div>
         </div>
 

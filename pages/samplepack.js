@@ -4,7 +4,7 @@ import IsGuestContext from '@/helpers/IsGuestContext';
 import CountdownTimer from '@/components/CountdownTimer';
 import {getAdminCookie} from '@/helpers/handleCookies';
 import getSessionData from '@/helpers/getSessionData';
-import DOMPurify from 'dompurify';
+import DOMPurify, { isValidAttribute } from 'dompurify';
 import validUrl from 'valid-url';
 import DeleteBtn from '../components/DeleteBtn';
 import EditBtn from '../components/EditBtn';
@@ -21,7 +21,6 @@ function Samplepack() {
   const [admin, setAdmin] = useState(false);
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
-
 
   useEffect(() => {    
     if (id) {
@@ -87,7 +86,7 @@ return (
 <>
 <div className="mt-1 sm:mt-8 flex flex-col h-screen">
 
-<div className='max-w-[1200px] w-[95%] m-auto flex-1'>
+<div className='max-w-[1200px] w-[100%] m-auto flex-1'>
 
 {/* navigation */}
   <div className="z-10 relative mt-8 sm:mt-2 border-t-2 border-white">
@@ -123,36 +122,65 @@ return (
 
       </div>
     </div>
-  </div>
+  </div>{/* \navigation */}
+
+</div>{/* \CONTAINER */}
 
 
-
+<div className={`${getRandomClass(random100)}`}>
 {/* MAIN CONTENT */}
-  
+<div className='w-[100%] m-auto flex-1'>
+
     <div className={`loadedAni`}>
 
   {data?.map(item => (
-    <div key={item.id} className={`${getRandomClass(random100)} z-2 -mt-0 sm:-mt-4 lg:mt-0 relative overflow-hidden px-6 py-12 lg:overflow-visible lg:px-0`}>
+    <div key={item.id} className={`z-2 -mt-0 sm:-mt-4 lg:mt-0 relative overflow-hidden px-6 py-12 lg:overflow-visible lg:px-0`}>
 
     <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-0">
       
-       
+       {/* left tab */}
         <div className={`${getRandomClass(random300)} lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8`}>
 
+      {/* meta block */}
       <div className={`${getRandomClass(random400)} -mr-6 lg:mr-2 lg:pr-4`}>
         
-          <div className="lg:max-w-lg">
-            <p className={`${getRandomClass(random300)} -mt-2 -ml-4 px-2 text-xs sm:text-base text-white font-semibold leading-7 w-fit`}>
-            {item.genre}
-            {/* <time dateTime={null} className="bg-gray-100 text-gray-500">
-              {generateRandomDate()}
-            </time> */}
-            </p>
-            <h1 className="pl-2 pr-2 mt-3 pb-2 text-2xl font-bold text-right text-gray-900 sm:text-3xl md:sm:text-4xl">{DOMPurify.sanitize(item.title)}</h1>
+        
+        <div className="lg:max-w-lg">
 
-            {item.linkTag && (
+        {/* GENRE */}
+        <div className='flex justify-between'>
+          <p className={`${getRandomClass(random300)} -rotate-1 -mt-2 -ml-4 px-2 text-xs sm:text-base text-white font-semibold leading-7 w-fit`}>
+          {DOMPurify.sanitize(item.genre)}
+          {/* <time dateTime={null} className="bg-gray-100 text-gray-500">
+            {generateRandomDate()}
+          </time> */}
+          </p>
+          
+          {/* DATE */}
+          <p className={`-mt-4 rotate-1 mr-4 px-2 text-xs sm:text-base text-white font-semibold leading-7 w-fit`}>
+            <span className={`p-1 ${getRandomClass(random300)}`}>
+              {item.date ? DOMPurify.sanitize(item.date) : "9.6.23"}
+            </span>
+          </p>
+        </div>
+
+          {/* TITLE */}
+            <h1 className="pl-2 pr-8 sm:pr-2 mt-3 pb-2 text-2xl font-bold text-right text-white sm:text-3xl md:sm:text-4xl">{DOMPurify.sanitize(item.title)}</h1>
+
+
+
+            {/* PRODUCER */}
+            {item.producer ? (
+              <p className={`${getRandomClass(random100)} w-fit cursor-pointer -ml-1 rotate-1 -mb-2 mt-0 px-2 text-md leading-8 text-gray-700`}>
+                Producer: {item.producer}
+              </p>
+            ) : (
+              <p><span className="text-white mr-2 ">&rarr;</span>No link</p>
+              )}
+
+            {/* {item.linkTag ? (
               <p className={`${getRandomClass(random100)} cursor-pointer mt-6 text-md leading-8 text-gray-700`}>
-                <span className="text-pink-400">&rarr;</span>
+                <span className="text-black">&rarr;</span>
                 <a className="pl-2 md:hover:text-indigo-400" href={
                   item.linkTag &&
                   validUrl.isWebUri(item.linkTag) &&
@@ -160,7 +188,11 @@ return (
                   {window.innerWidth < 480 ? (item.linkTag && item.linkTag.replace(/^https?:\/\//i, '')).slice(0, 20) : (item.linkTag && item.linkTag.replace(/^https?:\/\//i, ''))}
                 </a>
               </p>
-            )}
+            ) : (
+              <p><span className="text-white mr-2 ">&rarr;</span>No link</p>
+              )} */}
+
+
             </div>
             {/*  */}
         </div>
@@ -168,44 +200,49 @@ return (
 
 
 
-      <div className={`${getRandomClass(random400)} -ml-12 -mt-16 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 lg:overflow-hidden`}>
+      <div className={`${getRandomClass(random400)} -ml-12 -mt-16 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 h-full`}>
         
-        <div className='-mt-4'>
-          { (<ImageDynamic item={item} isLoggedIn={true}/> )}
+        {/* IMAGE */}
+        <div className='-mt-2 ml-2 -mr-20 md:mr-0 sm:ml-16'>
+          { (<ImageDynamic item={item} isLoggedIn={true} /> )}
         </div>
         
-        <div className={`mt-8 ${getRandomClass(random300)}`}>
-          <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.info)}}></p>
-        </div>
-      </div>
+        {/* GROUPED META  */}
+        <div className={`max-w-[750px] -mr-6 py-4 px-4 mt-8 ${getRandomClass(random50)}`}>
+       
+        {/* SUB_TITLE  */}
+          <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.sub_title)}} className={`rotate-1 text-center text-lg font-bold -mr-8 py-4 px-4 mt-0 ${getRandomClass(random300)}`}></p>
 
+        {/* INFO  */}
+          <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.info)}} className={`-rotate-1 text-right -ml-8 py-4 px-4 mt-0 ${getRandomClass(random400)}`}></p>
+
+        {/* PACK_DETAILS  */}
+          <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.pack_details)}} className={`rotate-0 text-left -mr-6 py-4 px-4 mt-0 ${getRandomClass(random100)}`}></p>
+        </div>
+      
+      </div>
 
         <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
           
-          <div className="lg:pr-4">
+          <div className="lg:pr-4 sm:ml-8 bg-red-100">
             
-            <div className="md:pr-8 max-w-xl text-base -mt-8 lg:mt-8 xl:mt-8 leading-7 text-gray-700 lg:max-w-lg">
-              
-              
-              <SamplePackSample getRandomClass={getRandomClass(random400)} />
-              <SamplePackSample getRandomClass={getRandomClass(random300)} />
-              <SamplePackSample getRandomClass={getRandomClass(random400)} />
-              <SamplePackSample getRandomClass={getRandomClass(random300)} />
-              <SamplePackSample getRandomClass={getRandomClass(random400)} />
-              <SamplePackSample getRandomClass={getRandomClass(random300)} />
-              <SamplePackSample getRandomClass={getRandomClass(random400)} />
-              <SamplePackSample getRandomClass={getRandomClass(random300)} />
-              <SamplePackSample getRandomClass={getRandomClass(random400)} />
-              <SamplePackSample getRandomClass={getRandomClass(random300)} />
-
+            <div className="md:pr-8 max-w-xl text-base -mt-20 lg:mt-8 leading-7 text-gray-700 lg:max-w-lg">
+                
+                {/* SAMPLES */}
+                {
+                  Array.from({ length: 16 }, (_, index) => (
+                    <SamplePackSample
+                      key={index + 1}
+                      isLoggedIn={true}
+                      sampleFileName={item[`sampleFileName_${index + 1}`]}
+                      sampleFileUrl={item[`sampleFileUrl_${index + 1}`]}
+                      getRandomClass={getRandomClass(random400)}
+                    />
+                  ))
+                }
 
             {/*  */}
             </div>
-
-
-
-
-
 
 
           {/* ADMIN BUTTONS */}
@@ -213,10 +250,14 @@ return (
             <div className="-ml-2 flex justify-start mt-10">
               <DeleteBtn id={item.id} />
               <EditBtn id={item.id} />
-          </div>
+            </div>
           )}
+          {/*  */}
+
           </div>
         </div>  
+
+        {/*  */}
     </div>
   </div>
   
@@ -224,7 +265,9 @@ return (
 
       </div>{/* \ MAIN CONTENT */}
     </div>{/* \CONTAINER */}
-  
+  </div>
+
+
     <div className='mt-auto'>
       <Footer />
     </div>

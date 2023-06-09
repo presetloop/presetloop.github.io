@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-const SoundFile = ({ isLoggedIn, isAdmin, soundFile, image }) => {
+const SoundFile = ({ isLoggedIn, isAdmin, soundFile, image, style }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLooping, setIsLooping] = useState(false);
   const audioRef = useRef(null);
@@ -112,10 +112,11 @@ const SoundFile = ({ isLoggedIn, isAdmin, soundFile, image }) => {
     <div>
       <audio ref={audioRef} className="hidden" src={soundFile} controls loop={isLooping} preload="auto" />
 
-      <div className="flex justify-center items-center">
+      <div className="flex">{/* keep play icon center in image */}
+        
         <div className="relative">
-        {/* SAMPLE PACK ARTWORK */}
-          <img className="rounded-md block max-w-full max-h-full" src={image} />
+        
+          <img className={`${style} rounded-md block`} src={image} alt="Preset Loop" />
 
           {/* PLAY / PAUSE */}
           <button
@@ -123,14 +124,14 @@ const SoundFile = ({ isLoggedIn, isAdmin, soundFile, image }) => {
             className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full px-2 py-2"
           >
             {isPlaying ? (
-              <img src="/pause.svg" alt="Preset Loop" />
+              <img className="w-8" src="/pause.svg" alt="Preset Loop" />
             ) : (
-              <img src="/play.svg" alt="Preset Loop" />
+              <img className="w-8" src="/play.svg" alt="Preset Loop" />
             )}
           </button>
 
           {/* LOOP */}
-          {(isLoggedIn || isAdmin) && (  
+          {(isLoggedIn || isAdmin) && (image !== "/waveform.svg") && (  
             <button
               onClick={toggleLoop}
               className="tracking-widest absolute -bottom-1.5 -left-1.5"

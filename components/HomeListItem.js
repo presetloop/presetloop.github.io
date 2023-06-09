@@ -4,7 +4,7 @@ import ImageDynamic from './ImageDynamic';
 import generateRandomDate from '@/helpers/generateRandomDate';
 import TruncatedLink from '@/helpers/TruncatedLink';
 import TruncatedTitle from '@/helpers/TruncatedTitle';
-import TruncatedContent from '@/helpers/TruncatedContent';
+import TruncatedInfo from '@/helpers/TruncatedInfo';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -68,8 +68,8 @@ const HomeListItem = ({ id, title, linkTag, imgHref, infoExcerpt, producer, genr
           </a>
         </h3>
         <div className="mt-1 mb-0 text-sm leading-5 bg-[#101010] text-white transition-all duration-500">
-          {infoExcerpt?.replace(/<br\s*\/?>/gi, '')}
-          {/* <TruncatedContent content={infoExcerpt?.replace(/<br\s*\/?>/gi, '')} /> */}
+          {/* {infoExcerpt?.replace(/<br\s*\/?>/gi, '')} */}
+          <TruncatedInfo content={infoExcerpt?.replace(/<br\s*\/?>/gi, '')} />
         </div>
 
 
