@@ -18,15 +18,16 @@ const HomeListItem = ({ id, title, linkTag, imgHref, infoExcerpt, producer, genr
   return (
     <section key={id} className={`group bg-[#101010] p-0 flex max-w-xl flex-col`}>
 
-
       {/* IMAGES */}
-      <div className="relative mb-2 sm:mb-1 flex w-full transition-all duration-500">
+      <div className="z-100 relative mb-2 sm:mb-1 flex w-full transition-all duration-500">
         {
-          <ImageDynamic packPreviewUrl={packPreviewUrl} item={imgHref} isAdmin={isAdmin} isLoggedIn={loggedIn} isAdminImg={isAdmin} isHomeImg={loggedIn} id={id}/>
+          <ImageDynamic packPreviewUrl={packPreviewUrl} item={imgHref} isAdmin={isAdmin} isLoggedIn={loggedIn} isAdminImg={isAdmin} isHomeImg={loggedIn} id={id} href={isValidHref ? href : null} />
         }
       </div>
+
     
-      
+      <a href={isValidHref ? href : null}>
+
 
       <div className="flex justify-between align-middle pb-3 sm:pb-2 text-xs text-white">
 
@@ -62,10 +63,10 @@ const HomeListItem = ({ id, title, linkTag, imgHref, infoExcerpt, producer, genr
 
       {/* TITLE AND INFO-EXCERPT */}
         <h3 className="text-lg font-semibold sm:mt-0 leading-6 bg-[#101010] text-white transition-all duration-500">
-          <a href={isValidHref ? href : null}>
+          
           {title}
           {/* <TruncatedTitle content={title} /> */}
-          </a>
+          
         </h3>
         <div className="mt-1 mb-0 text-sm leading-5 bg-[#101010] text-white transition-all duration-500">
           {/* {infoExcerpt?.replace(/<br\s*\/?>/gi, '')} */}
@@ -74,6 +75,8 @@ const HomeListItem = ({ id, title, linkTag, imgHref, infoExcerpt, producer, genr
 
 
 
+
+    </a>
 
       
 

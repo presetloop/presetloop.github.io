@@ -1,6 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 
-const SoundFile = ({ isLoggedIn, isAdmin, soundFile, image, style }) => {
+const SoundFile = ({ href, isLoggedIn, isAdmin, soundFile, image, style }) => {
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLooping, setIsLooping] = useState(false);
   const audioRef = useRef(null);
@@ -116,7 +116,9 @@ const SoundFile = ({ isLoggedIn, isAdmin, soundFile, image, style }) => {
         
         <div className="relative">
         
+        <a href={href}>
           <img className={`${style} rounded-md block`} src={image} alt="Preset Loop" />
+        </a>
 
           {/* PLAY / PAUSE */}
           <button
