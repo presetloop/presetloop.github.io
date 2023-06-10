@@ -35,7 +35,7 @@ export default function HomeNav({isGuest, isAdmin, loggedIn}) {
 
         <div className="flex justify-between">
 
-          <div className="flex text-[#101010] hover:text-white">
+          <div className="flex text-white hover:text-black">
             <a href="/login">
               <h1 className='-mt-[24px] [word-spacing:-0px]'>pre</h1>
               <p className="-mt-[21px] ml-6 mr-6 px-2 bg-transparent ease-in-out duration-300">

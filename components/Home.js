@@ -89,7 +89,7 @@ const scrollToRef = () => {
 setTimeout(() => {
   // NO DATA -> loading wont progress to render UI
   if (!data || data.length === 0) {
-  return <p className={`text-red-400 transition-all duration-5000 flex items-center justify-center h-screen text-[8vw]`}>Loading...</p>;
+  return <p className={`text-red-400 transition-all duration-5000 flex items-center justify-center h-screen text-[20vw]`}>Loading</p>;
 }
 }, 1000);
 
@@ -109,9 +109,9 @@ setTimeout(() => {
     
     <div>
       
-      <div className="loadedAni flex justify-center mt-4 sm:mt-4 text-md tracking-wide">
-        <div className='-skew-x-12 bg-[#fff] sm:-mt-4 sm:px-2 sm:py-2 text-black'>
-          <div className='total-sample-sets'>
+      <div className="loadedAni flex justify-center mt-4 sm:mt-4 tracking-wide">
+        <div className='-skew-x-12 bg-[#fff] -mt-3 sm:-mt-4 px-2 sm:py-2 text-black'>
+          <div className='total-sample-sets text-sm sm:text-lg'>
             Total Sample Sets<span className='inline-block ml-2'>({samplepackCount})</span>
           </div>
         </div>
