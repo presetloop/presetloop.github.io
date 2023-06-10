@@ -1,10 +1,12 @@
 import SoundFile from '@/components/SoundFile';
 import RandomWaveformSymbol from './RandomWaveformSymbol';
 
-export default function SamplePackSample({getRandomClass, sampleFileName, sampleFileUrl, isLoggedIn }) {
+export default function SamplePackSample({getRandomColourClass
+, sampleFileName, sampleFileUrl, isLoggedIn }) {
   return (
     <>
-      <div className={`${getRandomClass} flex justify-between p-2 items-center`}>
+      <div className={`${getRandomColourClass
+} flex justify-between p-2 items-center`}>
     
         <div className='rounded-full bg-white mr-2'>
           {(isLoggedIn) && (

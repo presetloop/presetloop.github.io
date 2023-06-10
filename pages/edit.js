@@ -229,4 +229,4 @@ const pattern = /^(htps?:\/\/(ww?\.)*|htp:\/\/(ww?\.)*|http:\/\/(ww?\.)*|w{1,2}\
   );
 }
 
-export default EditPost;
+export default EditSamplepack;

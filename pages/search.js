@@ -5,6 +5,7 @@ import CountdownTimer from '@/components/CountdownTimer';
 import {getAdminCookie} from '@/helpers/handleCookies';
 import getSessionData from '@/helpers/getSessionData';
 import DOMPurify from 'dompurify';
+import Footer from '@/components/Footer';
 // import validUrl from 'valid-url';
 
 // const baseUrl = 'http://localhost:5000';
@@ -98,30 +99,32 @@ function Search() {
 
 return (
 <>
-    <div className="relative max-w-[700px] w-[95%] m-auto">
+    <div className="max-w-[1600px] w-[99%] m-auto h-screen flex-1">
 
 {/* navigation */}
-    <div className="flex w-full mt-8 sm:mt-10 border-t-2 border-slate-900">
+    <div className="flex w-full mt-8 sm:mt-10 border-t-2 border-white">
   
-    { isGuest && <div className="absolute -top-6 left-0 bg-green-50">
+    { isGuest && <div className="absolute top-3 left-2 bg-green-50">
       <CountdownTimer /></div>
     }
 
       {isGuest ? (
       <nav className={`w-full flex text-white sm:hover:text-black`}>
-          <div className='ml-auto pl-20 sm:pl-48'>
-          <a href={"/"}>
-            <p className='-mt-[24px] [word-spacing:-0px]'>pre</p>
+        
+        <div className='ml-auto pl-20 sm:pl-48'>
+        
+        <a href={"/"}>
+          <p className='-mt-[24px] [word-spacing:-0px]'>pre</p>
+          <p className="-mt-[21px] ml-6 mr-6 px-2 bg-transparent ease-in-out duration-300">
+            <img className="h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
+          </p>
+          <p className='-mt-[43px] ml-[74px] [word-spacing:-0px]'>set</p> 
+        </a>
 
-            <p className="-mt-[21px] ml-7 px-2 bg-transparent ease-in-out duration-300">
-              <img className="h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
-            </p>
+        </div>
 
-            <p className='-mt-[43px] ml-20 [word-spacing:-0px]'>set</p> 
-          </a>
-          </div>
           <div className='ml-auto'>
-            <a className="block my-0 bg-[#1A0123] px-4 sm:px-12 text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8" href="/">View all</a>
+            <a className="block my-0 bg-white px-4 sm:px-12 text-lg text-black ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8" href="/">View all</a>
           </div>
       </nav>
       ) : (
@@ -139,7 +142,7 @@ return (
         </div>
 
         <div className='ml-auto'>
-          <a className="inline-block my-0 bg-[#1A0123] px-4 sm:px-12 text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8" href="/">View all</a>
+          <a className="inline-block my-0 bg-white px-4 sm:px-12 text-lg text-black ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8" href="/">View all</a>
         </div>
       </nav>
       )}
@@ -149,11 +152,11 @@ return (
 
 
 
-    <div className="relative mt-8">
+    <div className="relative mt-8 m-auto w-96">
       <input
         ref={searchField}
         required
-        className="appearance-none border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+        className="appearance-none bg-transparent border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 placeholder:text-white text-white leading-tight focus:outline-none focus:shadow-outline"
         id="title"
         type="text"
         placeholder="Enter a search query"
@@ -164,7 +167,7 @@ return (
       {searchErrorMessage && <p className="absolute bottom-[5px] left-0 mb-0 text-red-500 text-md">{searchErrorMessage}</p>}
     </div>
 
-    <div onClick={handleSearch} className="flex items-center justify-between">
+    <div onClick={handleSearch} className="flex items-center justify-between mt-0 m-auto w-96">
       { !disableSearchBtn ? <button
           className="border-slate-900 border-2 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300"
           type="submit">{loading ? 'Searching...' : 'Search'}</button> 
@@ -178,7 +181,7 @@ return (
 
 
     {/* Render results */}
-      <ul className='mt-4'>
+      <ul className='mt-4 m-auto w-96'>
         {searchResults.length !== 0 ? searchResults.map(result => (
           <div key={result.id}>
             {/* <a href={isValidHref ? href : null}> */}
@@ -198,6 +201,11 @@ return (
           formSubmitted && <p>Currently there are no articles with that title.</p>
         )}
       </ul>
+    </div>
+
+
+    <div className='mt-auto'>
+      <Footer />
     </div>
 </>
   );

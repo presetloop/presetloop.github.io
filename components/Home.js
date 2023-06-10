@@ -110,7 +110,7 @@ setTimeout(() => {
     <div>
       
       <div className="loadedAni flex justify-center mt-4 sm:mt-4 text-md tracking-wide">
-        <div className='-skew-x-12 bg-[#fff] mt-4 sm:px-2 sm:py-2 text-black'>
+        <div className='-skew-x-12 bg-[#fff] sm:-mt-4 sm:px-2 sm:py-2 text-black'>
           <div className='total-sample-sets'>
             Total Sample Sets<span className='inline-block ml-2'>({samplepackCount})</span>
           </div>
@@ -122,8 +122,8 @@ setTimeout(() => {
       className="
         loadedAni
         max-w-lg 
-        ml-[11vw]
-        mr-[11vw] 
+        ml-[6vw]
+        mr-[6vw] 
         grid 
         pt-4 
         gap-x-4
@@ -142,7 +142,7 @@ setTimeout(() => {
         xl:pt-10 
         xl:gap-x-16
         xl:gap-y-4 
-        xl:grid-cols-6
+        xl:grid-cols-5
         ">
       {data.map(({ id, title, linkTag, imgHref, infoExcerpt, producer, genre, packPreviewUrl }) => (
         <HomeListItem key={id} id={id} title={title} infoExcerpt={infoExcerpt} linkTag={linkTag} imgHref={imgHref} producer={producer} genre={genre} packPreviewUrl={packPreviewUrl} isAdmin={isAdmin} loggedIn={loggedIn} />

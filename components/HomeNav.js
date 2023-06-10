@@ -10,12 +10,12 @@ export default function HomeNav({isGuest, isAdmin, loggedIn}) {
 
       <div className="flex gap-2 justify-between">
 
-      <div className={`flex hover:text-white text-[#101010] ${isGuest ? "ml-24 sm:ml-80" : ""}`}>
+      <div className={`flex text-white ${isGuest ? "ml-24 sm:ml-80" : ""}`}>
           
       <a href={isAdmin ? "/form" : "/"}>
           <p className='-mt-[24px] [word-spacing:-0px]'>pre</p>
           <p className="-mt-[21px] ml-6 mr-6 px-2 bg-transparent ease-in-out duration-300">
-            <img className="invert h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
+            <img className="h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
           </p>
           <p className='-mt-[43px] ml-[74px] [word-spacing:-0px]'>set</p> 
       </a>
@@ -39,7 +39,7 @@ export default function HomeNav({isGuest, isAdmin, loggedIn}) {
             <a href="/login">
               <h1 className='-mt-[24px] [word-spacing:-0px]'>pre</h1>
               <p className="-mt-[21px] ml-6 mr-6 px-2 bg-transparent ease-in-out duration-300">
-                <img className="invert h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
+                <img className="h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
               </p>
               <h1 className='-mt-[43px] ml-[74px] [word-spacing:-0px]'>set</h1>
             </a>

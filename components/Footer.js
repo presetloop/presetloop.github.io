@@ -8,10 +8,11 @@ export default function Footer() {
  
           
             {/* LOGO */}
+          <a href={"/"}>
             <div className="flex justify-center">
               <img className="rounded-full my-8 h-40 w-40 sm:h-48 sm:w-48" src="/logo.svg" alt="Preset Loop" />
             </div>
-  
+          </a>
 
             <div className="my-8">
               
@@ -22,11 +23,10 @@ export default function Footer() {
           
 
           <div className="my-16 flex flex-col gap-x-4 text-white tracking-tighter leading-8">
-            <p>E.U.L.A.</p>
-            <p>Privacy Policy</p>
-            <p>Cookie Settings</p>
+            <a href="/eula"><p>E.U.L.A.</p></a>
+            <a href="/cookies"><p>Cookie Settings</p></a>
             <p>
-              <a className="text-indigo-100 sm:hover:text-indigo-200" href={`mailto:${process.env.NEXT_PUBLIC_FOOTER_EMAIL}`}>{process.env.NEXT_PUBLIC_FOOTER_EMAIL}</a>
+              <a className="sm:hover:text-indigo-200" href={`mailto:${process.env.NEXT_PUBLIC_FOOTER_EMAIL}`}>{process.env.NEXT_PUBLIC_FOOTER_EMAIL}</a>
             </p>
             <p>&copy; {currentYear} {`${process.env.NEXT_PUBLIC_BRAND}`}</p>
           </div>

@@ -126,8 +126,10 @@ return (
       <Footer />
     </div>
   } */}
+  <div className="mt-auto">
+    {loading ? null : <Footer />}
+  </div>
 
-  {loading ? null : <Footer />}
 
 </div>  
 </>

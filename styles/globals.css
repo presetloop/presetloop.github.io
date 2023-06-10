@@ -6,7 +6,27 @@
   --font-mono: ui-monospace, Menlo, Monaco, 'Cascadia Mono', 'Segoe UI Mono',
     'Roboto Mono', 'Oxygen Mono', 'Ubuntu Monospace', 'Source Code Pro',
     'Fira Mono', 'Droid Sans Mono', 'Courier New', monospace;
+  
+  --height: 2000px; /* STRIPES ONLY */
+  
+  /* --bg-col: #101010;
+  --bg-light: #EFEFEF; */
+  
+  /* SOFT */
+  --bg-col: #F472B6;
+  --bg-light: #D1D6DB;
+
+  /* HARD */
+  /* --bg-col: #FFB2B2;
+  --bg-light: #A5FFC9; */
+  
+  /* tailwind green and red hex */
+  /* --bg-col: #4ADE80;
+  --bg-light: #F87170; */
 }
+
+/* tailwind drop shadow class */
+/* drop-shadow-[6px_6px_0px_rgba(0,0,0,1)] */
 
 /* 
 COLOR SCHEME:
@@ -18,9 +38,23 @@ COLOR SCHEME:
   bg-green-400
  */
 
-
 body {
-  @apply bg-[#101010];
+  background-color: var(--bg-col);
+  
+  /* DOTS */
+  /* background-image: radial-gradient(var(--bg-light) 0.1px, transparent 1px);
+  background-size: calc(10 * 1px) calc(10 * 1px); */
+  
+  /* STRIPES */
+  background-image: linear-gradient(315deg, var(--bg-light) 25%, transparent 25%),
+    linear-gradient(225deg, var(--bg-light) 25%, transparent 25%),
+    linear-gradient(135deg, var(--bg-light) 25%, transparent 25%),
+    linear-gradient(45deg, var(--bg-light) 25%, transparent 25%);
+  background-position-x: 0, 0, 0, 0;
+  background-position-y: 0, 0, calc(var(--height) / 2), calc(var(--height) / 2);
+  background-size: var(--height) var(--height);
+
+  /*  */
   padding: 0rem;
   font-family: var(--font-mono);
   overflow-x: hidden;
@@ -50,6 +84,12 @@ body::-webkit-scrollbar-thumb {
   } 
 }
 
+.underline{
+  text-decoration-line: underline;
+  text-decoration-style: "solid";
+  text-decoration-color: rgba(232,54,0,1);
+  text-decoration-thickness: 25px;
+}
 
 .loadedAni {
   animation: fadeit 1s ease-in;

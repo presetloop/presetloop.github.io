@@ -11,6 +11,7 @@ import EditBtn from '../components/EditBtn';
 import ImageDynamic from '../components/ImageDynamic';
 import Footer from '@/components/Footer';
 import SamplePackSample from '@/components/SamplePackSample';
+import getRandomColourClass from '@/helpers/GetRandomColourClass';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
@@ -55,7 +56,11 @@ function Samplepack() {
 
 
   if (loading) {
-    return <p className={`text-slate-200 transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[8vw]`}>Loading...</p>;
+    return (
+      <div className="fixed inset-0 flex items-center justify-center bg-[#101010]">
+      <p className="text-white transition-all duration-5000 text-[20vw]">Loading</p>
+    </div>
+    )
   }
 
   function handleClick() {
@@ -71,22 +76,17 @@ function Samplepack() {
     );
   }
 
-  // const og = ["blue-300", "red-50", "pink-400", "yellow-100", "red-100", "green-100"];
-  const random50 = ["bg-blue-50", "bg-red-50", "bg-pink-50", "bg-yellow-50", "bg-green-50", "bg-purple-50", "bg-indigo-50", "bg-gray-50"];
+ // const og = ["blue-300", "red-50", "pink-400", "yellow-100", "red-100", "green-100"];
+const random50 = ["bg-blue-50", "bg-red-50", "bg-pink-50", "bg-yellow-50", "bg-green-50", "bg-purple-50", "bg-indigo-50", "bg-gray-50"];
   const random100 = ["bg-blue-100", "bg-red-100", "bg-pink-100", "bg-yellow-100", "bg-green-100", "bg-purple-100", "bg-indigo-100", "bg-gray-100"];
   const random300 = ["bg-blue-300", "bg-red-300", "bg-pink-300", "bg-yellow-300", "bg-green-300", "bg-purple-300", "bg-indigo-300", "bg-gray-300"];
-  const random400 = ["bg-blue-400", "bg-red-400", "bg-pink-400", "bg-yellow-400", "bg-green-400", "bg-purple-400", "bg-indigo-400", "bg-gray-400"];
-
-  function getRandomClass(classesArray) {
-    const randomIndex = Math.floor(Math.random() * classesArray.length);
-    return classesArray[randomIndex];
-  }
+  const random400 = ["bg-blue-400", "bg-red-400", "bg-pink-400", "bg-yellow-400", "bg-green-400", "bg-purple-400", "bg-indigo-400", "bg-gray-400"];  
 
 return (
 <>
 <div className="mt-1 sm:mt-8 flex flex-col h-screen">
 
-<div className='max-w-[1200px] w-[100%] m-auto flex-1'>
+<div className='max-w-[1600px] w-[99%] m-auto flex-1'>
 
 {/* navigation */}
   <div className="z-10 relative mt-8 sm:mt-2 border-t-2 border-white">
@@ -96,7 +96,7 @@ return (
         <CountdownTimer /></div>
       }
 
-      <a className={`${getRandomClass(random300)} sm:-rotate-1 block mt-2 sm:mt-1 sm:mb-1 pb-1 pt-1 sm:pb-1 sm:pt-1 lg:mt-2 lg:-mb-2 px-2 sm:px-6 text-sm sm:text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8 leading-0`} href="/">Back</a>
+      <a className={`${getRandomColourClass(random300)} sm:-rotate-1 block mt-2 sm:mt-1 sm:mb-1 pb-1 pt-1 sm:pb-1 sm:pt-1 lg:mt-2 lg:-mb-2 px-2 sm:px-6 text-sm sm:text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8 leading-0`} href="/">Back</a>
       
       <div className="flex gap-2">
         
@@ -105,7 +105,7 @@ return (
 
               <h1 className='-mt-[24px] [word-spacing:-0px]'>pre</h1>
               <p className="-mt-[21px] ml-2 mr-6 px-2 bg-transparent ease-in-out duration-300">
-                <img className="ml-4 invert h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
+                <img className="ml-4 h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
               </p>
 
               <h1 className='-mt-[43px] ml-[74px] [word-spacing:-0px]'>set</h1>
@@ -117,7 +117,7 @@ return (
         </a>  
 
         <a className="block" href={admin ? "/form" : "/"}>
-          <p className={`hidden sm:inline-block mt-1 -rotate-1 ${getRandomClass(random300)} px-2 sm:px-12 text-md sm:text-lg text-white sm:hover:pl-10 sm:hover:pr-10 ease-in-out duration-300`}>{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
+          <p className={`hidden sm:inline-block mt-1 -rotate-1 ${getRandomColourClass(random300)} px-2 sm:px-12 text-md sm:text-lg text-white sm:hover:pl-10 sm:hover:pr-10 ease-in-out duration-300`}>{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
         </a>
 
       </div>
@@ -127,7 +127,7 @@ return (
 </div>{/* \CONTAINER */}
 
 
-<div className={`${getRandomClass(random100)}`}>
+<div className={`${getRandomColourClass(random100)}`}>
 {/* MAIN CONTENT */}
 <div className='w-[100%] m-auto flex-1'>
 
@@ -139,17 +139,17 @@ return (
     <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-0">
       
        {/* left tab */}
-        <div className={`${getRandomClass(random300)} lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8`}>
+        <div className={`${getRandomColourClass(random300)} lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8`}>
 
       {/* meta block */}
-      <div className={`${getRandomClass(random400)} -mr-6 lg:mr-2 lg:pr-4`}>
+      <div className={`${getRandomColourClass(random400)} -mr-6 lg:mr-2 lg:pr-4`}>
         
         
         <div className="lg:max-w-lg">
 
         {/* GENRE */}
         <div className='flex justify-between'>
-          <p className={`${getRandomClass(random300)} -rotate-1 -mt-2 -ml-4 px-2 text-xs sm:text-base text-white font-semibold leading-7 w-fit`}>
+          <p className={`${getRandomColourClass(random300)} -rotate-1 -mt-2 -ml-4 px-2 text-xs sm:text-base text-white font-semibold leading-7 w-fit`}>
           {DOMPurify.sanitize(item.genre)}
           {/* <time dateTime={null} className="bg-gray-100 text-gray-500">
             {generateRandomDate()}
@@ -158,7 +158,7 @@ return (
           
           {/* DATE */}
           <p className={`-mt-4 rotate-1 mr-4 px-2 text-xs sm:text-base text-white font-semibold leading-7 w-fit`}>
-            <span className={`p-1 ${getRandomClass(random300)}`}>
+            <span className={`p-1 ${getRandomColourClass(random300)}`}>
               {item.date ? DOMPurify.sanitize(item.date) : "9.6.23"}
             </span>
           </p>
@@ -171,7 +171,7 @@ return (
 
             {/* PRODUCER */}
             {item.producer ? (
-              <p className={`${getRandomClass(random100)} w-fit cursor-pointer -ml-1 rotate-1 -mb-2 mt-0 px-2 text-md leading-8 text-gray-700`}>
+              <p className={`${getRandomColourClass(random100)} w-fit cursor-pointer -ml-1 rotate-1 -mb-2 mt-0 px-2 text-md leading-8 text-gray-700`}>
                 Producer: {item.producer}
               </p>
             ) : (
@@ -179,7 +179,7 @@ return (
               )}
 
             {/* {item.linkTag ? (
-              <p className={`${getRandomClass(random100)} cursor-pointer mt-6 text-md leading-8 text-gray-700`}>
+              <p className={`${getRandomColourClass(random100)} cursor-pointer mt-6 text-md leading-8 text-gray-700`}>
                 <span className="text-black">&rarr;</span>
                 <a className="pl-2 md:hover:text-indigo-400" href={
                   item.linkTag &&
@@ -200,7 +200,7 @@ return (
 
 
 
-      <div className={`${getRandomClass(random400)} -ml-12 -mt-16 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 h-full`}>
+      <div className={`${getRandomColourClass(random400)} -ml-12 -mt-16 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 h-full`}>
         
         {/* IMAGE */}
         <div className='-mt-2 ml-2 -mr-20 md:mr-0 sm:ml-16'>
@@ -208,16 +208,16 @@ return (
         </div>
         
         {/* GROUPED META  */}
-        <div className={`max-w-[750px] -mr-6 py-4 px-4 mt-8 ${getRandomClass(random50)}`}>
+        <div className={`max-w-[750px] -mr-6 py-4 px-4 mt-8 ${getRandomColourClass(random50)}`}>
        
         {/* SUB_TITLE  */}
-          <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.sub_title)}} className={`rotate-1 text-center text-lg font-bold -mr-8 py-4 px-4 mt-0 ${getRandomClass(random300)}`}></p>
+          <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.sub_title)}} className={`rotate-1 text-center text-lg font-bold -mr-8 py-4 px-4 mt-0 ${getRandomColourClass(random300)}`}></p>
 
         {/* INFO  */}
-          <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.info)}} className={`-rotate-1 text-right -ml-8 py-4 px-4 mt-0 ${getRandomClass(random400)}`}></p>
+          <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.info)}} className={`-rotate-1 text-right -ml-8 py-4 px-4 mt-0 ${getRandomColourClass(random400)}`}></p>
 
         {/* PACK_DETAILS  */}
-          <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.pack_details)}} className={`rotate-0 text-left -mr-6 py-4 px-4 mt-0 ${getRandomClass(random100)}`}></p>
+          <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.pack_details)}} className={`rotate-0 text-left -mr-6 py-4 px-4 mt-0 ${getRandomColourClass(random100)}`}></p>
         </div>
       
       </div>
@@ -236,7 +236,7 @@ return (
                       isLoggedIn={true}
                       sampleFileName={item[`sampleFileName_${index + 1}`]}
                       sampleFileUrl={item[`sampleFileUrl_${index + 1}`]}
-                      getRandomClass={getRandomClass(random400)}
+                      getRandomColourClass={getRandomColourClass(random400)}
                     />
                   ))
                 }
