@@ -140,7 +140,7 @@ setTimeout(() => {
         lg:gap-y-4 
         lg:grid-cols-4
         xl:pt-10 
-        xl:gap-x-8
+        xl:gap-x-16
         xl:gap-y-4 
         xl:grid-cols-6
         ">

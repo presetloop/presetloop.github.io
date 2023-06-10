@@ -99,7 +99,7 @@ return (
 <>
 <div className="mt-1 sm:mt-8 flex flex-col h-screen">
 
-<div className='max-w-[1200px] w-[95%] m-auto flex-1'>
+<div className='max-w-[1600px] w-[99%] m-auto flex-1'>
 
 <div className="relative mt-8 sm:mt-2 border-t-2 border-white">
 
