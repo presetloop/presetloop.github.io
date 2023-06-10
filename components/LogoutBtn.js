@@ -46,7 +46,7 @@ function LogoutBtn() {
   return (
       <p className='-mt-0.5 cursor-pointer bg-[#F90B0D]'>
       <a
-        className="block px-2 sm:px-4 pt-1 mt-[1.5px] mb-1.5 text-sm sm:text-lg text-white hover:text-white ease-in-out sm:hover:scale-110 sm:hover:transition-all duration-300"
+        className="block px-2 sm:px-2 pt-1 mt-[1.5px] mb-1.5 text-sm sm:text-md text-white hover:text-white ease-in-out sm:hover:scale-110 sm:hover:transition-all duration-300"
         disabled={loggingOut}
         onClick={handleClick}
       >

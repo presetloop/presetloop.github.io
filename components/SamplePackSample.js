@@ -5,12 +5,11 @@ export default function SamplePackSample({getRandomColourClass
 , sampleFileName, sampleFileUrl, isLoggedIn }) {
   return (
     <>
-      <div className={`${getRandomColourClass
-} flex justify-between p-2 items-center`}>
+      <div className={`${getRandomColourClass} flex justify-between p-2 items-center`}>
     
         <div className='rounded-full bg-white mr-2'>
           {(isLoggedIn) && (
-            <SoundFile isLoggedIn={true} isAdmin={true} soundFile={sampleFileUrl || `${process.env.NEXT_PUBLIC_SAMPLES}/frazzles-kik-hat.mp3`} image={"/waveform.svg"} style="h-16 w-16"/>
+            <SoundFile isLoggedIn={true} isAdmin={true} soundFile={sampleFileUrl || `${process.env.NEXT_PUBLIC_SAMPLES}/frazzles-kik-hat.mp3`} wave={`${getRandomColourClass} border-2 border-[#99999999] rounded-full`} image={"/waveform.svg"} style="h-16 w-16"/>
           )}
         </div>
 
@@ -25,7 +24,7 @@ export default function SamplePackSample({getRandomColourClass
           </div>
         </div>
 
-        <div className='rounded-full p-2 bg-black'>
+        <div className='rounded-full ml-1 mr-1 p-2 border-8 border-white bg-black'>
           <img className="h-4 w-4 invert" src="/download.svg" alt="Preset Loop" />
         </div>
 
