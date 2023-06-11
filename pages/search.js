@@ -93,7 +93,7 @@ function Search() {
   };
 
   if (loading) {
-    return <p className={`text-slate-200 transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[8vw]`}>Loading...</p>;
+    return <p className={`text-slate-200 transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[20vw]`}>Loading</p>;
   }
 
 
@@ -104,9 +104,11 @@ return (
 {/* navigation */}
     <div className="flex w-full mt-8 sm:mt-10 border-t-2 border-white">
   
-    { isGuest && <div className="absolute top-3 left-2 bg-green-50">
+    <div className='relative md:w-full'>
+      { isGuest && <div className="z-100 absolute -top-7 left-0 bg-green-50">
       <CountdownTimer /></div>
     }
+    </div>
 
       {isGuest ? (
       <nav className={`w-full flex text-white sm:hover:text-black`}>

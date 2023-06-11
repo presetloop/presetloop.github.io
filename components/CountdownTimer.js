@@ -37,21 +37,22 @@ export default function CountdownTimer() {
 
 
   function formatTime(time) {
-    const hours = Math.floor(time / 3600);
+    // const hours = Math.floor(time / 3600);
     const minutes = Math.floor((time % 3600) / 60);
     const seconds = time % 60;
 
-    const formattedHours = hours.toString().padStart(2, '0');
+    // const formattedHours = hours.toString().padStart(2, '0');
     const formattedMinutes = minutes.toString().padStart(2, '0');
     const formattedSeconds = seconds.toString().padStart(2, '0');
 
-    return `${formattedHours}h:${formattedMinutes}m:${formattedSeconds}s`;
+    return `${formattedMinutes}m:${formattedSeconds}s`;
+    // return `${formattedHours}h:${formattedMinutes}m:${formattedSeconds}s`;
   }
 
   return (
     <div>
       {timeRemaining > 1000 ? (
-        <span className="text-sm sm:text-[16px]">{window.innerWidth < 768 ? "" : "Session expires in"} {formatTime(Math.floor(timeRemaining / 1000))}</span>
+        <span className="text-sm sm:text-[16px]">{window.innerWidth < 1024 ? "" : "Session expires in"} {formatTime(Math.floor(timeRemaining / 1000))}</span>
       ) : (
         <span className='text-red-500 text-xs sm:text-[16px]'>Session expired</span>
       )}
