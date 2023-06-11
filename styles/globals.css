@@ -46,6 +46,10 @@ body {
   background-size: calc(10 * 1px) calc(10 * 1px); */
   
   /* STRIPES */
+  background-image: -o-linear-gradient(135deg, var(--bg-light) 25%, transparent 25%),
+    -o-linear-gradient(225deg, var(--bg-light) 25%, transparent 25%),
+    -o-linear-gradient(315deg, var(--bg-light) 25%, transparent 25%),
+    -o-linear-gradient(45deg, var(--bg-light) 25%, transparent 25%);
   background-image: linear-gradient(315deg, var(--bg-light) 25%, transparent 25%),
     linear-gradient(225deg, var(--bg-light) 25%, transparent 25%),
     linear-gradient(135deg, var(--bg-light) 25%, transparent 25%),
@@ -59,7 +63,8 @@ body {
   font-family: var(--font-mono);
   overflow-x: hidden;
   overflow-y: scroll;
-  overscroll-behavior: none; /* IOS */
+  -ms-scroll-chaining: none;
+      overscroll-behavior: none; /* IOS */
 }
 
 body::-webkit-scrollbar {
@@ -85,14 +90,36 @@ body::-webkit-scrollbar-thumb {
 }
 
 .underline{
-  text-decoration-line: underline;
-  text-decoration-style: "solid";
-  text-decoration-color: rgba(232,54,0,1);
+  -webkit-text-decoration-line: underline;
+          text-decoration-line: underline;
+  -webkit-text-decoration-style: "solid";
+          text-decoration-style: "solid";
+  -webkit-text-decoration-color: rgba(232,54,0,1);
+          text-decoration-color: rgba(232,54,0,1);
   text-decoration-thickness: 25px;
 }
 
 .loadedAni {
-  animation: fadeit 1s ease-in;
+  -webkit-animation: fadeit 1s ease-in;
+          animation: fadeit 1s ease-in;
+}
+
+@-webkit-keyframes fadeit {
+  0% {
+    opacity: 0;
+  }
+  25% {
+    opacity: .25;
+  }
+  50% {
+    opacity: .5;
+  }
+  75% {
+    opacity: .75;
+  }
+  100% {
+    opacity: 1;
+  }
 }
 
 @keyframes fadeit {
@@ -117,15 +144,28 @@ body::-webkit-scrollbar-thumb {
   position: relative;
   display: inline-block;
   text-transform: uppercase;
-  animation: flip 60s infinite;
-  animation-delay: 0s;
+}
+@media screen and (min-width: 768px){
+.total-sample-sets {
+  -webkit-animation: flip 60s infinite;
+          animation: flip 60s infinite;
+  -webkit-animation-delay: 0s;
+          animation-delay: 0s;
+}
+  @-webkit-keyframes flip {
+  0%,80% {
+    -webkit-transform: rotateY(360deg);
+    transform: rotateY(360deg);
+  }
 }
 @keyframes flip {
   0%,80% {
+    -webkit-transform: rotateY(360deg);
     transform: rotateY(360deg);
   }
 }
 
+}
 
 .load-more-btn {
   color: white;
@@ -133,18 +173,53 @@ body::-webkit-scrollbar-thumb {
   overflow: hidden;
   /* animation: scroll 5s linear infinite; */
 }
-@keyframes scroll {
+@-webkit-keyframes scroll {
   0% {
+    -webkit-transform: translateX(-100%);
     transform: translateX(-100%);
   }
   100% {
+    -webkit-transform: translateX(115%);
+    transform: translateX(115%);
+  }
+}
+@keyframes scroll {
+  0% {
+    -webkit-transform: translateX(-100%);
+    transform: translateX(-100%);
+  }
+  100% {
+    -webkit-transform: translateX(115%);
     transform: translateX(115%);
   }
 }
 
 
 .guestLoginbtnAni{
-  animation: pulse 1s ease-in-out infinite;
+  -webkit-animation: pulse 1s ease-in-out infinite;
+          animation: pulse 1s ease-in-out infinite;
+}
+
+@-webkit-keyframes pulse {
+  0% {
+    /* transform: scale(100%); */
+  }
+  50% {
+    -webkit-transform: translateY(0%);
+    transform: translateY(0%);
+    border: 2px solid white;
+    /* transform: scaleY(103%); */
+  }
+  75% {
+    /* transform: scaleX(110%); */
+    -webkit-transform: translateY(0%);
+    transform: translateY(0%);
+  }
+  100% {
+    -webkit-transform: translateY(0%);
+    transform: translateY(0%);
+    /* transform: scaleY(103%); */
+  }
 }
 
 @keyframes pulse {
@@ -152,15 +227,18 @@ body::-webkit-scrollbar-thumb {
     /* transform: scale(100%); */
   }
   50% {
+    -webkit-transform: translateY(0%);
     transform: translateY(0%);
     border: 2px solid white;
     /* transform: scaleY(103%); */
   }
   75% {
     /* transform: scaleX(110%); */
+    -webkit-transform: translateY(0%);
     transform: translateY(0%);
   }
   100% {
+    -webkit-transform: translateY(0%);
     transform: translateY(0%);
     /* transform: scaleY(103%); */
   }
