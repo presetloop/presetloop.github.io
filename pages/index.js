@@ -37,7 +37,7 @@ export default function App() {
     }
     
     const responseData = response.data;
-    console.log(responseData);
+    // console.log(responseData);
     
     if (responseData.admin_login && getAdminCookie()) {
       setIsAdmin(true);

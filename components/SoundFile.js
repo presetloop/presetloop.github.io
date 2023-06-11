@@ -1,9 +1,35 @@
 import { useState, useEffect, useRef } from 'react';
+import { useRouter } from 'next/router';
 
 const SoundFile = ({ href, isLoggedIn, isAdmin, soundFile, image, style, wave }) => {
+  const router = useRouter();
+  const { id } = router.query;
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLooping, setIsLooping] = useState(false);
+  const [isSamplePack, setIsSamplePack] = useState(false);
   const audioRef = useRef(null);
+
+
+  useEffect(() => {
+    if (id) {
+      setIsSamplePack(true);
+    }
+  }, [id]);
+
+
+  function handleImageClick(e) {
+    e.preventDefault();
+    
+    if (isSamplePack) {
+      return;
+    } else if (isLoggedIn || isAdmin) {
+      window.location.href = href;
+    } else {
+      window.location.href = "/login";
+    }
+  }
+
+
 
  const toggleAudio = () => {
     const audio = audioRef.current;
@@ -116,9 +142,9 @@ const SoundFile = ({ href, isLoggedIn, isAdmin, soundFile, image, style, wave })
         
         <div className="relative">
         
-        <a href={href}>
-          <img className={`${style} rounded-md block`} src={image} alt="Preset Loop" />
-        </a>
+          {/* IMAGE */}
+          <img onClick={handleImageClick} className={`${style} rounded-md block ${!isSamplePack ? "cursor-pointer" : ""}`} src={image} alt="Preset Loop" />
+
 
           {/* PLAY / PAUSE */}
           <button

@@ -72,7 +72,7 @@ function Samplepack() {
     return (
       <div className="max-w-[700px] w-[95%] m-auto">
         <p>Samplepack no longer exists or perhaps it never did?</p>
-        <p className="w-fit mt-2 border-slate-900 border-2 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300 cursor-pointer" onClick={handleClick}>Go back &larr;</p>
+        <p className="w-fit mt-2 border-slate-900 border-2 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300 cursor-pointer" onClick={handleClick}>Home &larr;</p>
       </div>
     );
   }
@@ -97,7 +97,7 @@ return (
         <CountdownTimer /></div>
       }
 
-      <a className={`${getRandomColourClass(random300)} sm:rotate-2 block mt-0 h-fit sm:mt-1 sm:mb-1 pb-1 pt-1 sm:pb-1 sm:pt-1 lg:-mb-2 px-2 sm:px-6 text-sm sm:text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8 leading-0`} href="/">Back</a>
+      <a className={`${getRandomColourClass(random300)} sm:rotate-2 block mt-0 h-fit sm:mt-1 sm:mb-1 pb-1 pt-1 sm:pb-1 sm:pt-1 lg:-mb-2 px-2 sm:px-6 text-sm sm:text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8 leading-0`} href="/">Index</a>
       
       <div className="flex gap-2 w-full justify-between">
         
@@ -169,7 +169,7 @@ return (
         </a>  
 
         <a className="block" href={admin ? "/form" : "/"}>
-          <p className={`hidden sm:inline-block mt-1 -rotate-1 ${getRandomColourClass(random300)} px-2 sm:px-12 text-md sm:text-lg text-white sm:hover:pl-10 sm:hover:pr-10 ease-in-out duration-300`}>{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
+          <p className={`hidden lg:inline-block mt-1 -rotate-1 ${getRandomColourClass(random300)} px-2 sm:px-12 text-md sm:text-lg text-white ease-in-out duration-300`}>{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
         </a>
         </div>
 
@@ -236,11 +236,11 @@ return (
 
             {/* PRODUCER */}
             {item.producer ? (
-              <p className={`${getRandomColourClass(random100)} w-fit cursor-pointer -ml-1 rotate-1 -mb-2 mt-0 px-2 text-md leading-8 text-gray-700`}>
+              <p className={`${getRandomColourClass(random100)} w-fit -ml-1 rotate-1 -mb-2 mt-0 px-2 text-md leading-8 text-gray-700`}>
                 Producer: {DOMPurify.sanitize(item.producer)}
               </p>
             ) : (
-                <p className={`${getRandomColourClass(random100)} w-fit cursor-pointer -ml-1 rotate-1 -mb-2 mt-0 px-2 text-md leading-8 text-gray-700`}>
+                <p className={`${getRandomColourClass(random100)} w-fit -ml-1 rotate-1 -mb-2 mt-0 px-2 text-md leading-8 text-gray-700`}>
                 Producer: MVM
               </p>
               )}
