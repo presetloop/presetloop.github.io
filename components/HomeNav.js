@@ -7,10 +7,9 @@ export default function HomeNav({isGuest, isAdmin, loggedIn}) {
      
     { isAdmin || loggedIn ? (
       <>
-
       <div className="flex gap-2 justify-between">
 
-      <div className={`flex text-white ${isGuest ? "ml-24 sm:ml-80" : ""}`}>
+      <div className={`flex text-white sm:hover:text-black ${isGuest ? "ml-24 sm:ml-80" : ""}`}>
           
       <a href={isAdmin ? "/form" : "/"}>
           <p className='-mt-[24px] [word-spacing:-0px]'>pre</p>

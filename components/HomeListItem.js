@@ -57,10 +57,10 @@ const HomeListItem = ({ id, title, linkTag, imgHref, infoExcerpt, producer, genr
 
 
         {/* PRODUCER */}
-          <p className={`leading-[17px] rounded-sm ${getRandomColourClass(random400)} px-1 py-1`}>{producer || "Preset Loop"}</p>
+          <p className={`leading-[17px] rounded-sm ${getRandomColourClass(random400)} px-1 py-1`}>{DOMPurify.sanitize(producer) || "Preset Loop"}</p>
 
         {/* GENRE */}
-          <p className={`leading-[17px] rounded-sm ${getRandomColourClass(random400)} px-1 py-1`}>{genre || "Beats"}</p>
+          <p className={`leading-[17px] rounded-sm ${getRandomColourClass(random400)} px-1 py-1`}>{DOMPurify.sanitize(genre) || "Beats"}</p>
         
       </div>
 
@@ -70,13 +70,13 @@ const HomeListItem = ({ id, title, linkTag, imgHref, infoExcerpt, producer, genr
       {/* TITLE AND INFO-EXCERPT */}
         <h3 className="text-lg font-semibold p-1 sm:mt-0 leading-6 bg-[#101010] text-white transition-all duration-500">
           
-          {title}
+          {DOMPurify.sanitize(title)}
           {/* <TruncatedTitle content={title} /> */}
           
         </h3>
         <div className="p-1 mt-1 mb-0 text-sm leading-5 bg-[#101010] text-white transition-all duration-500">
           {/* {infoExcerpt?.replace(/<br\s*\/?>/gi, '')} */}
-          <TruncatedInfo content={infoExcerpt?.replace(/<br\s*\/?>/gi, '')} />
+          <TruncatedInfo content={DOMPurify.sanitize(infoExcerpt?.replace(/<br\s*\/?>/gi, ''))} />
         </div>
 
 

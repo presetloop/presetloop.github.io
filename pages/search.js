@@ -6,7 +6,7 @@ import {getAdminCookie} from '@/helpers/handleCookies';
 import getSessionData from '@/helpers/getSessionData';
 import DOMPurify from 'dompurify';
 import Footer from '@/components/Footer';
-// import validUrl from 'valid-url';
+import validUrl from 'valid-url';
 
 // const baseUrl = 'http://localhost:5000';
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -188,7 +188,7 @@ return (
             <a href={`/samplepack?id=${result.id}`}>
               <div className='flex my-8 items-center'>
                 {
-                  result.imgHref ? <img className="mr-4 h-10 w-10 rounded-full" src={result.imgHref} alt="Search result" />
+                  result.imgHref ? <img className="mr-4 h-10 w-10 rounded-full" src={DOMPurify.sanitize(validUrl.isWebUri(result.imgHref))} alt="Search result" />
                   : <img alt="Post Preview Image" className="mr-4 h-10 w-10 rounded-full" src="https://images.presetloops.com/placeholder/1682816223.jpg" />
                 }
                 <p className="w-fit text-xl">

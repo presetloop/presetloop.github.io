@@ -102,18 +102,41 @@ return (
       <div className="flex gap-2 w-full justify-between">
         
         {isGuest ? (
-          <div className="ml-12 flex text-white sm:hover:text-black">
-            <a href="/">
+        //   <div className="ml-52 flex text-white sm:hover:text-black">
+        //     <a href="/">
               
-              <h1 className='-mt-[24px] sm:hidden [word-spacing:-0px]'>pre</h1>
+        //       <h1 className='-mt-[24px] -ml-8 [word-spacing:-0px]'>pre</h1>
               
-              <p className="-mt-[21px] ml-2 mr-6 px-2 bg-transparent ease-in-out duration-300">
-                <img className="ml-4 h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
-              </p>
+        //       <p className="-mt-[21px] -ml-8 mr-6 px-2 bg-transparent ease-in-out duration-300">
+        //         <img className="ml-4 h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
+        //       </p>
 
-              <h1 className='-mt-[43px] ml-[74px] sm:hidden [word-spacing:-0px]'>set</h1>
+        //       <h1 className='-mt-[43px] ml-[74px] [word-spacing:-0px]'>set</h1>
+        //     </a>
+        // </div>
+      <>
+      <div className="flex gap-2 justify-between">
+
+      <div className={`flex text-white sm:hover:text-black ${isGuest ? "ml-12 sm:ml-80" : ""}`}>
+          
+      <a href={"/"}>
+          <p className='-mt-[24px] [word-spacing:-0px]'>pre</p>
+          <p className="-mt-[21px] ml-6 mr-6 px-2 bg-transparent ease-in-out duration-300">
+            <img className="h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
+          </p>
+          <p className='-mt-[43px] ml-[74px] [word-spacing:-0px]'>set</p> 
+      </a>
+
+      </div>
+
+            
+          {/* <div className="flex gap-2">
+            <a className="block" href="/search">
+              <p className="border-white border-2 border-b-0 -mt-7 px-1 text-md sm:-mt-8 sm:px-4 sm:text-lg text-white ease-in-out duration-300">Search</p>
             </a>
+          </div> */}
         </div>
+      </>
         ) : (
           <div className="flex text-white sm:hover:text-black">
             <a href="/">
@@ -132,7 +155,7 @@ return (
         { data?.map(item => (
           <div className={`${getRandomColourClass(random100)} w-fit h-fit`} key={item.id}>
             {item.wildcard_1 ? (
-              <p className='-rotate-90 tracking-widest text-sm mt-0 px-2 py-4 uppercase'>{item.wildcard_1}</p>
+              <p className='-rotate-90 tracking-widest text-sm mt-0 px-2 py-4 uppercase'>{DOMPurify.sanitize(item.wildcard_1)}</p>
             ) : (
               <p className='-rotate-90 tracking-widest text-sm mt-0 px-2 py-4 uppercase'>old</p>
             )}
@@ -214,7 +237,7 @@ return (
             {/* PRODUCER */}
             {item.producer ? (
               <p className={`${getRandomColourClass(random100)} w-fit cursor-pointer -ml-1 rotate-1 -mb-2 mt-0 px-2 text-md leading-8 text-gray-700`}>
-                Producer: {item.producer}
+                Producer: {DOMPurify.sanitize(item.producer)}
               </p>
             ) : (
                 <p className={`${getRandomColourClass(random100)} w-fit cursor-pointer -ml-1 rotate-1 -mb-2 mt-0 px-2 text-md leading-8 text-gray-700`}>
@@ -287,7 +310,7 @@ return (
 
             <div className={`w-fit ml-4 mt-4 -rotate-2 text-white ${getRandomColourClass(random400)}`}>
               {item.linkTag ? (
-                <a className="sm:hover:text-black" href={item.linkTag} target="_blank">Play Artist on Spotify</a>
+                <a className="sm:hover:text-black" href={DOMPurify.sanitize(validUrl.isWebUri(item.linkTag))} target="_blank">Play Artist on Spotify</a>
               ) : (
                 <a className="sm:hover:text-black" href="https://open.spotify.com/artist/66OsKKYin7yLMQUsZxjE91" target="_blank">Play Artist on Spotify</a>
               )}
