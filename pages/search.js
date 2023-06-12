@@ -104,47 +104,46 @@ return (
 {/* navigation */}
     <div className="flex w-full mt-8 sm:mt-10 border-t-2 border-white">
   
-    <div className='relative md:w-full'>
-      { isGuest && <div className="z-100 absolute -top-7 left-0 bg-green-50">
-      <CountdownTimer /></div>
-    }
-    </div>
+    
+    
+      { isGuest && (
+        <div className='relative md:w-full'>
+          <div className="z-100 absolute -top-7 left-0 bg-green-50">
+            <CountdownTimer />
+          </div>
+        </div> 
+      )}
+    
 
       {isGuest ? (
       <nav className={`w-full flex text-white sm:hover:text-black`}>
         
-        <div className='ml-auto pl-20 sm:pl-48'>
+        <div className='ml-auto pl-0 sm:pl-0'>
         
         <a href={"/"}>
-          <p className='-mt-[24px] [word-spacing:-0px]'>pre</p>
-          <p className="-mt-[21px] ml-6 mr-6 px-2 bg-transparent ease-in-out duration-300">
-            <img className="h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
-          </p>
-          <p className='-mt-[43px] ml-[74px] [word-spacing:-0px]'>set</p> 
+
+          <img className="invert sm:hover:invert-0 -mt-4 h-auto w-16 transition-all ease-in-out duration-1000" src="/pl-logo-trans.png" alt="Preset Loop" />
+        
         </a>
 
         </div>
 
           <div className='ml-auto'>
-            <a className="block my-0 bg-white px-4 sm:px-12 text-lg text-black ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8" href="/">View all</a>
+            <a className="block my-0 bg-white sm:hover:bg-black px-1 sm:px-12 text-lg text-black sm:hover:text-white ease ease-in-out duration-300" href="/">View all</a>
           </div>
       </nav>
       ) : (
       <nav className={`w-full flex space-between text-white sm:hover:text-black`}>
         <div>
           <a href={"/"}>
-          <p className='-mt-[24px] [word-spacing:-0px]'>pre</p>
 
-          <p className="-mt-[21px] ml-7 px-2 bg-transparent ease-in-out duration-300">
-            <img className="h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
-          </p>
+          <img className="invert sm:hover:invert-0 -mt-4 h-auto w-16 transition-all ease-in-out duration-1000" src="/pl-logo-trans.png" alt="Preset Loop" />
 
-          <p className='-mt-[43px] ml-20 [word-spacing:-0px]'>set</p> 
         </a>
         </div>
 
         <div className='ml-auto'>
-          <a className="inline-block my-0 bg-white px-4 sm:px-12 text-lg text-black ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8" href="/">View all</a>
+          <a className="block my-0 bg-white sm:hover:bg-black px-1 sm:px-12 text-lg text-black sm:hover:text-white ease ease-in-out duration-300" href="/">View all</a>
         </div>
       </nav>
       )}
@@ -154,7 +153,7 @@ return (
 
 
 
-    <div className="relative mt-8 m-auto w-96">
+    <div className="relative mt-8 pl-1 m-auto w-96">
       <input
         ref={searchField}
         required
@@ -169,7 +168,7 @@ return (
       {searchErrorMessage && <p className="absolute bottom-[5px] left-0 mb-0 text-red-500 text-md">{searchErrorMessage}</p>}
     </div>
 
-    <div onClick={handleSearch} className="flex items-center justify-between mt-0 m-auto w-96">
+    <div onClick={handleSearch} className="flex items-center justify-between pl-1 mt-0 m-auto w-96">
       { !disableSearchBtn ? <button
           className="border-slate-900 border-2 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300"
           type="submit">{loading ? 'Searching...' : 'Search'}</button> 

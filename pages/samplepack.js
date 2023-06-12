@@ -97,57 +97,32 @@ return (
         <CountdownTimer /></div>
       }
 
-      <a className={`${getRandomColourClass(random300)} sm:rotate-2 block mt-0 h-fit sm:mt-1 sm:mb-1 pb-1 pt-1 sm:pb-1 sm:pt-1 lg:-mb-2 px-2 sm:px-6 text-sm sm:text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8 leading-0`} href="/">Index</a>
+      <a className={`${getRandomColourClass(random300)} sm:rotate-2 block mt-0 h-fit sm:mt-1 sm:mb-1 pb-1 pt-1 sm:pb-1 sm:pt-1 lg:-mb-2 px-2 sm:px-6 text-sm sm:text-lg text-white ease ease-in-out duration-300 sm:hover:text-black leading-0`} href="/">Index</a>
       
       <div className="flex gap-2 w-full justify-between">
         
         {isGuest ? (
-        //   <div className="ml-52 flex text-white sm:hover:text-black">
-        //     <a href="/">
-              
-        //       <h1 className='-mt-[24px] -ml-8 [word-spacing:-0px]'>pre</h1>
-              
-        //       <p className="-mt-[21px] -ml-8 mr-6 px-2 bg-transparent ease-in-out duration-300">
-        //         <img className="ml-4 h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
-        //       </p>
-
-        //       <h1 className='-mt-[43px] ml-[74px] [word-spacing:-0px]'>set</h1>
-        //     </a>
-        // </div>
       <>
       <div className="flex gap-2 justify-between">
 
       <div className={`flex text-white sm:hover:text-black ${isGuest ? "ml-12 sm:ml-80" : ""}`}>
           
       <a href={"/"}>
-          <p className='-mt-[24px] [word-spacing:-0px]'>pre</p>
-          <p className="-mt-[21px] ml-6 mr-6 px-2 bg-transparent ease-in-out duration-300">
-            <img className="h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
-          </p>
-          <p className='-mt-[43px] ml-[74px] [word-spacing:-0px]'>set</p> 
+          
+        <img className="invert sm:hover:invert-0 -mt-4 h-auto w-16 transition-all ease-in-out duration-1000" src="/pl-logo-trans.png" alt="Preset Loop" />
+
       </a>
 
       </div>
 
-            
-          {/* <div className="flex gap-2">
-            <a className="block" href="/search">
-              <p className="border-white border-2 border-b-0 -mt-7 px-1 text-md sm:-mt-8 sm:px-4 sm:text-lg text-white ease-in-out duration-300">Search</p>
-            </a>
-          </div> */}
         </div>
       </>
         ) : (
           <div className="flex text-white sm:hover:text-black">
             <a href="/">
               
-              <h1 className='-mt-[24px] sm:hidden [word-spacing:-0px]'>pre</h1>
+              <img className="invert sm:hover:invert-0 -mt-4 h-auto w-16 transition-all ease-in-out duration-1000" src="/pl-logo-trans.png" alt="Preset Loop" />
               
-              <p className="-mt-[21px] ml-2 mr-6 px-2 bg-transparent ease-in-out duration-300">
-                <img className="ml-4 h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
-              </p>
-
-              <h1 className='-mt-[43px] ml-[74px] sm:hidden [word-spacing:-0px]'>set</h1>
             </a>
         </div>
         )}
@@ -188,7 +163,7 @@ return (
     <div className={`loadedAni`}>
 
   {data?.map(item => (
-    <div key={item.id} className={`z-2 -mt-0 sm:-mt-4 lg:mt-0 relative overflow-hidden px-6 py-12 lg:overflow-visible lg:px-0`}>
+    <div key={item.id} className={`z-2 -mt-4 sm:-mt-4 lg:mt-0 relative overflow-hidden px-6 py-12 lg:overflow-visible lg:px-0`}>
 
     <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-0">
       

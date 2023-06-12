@@ -10,7 +10,7 @@ export default function Footer() {
             {/* LOGO */}
           <a href={"/"}>
             <div className="flex justify-center">
-              <img className="invert rounded-full my-8 h-full w-64 sm:h-fit sm:w-64" src="/pl-logo-trans.png" alt="Preset Loop" />
+              <img className="invert rounded-full my-8 h-auto w-64" src="/pl-logo-trans.png" alt="Preset Loop" />
             </div>
           </a>
 

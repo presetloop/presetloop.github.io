@@ -12,11 +12,9 @@ export default function HomeNav({isGuest, isAdmin, loggedIn}) {
       <div className={`flex text-white sm:hover:text-black ${isGuest ? "ml-24 sm:ml-80" : ""}`}>
           
       <a href={isAdmin ? "/form" : "/"}>
-          <p className='-mt-[24px] [word-spacing:-0px]'>pre</p>
-          <p className="-mt-[21px] ml-6 mr-6 px-2 bg-transparent ease-in-out duration-300">
-            <img className="h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
-          </p>
-          <p className='-mt-[43px] ml-[74px] [word-spacing:-0px]'>set</p> 
+          
+            <img className="invert sm:hover:invert-0 -mt-4 h-auto w-16 transition-all ease-in-out duration-1000" src="/pl-logo-trans.png" alt="Preset Loop" />
+          
       </a>
 
       </div>
@@ -24,7 +22,7 @@ export default function HomeNav({isGuest, isAdmin, loggedIn}) {
             
           <div className="flex gap-2">
             <a className="block" href="/search">
-              <p className="border-white border-2 border-b-0 -mt-7 px-1 text-md sm:-mt-8 sm:px-4 sm:text-lg text-white ease-in-out duration-300">Search</p>
+              <p className="border-white border-2 border-b-0 -mt-7 px-1 text-md sm:-mt-8 sm:px-4 sm:text-lg text-white sm:hover:bg-white sm:hover:text-black ease-in-out duration-300">Search</p>
             </a>
             <LogoutBtn />
           </div>
@@ -36,11 +34,9 @@ export default function HomeNav({isGuest, isAdmin, loggedIn}) {
 
           <div className="flex text-white hover:text-black">
             <a href="/login">
-              <h1 className='-mt-[24px] [word-spacing:-0px]'>pre</h1>
-              <p className="-mt-[21px] ml-6 mr-6 px-2 bg-transparent ease-in-out duration-300">
-                <img className="h-10 w-10 transition-all ease-in-out duration-1000" src="/loop.svg" alt="Preset Loop" />
-              </p>
-              <h1 className='-mt-[43px] ml-[74px] [word-spacing:-0px]'>set</h1>
+              
+              <img className="invert sm:hover:invert-0 -mt-4 h-auto w-16 transition-all ease-in-out duration-1000" src="/pl-logo-trans.png" alt="Preset Loop" />
+
             </a>
           </div>
           

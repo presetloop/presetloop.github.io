@@ -89,6 +89,15 @@ body::-webkit-scrollbar-thumb {
   } 
 }
 
+.topline{
+  position: absolute;
+  right: 0;
+  top: -2px;
+  width: calc(99% - 3.5rem);
+  max-width: calc(1600px - 3rem);
+}
+
+/* eula.js */
 .underline{
   -webkit-text-decoration-line: underline;
           text-decoration-line: underline;

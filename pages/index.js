@@ -101,7 +101,10 @@ return (
 
 <div className='max-w-[1600px] w-[99%] m-auto flex-1'>
 
-<div className="relative mt-8 sm:mt-2 border-t-2 border-white">
+<div className="relative mt-8 sm:mt-2">
+
+{/* white border line that runs across page (global.css) */}
+<div className={`${!isGuest && `topline`} right-0 border-t-2 border-white`} />
 
      { isGuest && <div className="absolute -top-7 left-0 bg-green-50">
         <CountdownTimer /></div>
