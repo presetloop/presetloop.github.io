@@ -7,18 +7,12 @@ export default function Cookies() {
     <a href={"/"}>
       <div className="flex w-full justify-end pr-4 mb-4">
       
-        <p className='[word-spacing:-0px]'>pre</p>
+        <img className="invert sm:hover:invert-0 -mt-0 h-auto w-16 transition-all ease-in-out duration-1000" src="/pl-logo-trans.png" alt="Preset Loop" />
         
-        <p className="[word-spacing:-0px]">
-          <img className="-mt-1.5 h-10 w-10" src="/loop.svg" alt="Preset Loop" />
-        </p>
-
-        <p className='[word-spacing:-0px]'>set</p> 
-      
       </div>
     </a>
 
-      <h1 className="font-bold text-white mb-4 text-[20vw]">WE REJECTED ALL COOKIES SO YOU DON'T HAVE TO.</h1>
+      <h1 className="font-bold text-white mt-4 mb-4 text-[20vw]">WE REJECTED ALL COOKIES SO YOU DON'T HAVE TO.</h1>
 
       <Footer />
     </div>
