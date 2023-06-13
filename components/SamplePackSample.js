@@ -1,4 +1,5 @@
 import SoundFile from '@/components/SoundFile';
+import FileDownloader from './FileDownloader';
 import RandomWaveformSymbol from './RandomWaveformSymbol';
 
 export default function SamplePackSample({getRandomColourClass
@@ -24,8 +25,17 @@ export default function SamplePackSample({getRandomColourClass
           </div>
         </div>
 
+        {/* DOWNLOAD BUTTON AREA */}
         <div className='rounded-full ml-1 mr-1 p-2 border-8 border-white bg-black'>
-          <img className="h-4 w-4 invert" src="/download.svg" alt="Preset Loop" />
+          {sampleFileUrl && sampleFileName ? (
+            <FileDownloader url={sampleFileUrl} fileName={sampleFileName} />
+          ) : (
+            <img 
+              className="h-4 w-4 invert" 
+              src="/forbidden.svg" 
+              alt="Preset Loop" 
+            />
+          )}
         </div>
 
       </div>
