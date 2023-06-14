@@ -83,6 +83,9 @@ const random50 = ["bg-blue-50", "bg-red-50", "bg-pink-50", "bg-yellow-50", "bg-g
   const random300 = ["bg-blue-300", "bg-red-300", "bg-pink-300", "bg-yellow-300", "bg-green-300", "bg-purple-300", "bg-indigo-300", "bg-gray-300"];
   const random400 = ["bg-blue-400", "bg-red-400", "bg-pink-400", "bg-yellow-400", "bg-green-400", "bg-purple-400", "bg-indigo-400", "bg-gray-400"];  
 
+// Count number of samples in pack to render UI list 
+const sampleFileNames = Object.keys(data[0]).filter(key => key.startsWith('sampleFileName_') && data[0][key] !== null);
+
 return (
 <>
 <div className="mt-1 sm:mt-8 flex flex-col h-screen">
@@ -268,11 +271,11 @@ return (
           
           <div className={`lg:pr-4 sm:ml-8 ${getRandomColourClass(random100)}`}>
             
-            <div className="-mr-3 md:pr-8 max-w-xl text-base -mt-20 lg:mt-8 leading-7 text-gray-700 lg:max-w-lg">
+            <div className="-mr-3 md:pr-8 max-w-xl text-base -mt-8 lg:mt-8 leading-7 text-gray-700 lg:max-w-lg">
                 
                 {/* SAMPLES */}
                 {
-                  Array.from({ length: 16 }, (_, index) => (
+                  Array.from({ length: sampleFileNames.length }, (_, index) => (
                     <SamplePackSample
                       key={index + 1}
                       isLoggedIn={true}

@@ -147,7 +147,8 @@ const SoundFile = ({ href, isLoggedIn, isAdmin, soundFile, image, style, wave })
 
 
           {/* PLAY / PAUSE */}
-          <button
+          {soundFile && (
+            <button
             onClick={(isLoggedIn || isAdmin) ? toggleAudio : null}
             className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full px-0 py-0 transition-all ease-in-out duration-300 cursor-pointer"
           >
@@ -157,6 +158,7 @@ const SoundFile = ({ href, isLoggedIn, isAdmin, soundFile, image, style, wave })
               <img className={`w-10 ${wave}`} src="/play.svg" alt="Preset Loop" />
             )}
           </button>
+          )}
 
           {/* LOOP */}
           {(isLoggedIn || isAdmin) && (image !== "/waveform.svg") && (  

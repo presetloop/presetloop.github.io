@@ -10,7 +10,7 @@ export default function SamplePackSample({getRandomColourClass
     
         <div className='rounded-full bg-white mr-2'>
           {(isLoggedIn) && (
-            <SoundFile isLoggedIn={true} isAdmin={true} soundFile={sampleFileUrl || `${process.env.NEXT_PUBLIC_SAMPLES}/frazzles-kik-hat.mp3`} wave={`${getRandomColourClass} border-2 border-[#99999999] rounded-full`} image={"/waveform.svg"} style="h-16 w-16"/>
+            <SoundFile isLoggedIn={true} isAdmin={true} soundFile={sampleFileUrl} wave={`${getRandomColourClass} border-2 border-[#99999999] rounded-full`} image={"/waveform.svg"} style="h-16 w-16"/>
           )}
         </div>
 
