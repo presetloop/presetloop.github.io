@@ -147,7 +147,7 @@ return (
         </a>  
 
         <a className="block" href={admin ? "/form" : "/"}>
-          <p className={`hidden lg:inline-block mt-1 -rotate-1 ${getRandomColourClass(random300)} px-2 sm:px-12 text-md sm:text-lg text-white ease-in-out duration-300`}>{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
+          <p className={`hidden lg:inline-block mt-1 -rotate-3 ${getRandomColourClass(random300)} px-2 sm:px-12 text-md sm:text-lg text-white ease-in-out duration-300`}>{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
         </a>
         </div>
 
@@ -159,6 +159,9 @@ return (
 </div>{/* \CONTAINER */}
 
 
+
+
+
 <div className={`${getRandomColourClass(random100)}`}>
 {/* MAIN CONTENT */}
 <div className='w-[100%] m-auto flex-1'>
@@ -168,15 +171,25 @@ return (
   {data?.map(item => (
     <div key={item.id} className={`z-2 -mt-4 sm:-mt-4 lg:mt-0 relative overflow-hidden px-6 py-12 lg:overflow-visible lg:px-0`}>
 
+
+
+
+
     <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-0">
-      
-       {/* left blank coloured tab -> decorative */}
-        <div className={`${getRandomColourClass(random300)} lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8`}>
+
+
+
+
+    {/* left blank coloured tab -> decorative */}
+    <div className={`${getRandomColourClass(random300)} lg:col-span-2 lg:col-start-1 lg:row-start-1 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8`}>
+
+
+
 
       {/* meta block */}
       <div className={`${getRandomColourClass(random400)} -mr-6 lg:mr-2 lg:pr-4`}>
-        
-        
+
+
         <div className="lg:max-w-lg">
 
         {/* GENRE */}
@@ -191,8 +204,6 @@ return (
           </p>
           )}
           
-
-
           {/* DATE */}
           <p className={`-mt-4 rotate-1 mr-4 px-2 text-xs sm:text-base text-white font-semibold leading-7 w-fit`}>
             <span className={`p-1 ${getRandomColourClass(random300)}`}>
@@ -205,12 +216,8 @@ return (
           </p>
         </div>
 
-
-
           {/* TITLE */}
             <h1 className="pl-2 pr-8 sm:pr-2 mt-3 pb-2 text-2xl font-bold text-right text-white sm:text-3xl md:sm:text-4xl">{DOMPurify.sanitize(item.title)}</h1>
-
-
 
             {/* PRODUCER */}
             {item.producer ? (
@@ -237,7 +244,6 @@ return (
               <p><span className="text-white mr-2 ">&rarr;</span>No link</p>
               )} */}
 
-
             </div>
             {/*  */}
         </div>
@@ -245,8 +251,12 @@ return (
 
 
 
+
       <div className={`${getRandomColourClass(random400)} -ml-12 -mt-16 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 h-fit`}>
-        
+
+
+
+
         {/* IMAGE */}
         <div className='-mt-2 ml-2 -mr-20 md:mr-0 sm:ml-16'>
           { (<ImageDynamic item={item} isLoggedIn={true} /> )}
@@ -267,8 +277,14 @@ return (
       
       </div>
 
+
+
+
         <div className="lg:col-span-2 lg:col-start-1 lg:row-start-2 lg:mx-auto lg:grid lg:w-full lg:max-w-7xl lg:grid-cols-2 lg:gap-x-8 lg:px-8">
-          
+
+
+
+
           <div className={`lg:pr-4 sm:ml-8 ${getRandomColourClass(random100)}`}>
             
             <div className="-mr-3 md:pr-8 max-w-xl text-base -mt-8 lg:mt-8 leading-7 text-gray-700 lg:max-w-lg">
@@ -295,6 +311,7 @@ return (
             </div>
             {/*  */}
             </div>
+
 
 
           {/* ADMIN BUTTONS */}
