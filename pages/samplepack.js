@@ -281,7 +281,7 @@ return (
           <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.info)}} className={`-rotate-1 text-right -ml-8 py-4 px-4 mt-0 ${getRandomColourClass(random400)}`}></p>
 
         {/* PACK_DETAILS  */}
-          <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.pack_details)}} className={`rotate-0 text-left -mr-6 py-4 px-4 mt-0 ${getRandomColourClass(random100)}`}></p>
+          <p className={`rotate-0 text-left -mr-6 py-4 px-4 mt-0 ${getRandomColourClass(random100)}`}><span>{sampleFileNames.length}</span> Samples. Royalty Free. .WAV Files.</p>
         </div>
       
       </div>
