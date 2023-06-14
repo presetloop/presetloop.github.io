@@ -66,6 +66,7 @@ export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmi
         }
         <span className='absolute -right-0 top-1.5 text-white text-sm'>
           <span className='p-0'>
+          {/* Randomly add NEW label to home grid images */}
           {getRandomValue(
             <span className='p-0 bg-red-400'>{""}</span>,
             <span className='p-2 bg-green-400'>New</span>
@@ -156,7 +157,7 @@ export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmi
     //    rel="noopener noreferrer">
     <>
       { item.imgHref ? (
-        <SoundFile isLoggedIn={isLoggedIn} isAdmin={isAdmin} soundFile={packPreviewUrl || "https://samples.presetloops.com/frazzles_loop1.mp3"} image={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)} style={`max-w-[100%] h-[100%] w-[850px]`} />
+        <SoundFile isLoggedIn={isLoggedIn} isAdmin={isAdmin} soundFile={packPreviewUrl || "https://samples.presetloops.com/frazzles_loop1.mp3"} image={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)} style={`max-w-[100%] h-auto md:w-[650px] epic:w-[850px]`} />
         // <Image
         //   className={`transition-all duration-500 sm:mt-4 rotate-1 cursor-pointer ${className} sm:w-[48rem] max-w-[700px]`}
         //   src={
@@ -173,7 +174,7 @@ export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmi
         // /> 
       ) : ( 
         <ImagePlaceholder 
-          className={`transition-all duration-500 sm:mt-4 cursor-pointer ${className} w-[100%] h-[100%] max-w-[700px]`}
+          className={`transition-all duration-500 sm:mt-4 cursor-pointer ${className} w-[100%] h-auto max-w-[700px]`}
           // height={window.innerWidth < 800 ? "275px" : "100%"}
           imgkey={Math.random()} 
           rotate={"rotate(1deg)"}

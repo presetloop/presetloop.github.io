@@ -245,7 +245,7 @@ return (
 
             {/* PRODUCER */}
             {item.producer ? (
-              <p className={`${getRandomColourClass(random100)} w-fit -ml-1 rotate-1 -mb-2 mt-0 px-2 text-md leading-8 text-gray-700`}>
+              <p className={`${getRandomColourClass(random100)} w-fit -ml-1 rotate-3 -mb-2 mt-0 px-2 text-md leading-8 text-gray-700`}>
                 Producer: {DOMPurify.sanitize(item.producer)}
               </p>
             ) : (
@@ -260,8 +260,8 @@ return (
 
 
 
-
-      <div className={`${getRandomColourClass(random400)} -ml-12 -mt-16 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 h-fit`}>
+      <div className={`${getRandomColourClass(random400)} -ml-12 -mt-16 lg:-mt-52 lg:row-start-2 lg:col-start-2 lg:row-span-2 p-12 lg:sticky`}>
+      {/* <div className={`${getRandomColourClass(random400)} -ml-12 -mt-16 p-12 lg:sticky lg:top-4 lg:col-start-2 lg:row-span-2 lg:row-start-1 h-fit`}> */}
 
 
 
@@ -293,8 +293,8 @@ return (
 
 
 
-
-          <div className={`lg:pr-4 sm:ml-8 ${getRandomColourClass(random100)}`}>
+          <div className={`lg:mt-4 lg:pr-4 sm:ml-8 ${getRandomColourClass(random100)}`}>        
+          {/* <div className={`lg:pr-4 sm:ml-8 ${getRandomColourClass(random100)}`}> */}
             
             <div className="-mr-3 md:pr-8 max-w-xl text-base -mt-8 lg:mt-8 leading-7 text-gray-700 lg:max-w-lg">
                 
