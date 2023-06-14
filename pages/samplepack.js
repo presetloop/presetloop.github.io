@@ -4,7 +4,7 @@ import IsGuestContext from '@/helpers/IsGuestContext';
 import CountdownTimer from '@/components/CountdownTimer';
 import {getAdminCookie} from '@/helpers/handleCookies';
 import getSessionData from '@/helpers/getSessionData';
-import DOMPurify, { isValidAttribute } from 'dompurify';
+import DOMPurify, { sanitize } from 'dompurify';
 import validUrl from 'valid-url';
 import DeleteBtn from '../components/DeleteBtn';
 import EditBtn from '../components/EditBtn';
@@ -17,8 +17,8 @@ import generateRandomDate from '@/helpers/generateRandomDate';
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
 
 function Samplepack() {
-  const router = useRouter();
   const { isGuest } = useContext(IsGuestContext);
+  const router = useRouter();
   const { id } = router.query;
   const [admin, setAdmin] = useState(false);
   const [data, setData] = useState([]);
@@ -90,6 +90,19 @@ return (
 <>
 <div className="mt-1 sm:mt-8 flex flex-col h-screen">
 
+
+
+
+
+
+
+
+
+
+
+
+{/*  */}
+{/*  */}
 <div className='max-w-[1600px] w-[99%] m-auto flex-1'>
 
 {/* navigation */}
@@ -157,13 +170,24 @@ return (
   </div>{/* \navigation */}
 
 </div>{/* \CONTAINER */}
+{/*  */}
+{/*  */}
 
 
 
 
+
+
+
+
+
+
+
+
+
+{/* MAIN CONTENT */}
 
 <div className={`${getRandomColourClass(random100)}`}>
-{/* MAIN CONTENT */}
 <div className='w-[100%] m-auto flex-1'>
 
     <div className={`loadedAni`}>
@@ -229,21 +253,6 @@ return (
                 Producer: MVM
               </p>
               )}
-
-            {/* {item.linkTag ? (
-              <p className={`${getRandomColourClass(random100)} cursor-pointer mt-6 text-md leading-8 text-gray-700`}>
-                <span className="text-black">&rarr;</span>
-                <a className="pl-2 md:hover:text-indigo-400" href={
-                  item.linkTag &&
-                  validUrl.isWebUri(item.linkTag) &&
-                  DOMPurify.sanitize(item.linkTag).replace(/^https?:\/\//i, 'https://')} target="_blank" rel="noopener">
-                  {window.innerWidth < 480 ? (item.linkTag && item.linkTag.replace(/^https?:\/\//i, '')).slice(0, 20) : (item.linkTag && item.linkTag.replace(/^https?:\/\//i, ''))}
-                </a>
-              </p>
-            ) : (
-              <p><span className="text-white mr-2 ">&rarr;</span>No link</p>
-              )} */}
-
             </div>
             {/*  */}
         </div>
@@ -258,7 +267,7 @@ return (
 
 
         {/* IMAGE */}
-        <div className='-mt-2 ml-2 -mr-20 md:mr-0 sm:ml-16'>
+        <div className='loadAni -mt-2 ml-2 -mr-20 md:mr-0 sm:ml-16'>
           { (<ImageDynamic item={item} isLoggedIn={true} /> )}
         </div>
         
@@ -332,14 +341,21 @@ return (
   
 ))}
 
-      </div>{/* \ MAIN CONTENT */}
+      </div>{/* \ LOAD ANI */}
     </div>{/* \CONTAINER */}
-  </div>
+  </div>{/* ADD RANDOM COLOUR TO MAIN CONTENT */}
+
+
+
 
 
     <div className='mt-auto'>
       <Footer />
     </div>
+
+
+
+    {/* flex flex-col h-screen outer page wrapper */}
   </div>
 </>
   );
