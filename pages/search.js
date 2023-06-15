@@ -170,10 +170,10 @@ return (
 
     <div onClick={handleSearch} className="flex items-center justify-between pl-1 mt-0 m-auto w-96">
       { !disableSearchBtn ? <button
-          className="border-slate-900 border-2 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300"
+          className="border-slate-900 border-2 px-4 text-lg text-slate-900 sm:hover:bg-slate-900 sm:hover:text-white ease-in-out duration-300"
           type="submit">{loading ? 'Searching...' : 'Search'}</button> 
         : <button disabled
-          className="border-slate-900 border-2 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300"
+          className="border-slate-900 border-2 px-4 text-lg text-slate-900 sm:hover:bg-slate-900 sm:hover:text-white ease-in-out duration-300"
           type="submit">Search</button> 
       }
       {/* {searchErrorMessage && <p className="text-red-500 text-md">{searchErrorMessage}</p>}  */}

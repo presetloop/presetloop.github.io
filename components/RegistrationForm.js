@@ -105,7 +105,7 @@ function RegistrationForm({apiUrl}) {
             {errorMessage && <p className="text-red-500">{errorMessage}</p>}
 
             <div className="flex items-center justify-between">
-              <input className="my-2 border-slate-900 border-2 hover:bg-slate-900 hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150" type="submit" 
+              <input className="my-2 border-slate-900 border-2 sm:hover:bg-slate-900 sm:hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150" type="submit" 
               value={loading ? 'Registering...' : 'Register'} />
             </div>
         </form>

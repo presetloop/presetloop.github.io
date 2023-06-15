@@ -32,24 +32,7 @@ const HomeListItem = ({ id, title, linkTag, imgHref, infoExcerpt, producer, genr
 
       <div className="flex justify-between align-middle mt-2 pb-3 sm:pb-2 text-xs text-white">
 
-      {/* DATE AND URL (linkTag) */}
-       
-        {/* <time dateTime={null} className="text-green-400">
-          {DOMPurify.sanitize(generateRandomDate())}
-        </time> */}
-        {/* {linkTag ? 
-          (<a
-            href={isValidHref ? href : null} className="relative z-10 sm:px-3 py-1.5 sm:py-0 font-medium text-gray-600 hover:bg-gray-100">
-
-            {DOMPurify.sanitize(truncateTitle(linkTag, 25))}
-
-            <TruncatedLink info={linkTag} />
-          </a>
-          ) : (
-            <span className="relative z-10 sm:px-3 py-1.5 sm:py-0 font-medium text-gray-600">{"http://presetloop.com"}</span>
-            )
-        } */}
-
+      
 
         {/* PRODUCER */}
           <p className={`leading-[17px] rounded-sm ${getRandomColourClass(random400)} px-1 py-1`}>{DOMPurify.sanitize(producer) || "Preset Loop"}</p>

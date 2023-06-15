@@ -72,7 +72,7 @@ function Samplepack() {
     return (
       <div className="max-w-[700px] w-[95%] m-auto">
         <p>Samplepack no longer exists or perhaps it never did?</p>
-        <p className="w-fit mt-2 border-slate-900 border-2 px-4 text-lg text-slate-900 hover:bg-slate-900 hover:text-white ease-in-out duration-300 cursor-pointer" onClick={handleClick}>Home &larr;</p>
+        <p className="w-fit mt-2 border-slate-900 border-2 px-4 text-lg text-slate-900 sm:hover:bg-slate-900 sm:hover:text-white ease-in-out duration-300 cursor-pointer" onClick={handleClick}>Home &larr;</p>
       </div>
     );
   }
@@ -151,7 +151,7 @@ return (
 
         <div>
         <a className="block" href="/search">
-          <p className="w-fit border-white border-2 -mt-5 px-1 text-md sm:-mt-7 sm:px-4 text-sm sm:text-lg text-white hover:bg-slate-900 hover:text-white ease-in-out duration-300">Search</p>
+          <p className="w-fit border-white border-2 -mt-5 px-1 text-md sm:-mt-7 sm:px-4 text-sm sm:text-lg text-white sm:hover:bg-slate-900 sm:hover:text-white ease-in-out duration-300">Search</p>
         </a>  
 
         <a className="block" href={admin ? "/form" : "/"}>

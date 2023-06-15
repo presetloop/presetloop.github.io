@@ -113,7 +113,7 @@ function ResetPasswordComp({ apiUrl }) {
 
             <p className="mt-8 text-slate-400 text-sm">Password must be a minimum of 8 characters containing one uppercase letter, one lowercase letter, at least one number and one special character (e.g., !, @, #, $, %, ^, &, *)</p>
 
-            <button className="mt-4 border-slate-900 border-2 hover:bg-slate-900 hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150" type="submit">
+            <button className="mt-4 border-slate-900 border-2 sm:hover:bg-slate-900 sm:hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150" type="submit">
               {loading ? 'Reseting...' : 'Reset Password'}
             </button>
         </form>
