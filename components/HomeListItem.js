@@ -5,7 +5,7 @@ import generateRandomDate from '@/helpers/generateRandomDate';
 import TruncatedLink from '@/helpers/TruncatedLink';
 import TruncatedTitle from '@/helpers/TruncatedTitle';
 import TruncatedInfo from '@/helpers/TruncatedInfo';
-import getRandomColourClass from '@/helpers/GetRandomColourClass';
+import getRandomColourClass, {random50, random100, random300, random400} from '@/helpers/GetRandomColourClass';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 
@@ -14,12 +14,7 @@ const HomeListItem = ({ id, title, linkTag, imgHref, infoExcerpt, producer, genr
   const loginUrl = `${baseUrl}/login`;
   const href = isAdmin || loggedIn ? samplepackUrl : loginUrl;
 
-  const isValidHref = validUrl.isWebUri(href);  
-
-  const random50 = ["bg-blue-50", "bg-red-50", "bg-pink-50", "bg-yellow-50", "bg-green-50", "bg-purple-50", "bg-indigo-50", "bg-gray-50"];
-  const random100 = ["bg-blue-100", "bg-red-100", "bg-pink-100", "bg-yellow-100", "bg-green-100", "bg-purple-100", "bg-indigo-100", "bg-gray-100"];
-  const random300 = ["bg-blue-300", "bg-red-300", "bg-pink-300", "bg-yellow-300", "bg-green-300", "bg-purple-300", "bg-indigo-300", "bg-gray-300"];
-  const random400 = ["bg-blue-400", "bg-red-400", "bg-pink-400", "bg-yellow-400", "bg-green-400", "bg-purple-400", "bg-indigo-400", "bg-gray-400"];  
+  const isValidHref = validUrl.isWebUri(href);
 
   return (
     <section key={id} className={`group ${getRandomColourClass(random300)} p-4 flex max-w-xl flex-col h-fit`}>
