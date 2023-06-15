@@ -9,6 +9,7 @@ function PasswordResetComp({ apiUrl }) {
   const [email, setEmail] = useState('');
   const [errorMessage, setErrorMessage] = useState('');
   const [data, setData] = useState('');
+  const [retry, setRetry] = useState('');
   const [loading, setLoading] = useState(false);
 
   // to get input autofocus working
@@ -55,8 +56,10 @@ function PasswordResetComp({ apiUrl }) {
 
     // Set the message returned by the PHP function
     if(JSON.parse(responseData) === "No user found with that email address."){
-      setData('Please try again');
+      setRetry('Please try again');
+      setData("");
       setErrorMessage(JSON.parse(responseData));
+      // setEmail('');
       setLoading(false);
       return; 
     }
@@ -64,6 +67,7 @@ function PasswordResetComp({ apiUrl }) {
     // Set the message returned by the PHP function
     // Success, email sent redirect to login page
     setData(JSON.parse(responseData));
+    setRetry("");
     setErrorMessage('');
     setEmail('');
     setTimeout(() => {
@@ -82,7 +86,7 @@ function PasswordResetComp({ apiUrl }) {
         <input 
           ref={titleField}
           required
-          className="appearance-none border-slate-900 mb-4 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
+          className={`${data && "hidden"} appearance-none border-slate-900 mb-4 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline`}
           placeholder="Enter your email"
           type="email" 
           value={email} 
@@ -90,11 +94,14 @@ function PasswordResetComp({ apiUrl }) {
           pattern="\S+@\S+\.\S+"
         />
 
-      {data && <p className="mt-2 text-blue-500 absolute -bottom-[10px] left-0 mb-0 text-md">{data}</p>}
+      {retry && <p className={`mt-2 text-blue-500 absolute -bottom-[10px] left-0 mb-0 text-lg`}>{retry}</p>}
+      
+      {data && <p className={`mt-2 text-blue-500 absolute -bottom-[10px] left-0 mb-0 text-xl`}>{data}</p>}
+      
       {errorMessage && <p className="absolute -bottom-[35px] left-0 mb-0 text-red-500 text-md">{errorMessage}</p>}
       </div>
 
-      <button className="my-10 border-slate-900 border-2 sm:hover:bg-slate-900 sm:hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150" type="submit">
+      <button className={`${data && "hidden"} my-10 border-slate-900 border-2 sm:hover:bg-slate-900 sm:hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150`} type="submit">
         {loading ? 'Sending...' : 'Send password reset link'}
       </button>
     </form>

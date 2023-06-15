@@ -4,7 +4,7 @@ import IsGuestContext from '@/helpers/IsGuestContext';
 import CountdownTimer from '@/components/CountdownTimer';
 import {getAdminCookie} from '@/helpers/handleCookies';
 import getSessionData from '@/helpers/getSessionData';
-import DOMPurify, { sanitize } from 'dompurify';
+import { sanitize } from 'dompurify';
 import validUrl from 'valid-url';
 import DeleteBtn from '../components/DeleteBtn';
 import EditBtn from '../components/EditBtn';
@@ -100,6 +100,10 @@ return (
 {/*  */}
 <div className='max-w-[1600px] w-[99%] m-auto flex-1'>
 
+
+
+
+
 {/* navigation */}
   <div className="z-10 relative mt-8 sm:mt-2 border-t-2 border-white">
     <div className="flex gap-2 justify-between">
@@ -108,7 +112,7 @@ return (
         <CountdownTimer /></div>
       }
 
-      <a className={`${getRandomColourClass(random300)} sm:rotate-2 block mt-0 h-fit sm:mt-1 sm:mb-1 pb-1 pt-1 sm:pb-1 sm:pt-1 lg:-mb-2 px-2 sm:px-6 text-sm sm:text-lg text-white ease ease-in-out duration-300 sm:hover:text-black leading-0`} href="/">Index</a>
+      <a className={`${getRandomColourClass(random300)} sm:rotate-2 block mt-0 h-fit sm:mt-1 sm:mb-1 pb-1 pt-1 sm:pb-1 sm:pt-1 lg:-mb-2 px-2 sm:px-6 text-sm sm:text-lg text-white ease ease-in-out duration-300 sm:hover:text-black leading-0 cursor-pointer`} href="/">Index</a>
       
       <div className="flex gap-2 w-full justify-between">
         
@@ -120,7 +124,7 @@ return (
           
       <a href={"/"}>
           
-        <img className="invert sm:hover:invert-0 -mt-4 h-auto w-16 transition-all ease-in-out duration-1000" src="/pl-logo-trans.png" alt="Preset Loop" />
+        <img className="invert sm:hover:invert-0 -mt-4 h-auto w-16 transition-all ease-in-out duration-1000 cursor-pointer" src="/pl-logo-trans.png" alt="Preset Loop" />
 
       </a>
 
@@ -132,7 +136,7 @@ return (
           <div className="flex text-white sm:hover:text-black">
             <a href="/">
               
-              <img className="invert sm:hover:invert-0 -mt-4 h-auto w-16 transition-all ease-in-out duration-1000" src="/pl-logo-trans.png" alt="Preset Loop" />
+              <img className="invert sm:hover:invert-0 -mt-4 h-auto w-16 transition-all ease-in-out duration-1000 cursor-pointer" src="/pl-logo-trans.png" alt="Preset Loop" />
               
             </a>
         </div>
@@ -140,10 +144,10 @@ return (
 
         { data?.map(item => (
           <div className={`${getRandomColourClass(random100)} w-fit h-fit`} key={item.id}>
-            {item.wildcard_1 ? (
-              <p className='-rotate-90 tracking-widest text-sm mt-0 px-2 py-4 uppercase'>{DOMPurify.sanitize(item.wildcard_1)}</p>
+            {item.isNew ? (
+              <p className='-rotate-90 tracking-widest text-sm mt-0 px-2 py-4 uppercase'>{sanitize(item.isNew)}</p>
             ) : (
-              <p className='-rotate-90 tracking-widest text-sm mt-0 px-2 py-4 uppercase'>old</p>
+              <p className='-rotate-90 tracking-widest text-sm mt-0 px-2 py-4 uppercase'>&nbsp;&nbsp;</p>
             )}
           </div>
           ))}
@@ -151,11 +155,11 @@ return (
 
         <div>
         <a className="block" href="/search">
-          <p className="w-fit border-white border-2 -mt-5 px-1 text-md sm:-mt-7 sm:px-4 text-sm sm:text-lg text-white sm:hover:bg-slate-900 sm:hover:text-white ease-in-out duration-300">Search</p>
+          <p className="w-fit border-white border-2 -mt-5 px-1 text-md sm:-mt-7 sm:px-4 text-sm sm:text-lg text-white sm:hover:bg-slate-900 sm:hover:text-white ease-in-out duration-300 cursor-pointer">Search</p>
         </a>  
 
         <a className="block" href={admin ? "/form" : "/"}>
-          <p className={`hidden lg:inline-block mt-1 -rotate-3 ${getRandomColourClass(random300)} px-2 sm:px-12 text-md sm:text-lg text-white ease-in-out duration-300`}>{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
+          <p className={`hidden lg:inline-block mt-1 -rotate-3 ${getRandomColourClass(random300)} px-2 sm:px-12 text-md sm:text-lg text-white ease-in-out duration-300 cursor-pointer`}>{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
         </a>
         </div>
 
@@ -215,7 +219,7 @@ return (
         <div className='flex justify-between'>
           {item.genre ? (
             <p className={`${getRandomColourClass(random300)} -rotate-1 -mt-2 -ml-4 px-2 text-xs sm:text-base text-white font-semibold leading-7 w-fit`}>
-          {DOMPurify.sanitize(item.genre)}
+          {sanitize(item.genre)}
           </p>
           ) : (
             <p className={`${getRandomColourClass(random300)} -rotate-1 -mt-2 -ml-4 px-2 text-xs sm:text-base text-white font-semibold leading-7 w-fit`}>
@@ -226,7 +230,7 @@ return (
           {/* DATE */}
           <p className={`-mt-4 rotate-1 mr-4 px-2 text-xs sm:text-base text-white font-semibold leading-7 w-fit`}>
             <span className={`p-1 ${getRandomColourClass(random300)}`}>
-              {item.date ? DOMPurify.sanitize(item.date) : (
+              {item.date ? sanitize(item.date) : (
               <time dateTime={null}>
                 {generateRandomDate()}
               </time> 
@@ -236,12 +240,12 @@ return (
         </div>
 
           {/* TITLE */}
-            <h1 className="pl-2 pr-8 sm:pr-2 mt-3 pb-2 text-2xl font-bold text-right text-white sm:text-3xl md:sm:text-4xl">{DOMPurify.sanitize(item.title)}</h1>
+            <h1 className="pl-2 pr-8 sm:pr-2 mt-3 pb-2 text-2xl font-bold text-right text-white sm:text-3xl md:sm:text-4xl">{sanitize(item.title)}</h1>
 
             {/* PRODUCER */}
             {item.producer ? (
               <p className={`${getRandomColourClass(random100)} w-fit -ml-1 rotate-3 -mb-2 mt-0 px-2 text-md leading-8 text-gray-700`}>
-                Producer: {DOMPurify.sanitize(item.producer)}
+                Producer: {sanitize(item.producer)}
               </p>
             ) : (
                 <p className={`${getRandomColourClass(random100)} w-fit -ml-1 rotate-1 -mb-2 mt-0 px-2 text-md leading-8 text-gray-700`}>
@@ -270,12 +274,12 @@ return (
         <div className={`max-w-[750px] -mr-6 py-4 px-4 mt-8 ${getRandomColourClass(random50)}`}>
        
         {/* SUB_TITLE  */}
-          <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.sub_title)}} className={`rotate-1 text-center text-lg font-bold -mr-8 py-4 px-4 mt-0 ${getRandomColourClass(random300)}`}></p>
+          <p dangerouslySetInnerHTML={{ __html: sanitize(item.sub_title)}} className={`rotate-1 text-center text-lg font-bold -mr-8 py-4 px-4 mt-0 ${getRandomColourClass(random300)}`}></p>
 
         {/* INFO  */}
-          <p dangerouslySetInnerHTML={{ __html: DOMPurify.sanitize(item.info)}} className={`-rotate-1 text-right -ml-8 py-4 px-4 mt-0 ${getRandomColourClass(random400)}`}></p>
+          <p dangerouslySetInnerHTML={{ __html: sanitize(item.info)}} className={`-rotate-1 text-right -ml-8 py-4 px-4 mt-0 ${getRandomColourClass(random400)}`}></p>
 
-        {/* PACK_DETAILS  */}
+        {/* PACK_DETAILS */}
           <p className={`rotate-0 text-left -mr-6 py-4 px-4 mt-0 ${getRandomColourClass(random100)}`}><span>{sampleFileNames.length}</span> Samples. Royalty Free. .WAV Files.</p>
         </div>
       
@@ -308,9 +312,9 @@ return (
 
             <div className={`w-fit ml-4 mt-4 -rotate-2 text-white ${getRandomColourClass(random400)}`}>
               {item.linkTag ? (
-                <a className="sm:hover:text-black" href={DOMPurify.sanitize(validUrl.isWebUri(item.linkTag))} target="_blank">Play Artist on Spotify</a>
+                <a className="sm:hover:text-black" href={sanitize(validUrl.isWebUri(item.linkTag))} target="_blank">Play Artist on Spotify</a>
               ) : (
-                <a className="sm:hover:text-black" href="https://open.spotify.com/artist/66OsKKYin7yLMQUsZxjE91" target="_blank">Play Artist on Spotify</a>
+                <a className="sm:hover:text-black cursor-pointer" href="https://open.spotify.com/artist/66OsKKYin7yLMQUsZxjE91" target="_blank">Play Artist on Spotify</a>
               )}
             </div>
             {/*  */}
