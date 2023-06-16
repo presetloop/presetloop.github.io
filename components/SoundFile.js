@@ -159,7 +159,7 @@ const SoundFile = ({ href, isLoggedIn, isAdmin, soundFile, image, style, wave })
                 <img src={"/loop-on.svg"} alt="Preset Loop" />
                 </p>
               ) : (
-                <p className='rounded-md p-2 lg:p-1.5 bg-[#101010]'>
+                <p className='pulseAni rounded-full p-2 lg:p-1.5 bg-[#101010]'>
                 <img src={"/loop-off.svg"} alt="Preset Loop" />
                 </p>
               )}
