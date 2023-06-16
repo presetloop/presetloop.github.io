@@ -125,7 +125,7 @@ return (
           
       <a href={"/"}>
           
-        <img className="invert sm:hover:invert-0 -mt-4 h-auto w-16 transition-all ease-in-out duration-1000 cursor-pointer" src="/pl-logo-trans.png" alt="Preset Loop" />
+        <img className="invert -mt-4 h-auto w-16 transition-all ease-in-out duration-1000 cursor-pointer" src="/pl-logo-trans.png" alt="Preset Loop" />
 
       </a>
 
@@ -137,7 +137,7 @@ return (
           <div className="flex text-white sm:hover:text-black">
             <a href="/">
               
-              <img className="invert sm:hover:invert-0 -mt-4 h-auto w-16 transition-all ease-in-out duration-1000 cursor-pointer" src="/pl-logo-trans.png" alt="Preset Loop" />
+              <img className="invert -mt-4 h-auto w-16 transition-all ease-in-out duration-1000 cursor-pointer" src="/pl-logo-trans.png" alt="Preset Loop" />
               
             </a>
         </div>
@@ -146,7 +146,7 @@ return (
 
 
   { data?.map(item => (
-    <div className={`${isGuest ? "sm:-ml-80" : ""} w-fit h-fit -rotate-[3deg] text-black`} key={item.id}>
+    <div className={`${isGuest ? "sm:-ml-80" : ""} lg:-ml-16 w-fit h-fit -rotate-[3deg] text-black`} key={item.id}>
       {item.isNew ? (
         <p className={`${getRandomColourClass(random100)} z-100 font-bold tracking-widest leading-4 text-sm -mt-2 px-2 py-4 uppercase`}>
         <span className='inline-block border-b-4 border-red-600'>
@@ -163,11 +163,11 @@ return (
 
         <div>
         <a className="block" href="/search">
-          <p className={`${getRandomColourClass(random100)} w-fit border-white border-0 -mt-4 sm:-mt-6 lg:-mt-5 px-1 text-md sm:px-4 py-1 text-sm sm:text-lg text-black sm:hover:text-white ease-in-out duration-300 cursor-pointer`}>Search</p>
+          <p className={`${getRandomColourClass(random100)} w-fit border-white border-0 mr-2 lg:ml-16 -mt-4 sm:-mt-6 lg:-mt-5 px-1 text-md sm:px-4 py-1 text-sm sm:text-lg text-black sm:hover:text-white ease-in-out duration-300 cursor-pointer`}>Search</p>
         </a>  
 
         <a className="block" href={admin ? "/form" : "/"}>
-          <p className={`hidden lg:inline-block mt-1 -rotate-3 ${getRandomColourClass(random300)} px-2 sm:px-12 text-md sm:text-lg text-white sm:hover:text-black ease-in-out duration-300 cursor-pointer`}>{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
+          <p className={`hidden lg:inline-block mt-1 -rotate-3 ${getRandomColourClass(random300)} px-2 sm:px-6 text-md sm:text-lg text-white sm:hover:text-black ease-in-out duration-300 cursor-pointer`}>{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
         </a>
         </div>
 

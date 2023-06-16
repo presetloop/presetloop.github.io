@@ -13,7 +13,7 @@ export default function HomeNav({isGuest, isAdmin, loggedIn}) {
           
       <a href={isAdmin ? "/form" : "/"}>
           
-            <img className="invert sm:hover:invert-0 -mt-4 h-auto w-16 transition-all ease-in-out duration-1000" src="/pl-logo-trans.png" alt="Preset Loop" />
+            <img className={`invert -mt-4 h-auto w-16 transition-all ease-in-out duration-1000 cursor-pointer`} src="/pl-logo-trans.png" alt="Preset Loop" />
           
       </a>
 
@@ -35,7 +35,7 @@ export default function HomeNav({isGuest, isAdmin, loggedIn}) {
           <div className="flex text-white sm:hover:text-black">
             <a href="/login">
               
-              <img className="invert sm:hover:invert-0 -mt-4 h-auto w-16 transition-all ease-in-out duration-1000" src="/pl-logo-trans.png" alt="Preset Loop" />
+              <img className="invert -mt-4 h-auto w-16 transition-all ease-in-out duration-1000 cursor-pointer" src="/pl-logo-trans.png" alt="Preset Loop" />
 
             </a>
           </div>

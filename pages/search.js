@@ -118,11 +118,11 @@ return (
       {isGuest ? (
       <nav className={`w-full flex text-white sm:hover:text-black`}>
         
-        <div className='ml-auto pl-0 sm:pl-0'>
+        <div className='lg:-ml-16 lg:mr-auto pl-0 sm:pl-0'>
         
         <a href={"/"}>
 
-          <img className="invert sm:hover:invert-0 -mt-4 h-auto w-16 transition-all ease-in-out duration-1000" src="/pl-logo-trans.png" alt="Preset Loop" />
+          <img className="invert -mt-4 h-auto w-16 transition-all ease-in-out duration-1000 cursor-pointer" src="/pl-logo-trans.png" alt="Preset Loop" />
         
         </a>
 
@@ -137,7 +137,7 @@ return (
         <div>
           <a href={"/"}>
 
-          <img className="invert sm:hover:invert-0 -mt-4 h-auto w-16 transition-all ease-in-out duration-1000" src="/pl-logo-trans.png" alt="Preset Loop" />
+          <img className="invert -mt-4 h-auto w-16 transition-all ease-in-out duration-1000 cursor-pointer" src="/pl-logo-trans.png" alt="Preset Loop" />
 
         </a>
         </div>
