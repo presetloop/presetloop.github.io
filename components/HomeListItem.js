@@ -26,7 +26,7 @@ const HomeListItem = ({ id, title, linkTag, imgHref, infoExcerpt, producer, genr
       <a href={isValidHref ? href : null}>
 
 
-      <div className="flex justify-between align-middle mt-2 pb-3 sm:pb-2 text-xs text-white">
+      <div className={`flex justify-between align-middle ${!loggedIn ? "mt-0" : "mt-2"} pb-2 text-xs text-white`}>
 
       
 
