@@ -11,6 +11,8 @@ export default function LoginForm({ apiUrl }) {
 
   const titleField = useRef(null);
   const router = useRouter();
+  
+  const [csrfToken, setCsrfToken] = useState('');
 
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
@@ -24,6 +26,23 @@ export default function LoginForm({ apiUrl }) {
       titleField.current.focus();
     }
   }, []);
+
+  // Fetch the CSRF token on component mount
+useEffect(() => {
+  getCsrfToken();
+}, []);
+
+const getCsrfToken = async () => {
+  try {
+    const response = await axios.get(`${apiUrl}/csrf.php`);
+    const get_csrfToken = response.data.csrf_token;
+    setCsrfToken(get_csrfToken);
+
+  } catch (error) {
+    console.error('Failed to fetch CSRF token:', error);
+  }
+};
+
 
   const handleSubmit = async (event) => {
     setLoading(true);
@@ -41,6 +60,7 @@ export default function LoginForm({ apiUrl }) {
       const response = await axios.post(`${apiUrl}/login.php`, {
         email: email,
         password: password,
+        csrfToken: csrfToken
       });
       // console.log();
       // console.table('Login request response:', response);
