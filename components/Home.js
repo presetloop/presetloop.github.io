@@ -37,6 +37,7 @@ async function fetchNewData(startPage = 1, endPage = startPage) {
     for (let pageNumber = startPage; pageNumber <= endPage; pageNumber++) {
       const response = await axios.get(`${apiUrl}/index.php?page=${pageNumber}`);
       const responseData = response.data;
+      console.log(responseData);
       const newSamplepack = responseData.samplepacks;
       setSamplepackCount(responseData.total_count);
       if (newSamplepack.length === 0) {
@@ -144,8 +145,8 @@ setTimeout(() => {
         xl:gap-y-4 
         xl:grid-cols-5
         ">
-      {data.map(({ id, title, linkTag, imgHref, infoExcerpt, producer, genre, packPreviewUrl }) => (
-        <HomeListItem key={id} id={id} title={title} infoExcerpt={infoExcerpt} linkTag={linkTag} imgHref={imgHref} producer={producer} genre={genre} packPreviewUrl={packPreviewUrl} isAdmin={isAdmin} loggedIn={loggedIn} />
+      {data.map(({ id, title, linkTag, imgHref, infoExcerpt, producer, genre, isNew, packPreviewUrl }) => (
+        <HomeListItem key={id} id={id} title={title} infoExcerpt={infoExcerpt} linkTag={linkTag} imgHref={imgHref} producer={producer} genre={genre} isNew={isNew} packPreviewUrl={packPreviewUrl} isAdmin={isAdmin} loggedIn={loggedIn} />
       ))}
     </div>
 

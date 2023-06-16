@@ -44,15 +44,15 @@ function LogoutBtn() {
   };
 
   return (
-      <p className='-mt-0.5 cursor-pointer bg-[#F90B0D]'>
-      <a
-        className="block px-2 sm:px-2 pt-1 mt-[1.5px] mb-1.5 text-sm sm:text-md text-white sm:hover:text-white ease-in-out sm:hover:scale-110 sm:hover:transition-all duration-300"
+      <div
+        className="-mt-0.5 cursor-pointer bg-[#F90B0D]"
         disabled={loggingOut}
         onClick={handleClick}
       >
-          {loggingOut && window.innerWidth < 480 ? 'Out...' : loggingOut ? 'Logging out...' : window.innerWidth < 480 ? 'Logout' : 'Logout'}
-      </a>
-      </p>
+        <p className='block px-2 sm:px-2 pt-1 mt-[1.5px] mb-1.5 text-sm sm:text-md text-white sm:hover:text-white ease-in-out sm:hover:scale-110 sm:hover:transition-all duration-300'>
+            {loggingOut && window.innerWidth < 480 ? 'Out...' : loggingOut ? 'Logging out...' : window.innerWidth < 480 ? 'Logout' : 'Logout'}
+        </p>
+      </div>
   );
 }
 

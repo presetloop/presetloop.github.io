@@ -24,7 +24,7 @@ function Samplepack() {
   const [data, setData] = useState([]);
   const [loading, setLoading] = useState(true);
 
-  useEffect(() => {    
+  useEffect(() => {
     if (id) {
       setTimeout(() => {
         fetchData();
@@ -48,6 +48,7 @@ function Samplepack() {
       const res = await fetch(`${apiUrl}/samplepack.php?id=${id}`);
       const json = await res.json();
       setData(json);
+      // console.log(json);
       setLoading(false);
     } catch (error) {
       console.log('Print the error:', error);
@@ -142,24 +143,31 @@ return (
         </div>
         )}
 
-        { data?.map(item => (
-          <div className={`${getRandomColourClass(random100)} w-fit h-fit`} key={item.id}>
-            {item.isNew ? (
-              <p className='-rotate-90 tracking-widest text-sm mt-0 px-2 py-4 uppercase'>{sanitize(item.isNew)}</p>
-            ) : (
-              <p className='-rotate-90 tracking-widest text-sm mt-0 px-2 py-4 uppercase'>&nbsp;&nbsp;</p>
-            )}
-          </div>
-          ))}
+
+
+  { data?.map(item => (
+    <div className={`${isGuest ? "sm:-ml-80" : ""} w-fit h-fit -rotate-[3deg] text-black`} key={item.id}>
+      {item.isNew ? (
+        <p className={`${getRandomColourClass(random100)} z-100 font-bold tracking-widest leading-4 text-sm -mt-2 px-2 py-4 uppercase`}>
+        <span className='inline-block border-b-4 border-red-600'>
+          {sanitize(item.isNew)}
+        </span></p>
+      ) : (
+        // add ${getRandomColourClass(random100)} for empty block
+        <p className={`-rotate-90 tracking-widest text-sm mt-0 px-2 py-4 uppercase`}>&nbsp;&nbsp;</p>
+      )}
+    </div>
+    ))}
         
+
 
         <div>
         <a className="block" href="/search">
-          <p className="w-fit border-white border-2 -mt-5 px-1 text-md sm:-mt-7 sm:px-4 text-sm sm:text-lg text-white sm:hover:bg-slate-900 sm:hover:text-white ease-in-out duration-300 cursor-pointer">Search</p>
+          <p className={`${getRandomColourClass(random100)} w-fit border-white border-0 -mt-4 sm:-mt-6 lg:-mt-5 px-1 text-md sm:px-4 py-1 text-sm sm:text-lg text-black sm:hover:text-white ease-in-out duration-300 cursor-pointer`}>Search</p>
         </a>  
 
         <a className="block" href={admin ? "/form" : "/"}>
-          <p className={`hidden lg:inline-block mt-1 -rotate-3 ${getRandomColourClass(random300)} px-2 sm:px-12 text-md sm:text-lg text-white ease-in-out duration-300 cursor-pointer`}>{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
+          <p className={`hidden lg:inline-block mt-1 -rotate-3 ${getRandomColourClass(random300)} px-2 sm:px-12 text-md sm:text-lg text-white sm:hover:text-black ease-in-out duration-300 cursor-pointer`}>{`${process.env.NEXT_PUBLIC_BRAND}`}</p>
         </a>
         </div>
 
@@ -186,19 +194,19 @@ return (
 
 {/* MAIN CONTENT */}
 
-<div className={`${getRandomColourClass(random100)}`}>
+<div className={`-mt-2 lg:-mt-4 ${getRandomColourClass(random100)}`}>
 <div className='w-[100%] m-auto flex-1'>
 
     <div className={`loadedAni`}>
 
   {data?.map(item => (
-    <div key={item.id} className={`z-2 -mt-4 sm:-mt-4 lg:mt-0 relative overflow-hidden px-6 py-12 lg:overflow-visible lg:px-0`}>
+    <div key={item.id} className={`z-2 -mt-4 sm:-mt-4 lg:mt-12 relative overflow-hidden px-6 py-12 lg:overflow-visible lg:px-0`}>
 
 
 
 
 
-    <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-0">
+    <div className="mx-auto grid max-w-2xl grid-cols-1 gap-x-8 gap-y-16 lg:mx-0 lg:max-w-none lg:grid-cols-2 lg:items-start lg:gap-y-0 lg:-mt-8">
 
 
 
@@ -210,7 +218,7 @@ return (
 
 
       {/* meta block */}
-      <div className={`${getRandomColourClass(random400)} -mr-6 lg:mr-2 lg:pr-4`}>
+      <div className={`${getRandomColourClass(random400)} -mr-6 lg:mr-2 lg:pr-4 lg:-mt-4`}>
 
 
         <div className="lg:max-w-lg">
@@ -265,11 +273,22 @@ return (
 
 
 
+
+
         {/* IMAGE */}
-        <div className='loadAni -mt-2 ml-2 -mr-20 md:mr-0 sm:ml-16'>
-          { (<ImageDynamic item={item} isLoggedIn={true} /> )}
+        <div className='loadAni -mt-3 lg:mt-4 ml-2 -mr-20 md:mr-0 sm:ml-16'>
+          { (<ImageDynamic item={item} packPreviewUrl={item.packPreviewUrl} isLoggedIn={true} /> )}
         </div>
-        
+
+
+
+
+
+
+
+
+
+
         {/* GROUPED META  */}
         <div className={`max-w-[750px] -mr-6 py-4 px-4 mt-8 ${getRandomColourClass(random50)}`}>
        

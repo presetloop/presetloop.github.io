@@ -1,24 +1,19 @@
 import { useState } from 'react';
-import Image from 'next/image';
+// import Image from 'next/image';
 import DOMPurify from 'dompurify';
 import validUrl from 'valid-url';
 import SoundFile from '@/components/SoundFile';
 import ImagePlaceholder from '@/components/ImagePlaceholder';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
-const imagePlaceholderUrl = "https://images.presetloops.com/placeholder";
+// const imagePlaceholderUrl = "https://images.presetloops.com/placeholder";
 
-export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmin = false, isLoggedIn = false, isHomeImg = false, isAdminImg = false, id }) {
+export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmin = false, isLoggedIn = false, isHomeImg = false, isAdminImg = false, id, isNew }) {
 
   const [className, setClassName] = useState('object-cover');
   
   const convertToHttps = "http://"; // CHANGE to https:// BEFORE BUILD AND DEPLOY
   const imgHref = item && item.imgHref || item;
-
-  const getRandomValue = (x,y) => {
-    const randomNum = Math.random();
-    return randomNum > 0.5 ? x : y || randomNum< 0.5 ? y : x;
-  };
 
 // images when not logged in (redirects to /login)
   if ((!isLoggedIn === true) && !isAdmin) {
@@ -49,11 +44,10 @@ export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmi
         }
         <span className='absolute -right-0 top-1.5 text-white text-sm'>
           <span className='p-0'>
-          {/* Randomly add NEW label to home grid images */}
-          {getRandomValue(
-            <span className='p-0 bg-red-400'>{""}</span>,
-            <span className='p-2 bg-green-400'>New</span>
-          )}
+          {/* NEW Label or empty */}
+          { isNew ? (<span className='p-2 bg-green-400'>{isNew}</span> ) : (
+            <span className='p-0 bg-red-400'>{}</span>
+            )}
           </span>
         </span>
 
@@ -98,10 +92,10 @@ export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmi
         }
         <span className='absolute -right-0 top-1.5 text-white text-sm'>
           <span className='p-0'>
-          {getRandomValue(
-            <span className='p-0 bg-red-400'>{""}</span>,
-            <span className='p-2 bg-green-400'>New</span>
-          )}
+          {/* NEW Label or empty */}
+          { isNew ? (<span className='p-2 bg-green-400'>{isNew}</span> ) : (
+            <span className='p-0 bg-red-400'>{}</span>
+            )}
           </span>
         </span>
         
