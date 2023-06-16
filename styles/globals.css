@@ -89,12 +89,18 @@ body::-webkit-scrollbar-thumb {
   } 
 }
 
-.topline{
+.topline {
   position: absolute;
   right: 0;
-  top: -2px;
-  width: calc(99% - 3.5rem);
+  top: -1.5px;
+  width: calc(99% - 2.9rem);
   max-width: calc(1600px - 3rem);
+}
+
+@media screen and (max-width: 1000px){
+  .topline {
+    width: calc(99% - 3.5rem);
+  } 
 }
 
 /* eula.js */

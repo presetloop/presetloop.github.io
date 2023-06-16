@@ -20,7 +20,7 @@ export default function HomeNav({isGuest, isAdmin, loggedIn}) {
       </div>
 
             
-          <div className="flex gap-2">
+          <div className="mt-0.5 flex gap-2">
             <a className="block" href="/search">
               <p className="border-white border-2 border-b-0 -mt-7 px-1 text-md sm:-mt-8 sm:px-4 sm:text-lg text-white sm:hover:bg-white sm:hover:text-black ease-in-out duration-300">Search</p>
             </a>
@@ -40,7 +40,7 @@ export default function HomeNav({isGuest, isAdmin, loggedIn}) {
             </a>
           </div>
           
-          <div className="flex gap-2">
+          <div className="mt-0.5 flex gap-2">
             <a className="hidden sm:block" href="/register">
               <p className="border-white border-0 -mt-7 px-1 text-md sm:hover:bg-green-400 text-white ease-in-out duration-300">Register</p>
             </a>
