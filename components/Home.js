@@ -111,8 +111,8 @@ setTimeout(() => {
     <div>
       
       <div className="loadedAni flex justify-center mt-4">
-        <div className={`-skew-y-0 -mt-3 px-2 opacity-70`}>
-          <div className='tracking-tight total-sample-sets text-sm sm:text-lg text-white'>
+        <div className={`-skew-y-0 -mt-3 px-2 opacity-100`}>
+          <div className='total-sample-sets tracking-tight text-sm sm:text-lg text-white'>
             Total Sample Sets<span className='inline-block ml-2'>({samplepackCount})</span>
           </div>
         </div>

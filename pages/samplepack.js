@@ -195,7 +195,7 @@ return (
 {/* MAIN CONTENT */}
 
 <div className={`-mt-2 lg:-mt-4 ${getRandomColourClass(random100)}`}>
-<div className='w-[100%] m-auto flex-1'>
+<div className='w-[100%] m-auto flex-1 min-h-screen'>
 
     <div className={`loadedAni`}>
 

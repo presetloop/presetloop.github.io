@@ -103,6 +103,7 @@ body::-webkit-scrollbar-thumb {
   } 
 }
 
+
 /* eula.js */
 .underline{
   -webkit-text-decoration-line: underline;
@@ -187,27 +188,28 @@ body::-webkit-scrollbar-thumb {
   position: relative;
   display: inline-block;
   text-transform: uppercase;
-}
-@media screen and (min-width: 768px){
-.total-sample-sets {
-  -webkit-animation: flip 60s infinite;
-          animation: flip 60s infinite;
+  -webkit-background-clip: text;
+  -moz-background-clip: text;
+  background-clip: text;
+  color: transparent;
+  -webkit-animation: blurout 60s ease-in-out infinite;
+          animation: blurout 60s ease-in-out infinite;
   -webkit-animation-delay: 0s;
           animation-delay: 0s;
 }
-  @-webkit-keyframes flip {
+@-webkit-keyframes blurout {
   0%,80% {
-    -webkit-transform: rotateY(360deg);
-    transform: rotateY(360deg);
+    /* -webkit-transform: rotateY(360deg);
+    transform: rotateY(360deg); */
+    text-shadow: rgba(245,245,245,0.1) 3px 5px 10px;
   }
 }
-@keyframes flip {
+@keyframes blurout {
   0%,80% {
-    -webkit-transform: rotateY(360deg);
-    transform: rotateY(360deg);
+    /* -webkit-transform: rotateY(360deg);
+    transform: rotateY(360deg); */
+    text-shadow: rgba(245,245,245,0.9) 3px 5px 1px;
   }
-}
-
 }
 
 .load-more-btn {
