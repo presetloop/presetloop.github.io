@@ -4,7 +4,7 @@ import IsGuestContext from '@/helpers/IsGuestContext';
 import CountdownTimer from '@/components/CountdownTimer';
 import {getAdminCookie} from '@/helpers/handleCookies';
 import getSessionData from '@/helpers/getSessionData';
-import DOMPurify from 'dompurify';
+import {sanitize} from 'dompurify';
 import Footer from '@/components/Footer';
 import validUrl from 'valid-url';
 
@@ -15,16 +15,12 @@ function Search() {
   const router = useRouter();
   const { isGuest } = useContext(IsGuestContext);
   const [admin, setAdmin] = useState(false);
-  // const samplePack = `${baseUrl}/post?id=${id}`;
-  // const loginUrl = `${baseUrl}/login`;
-  // const href = loggedIn ? samplePack : loginUrl;
-
-  // const isValidHref = validUrl.isWebUri(href);
-
+  
   const searchField = useRef(null);
   // const [loggedIn, setLoggedIn] = useState(false);
   const [searchTerm, setSearchTerm] = useState('');
   const [searchResults, setSearchResults] = useState([]);
+  const [message, setMessage] = useState("");
   const [formSubmitted, setFormSubmitted] = useState(false);
   const [loading, setLoading] = useState(false);
   const [searchErrorMessage, setSearchErrorMessage] = useState(false);
@@ -45,7 +41,6 @@ function Search() {
     }
   }, []);
 
-
   
   // Autofocus search field on load
   useEffect(() => {
@@ -63,7 +58,7 @@ function Search() {
       return;
     }
     setLoading(true);
-
+    
     try {
       const response = await fetch(`${apiUrl}/search.php`, {
         method: 'POST',
@@ -73,15 +68,14 @@ function Search() {
         }
       });
 
-      const results = await response.json();
-      // console.log(results)
-      setSearchResults(results);
+      const responseData = await response.json();
+      setSearchResults(responseData.results);
+      setMessage(responseData.message);
       setFormSubmitted(true);
       setLoading(false);
       setSearchTerm("");
       setSearchErrorMessage("")
     } catch (error) {
-      // console.error(error);
       setSearchErrorMessage(error);
       setDisableSearchBtn(true);
       setLoading(false);
@@ -99,7 +93,7 @@ function Search() {
 
 return (
 <>
-    <div className="max-w-[1600px] w-[99%] m-auto h-screen flex-1">
+    <div className="max-w-[1600px] w-[99%] m-auto min-h-screen flex-1">
 
 {/* navigation */}
     <div className="flex w-full mt-8 sm:mt-10 border-t-2 border-white">
@@ -182,23 +176,27 @@ return (
 
     {/* Render results */}
       <ul className='mt-4 m-auto w-96'>
-        {searchResults.length !== 0 ? searchResults.map(result => (
+        {searchResults ? (
+          searchResults.length !== 0 ? searchResults.map(result => (
           <div key={result.id}>
             {/* <a href={isValidHref ? href : null}> */}
             <a href={`/samplepack?id=${result.id}`}>
               <div className='flex my-8 items-center'>
                 {
-                  result.imgHref ? <img className="mr-4 h-10 w-10 rounded-full" src={DOMPurify.sanitize(validUrl.isWebUri(result.imgHref))} alt="Search result" />
+                  result.imgHref ? <img className="mr-4 h-10 w-10 rounded-full" src={sanitize(validUrl.isWebUri(result.imgHref))} alt="Search result" />
                   : <img alt="Post Preview Image" className="mr-4 h-10 w-10 rounded-full" src="https://images.presetloops.com/placeholder/1682816223.jpg" />
                 }
                 <p className="w-fit text-xl">
-                  {DOMPurify.sanitize(result.title)}
+                  {sanitize(result.title)}
                 </p>
               </div>
             </a>
           </div>
         )) : (
           formSubmitted && <p>Currently there are no articles with that title.</p>
+        )
+        ) : (
+          <h1 className='font-bold text-white'>{message}</h1>
         )}
       </ul>
     </div>
