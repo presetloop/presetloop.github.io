@@ -28,20 +28,20 @@ export default function LoginForm({ apiUrl }) {
   }, []);
 
   // Fetch the CSRF token on component mount
-useEffect(() => {
-  getCsrfToken();
-}, []);
+  useEffect(() => {
+    getCsrfToken();
+  }, []);
 
-const getCsrfToken = async () => {
-  try {
-    const response = await axios.get(`${apiUrl}/csrf.php`);
-    const get_csrfToken = response.data.csrf_token;
-    setCsrfToken(get_csrfToken);
+  const getCsrfToken = async () => {
+    try {
+      const response = await axios.get(`${apiUrl}/csrf.php`);
+      const get_csrfToken = response.data.csrf_token;
+      setCsrfToken(get_csrfToken);
 
-  } catch (error) {
-    console.error('Failed to fetch CSRF token:', error);
-  }
-};
+    } catch (error) {
+      console.error('Failed to fetch CSRF token:', error);
+    }
+  };
 
 
   const handleSubmit = async (event) => {

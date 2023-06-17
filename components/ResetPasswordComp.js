@@ -1,10 +1,13 @@
 import { useState, useEffect, useRef } from 'react';
 import {useRouter} from 'next/router';
+import axios from 'axios';
 
 function ResetPasswordComp({ apiUrl }) {
     const router = useRouter();
     const { token } = router.query;
     const titleField = useRef(null);
+
+    const [csrfToken, setCsrfToken] = useState('');
 
     const [email, setEmail] = useState('');
     const [newPassword, setNewPassword] = useState('');
@@ -19,6 +22,22 @@ function ResetPasswordComp({ apiUrl }) {
       }
     }, []);
     
+    // Fetch the CSRF token on component mount
+    useEffect(() => {
+      getCsrfToken();
+    }, []);
+
+    const getCsrfToken = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/csrf.php`);
+        const get_csrfToken = response.data.csrf_token;
+        setCsrfToken(get_csrfToken);
+
+      } catch (error) {
+        console.error('Failed to fetch CSRF token:', error);
+      }
+    };
+
     async function handleResetPassword(event) {
     setLoading(true);
     event.preventDefault();
@@ -39,13 +58,13 @@ function ResetPasswordComp({ apiUrl }) {
     const resetPasswordWithToken = `${apiUrl}/reset_password.php`;
     
     try {
-        // Send a POST request to the PHP function with the email and new password
+        // Send a POST request to the PHP function with the email and new password, the token and csrf validation.
         const response = await fetch(resetPasswordWithToken, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json'
             },
-            body: JSON.stringify({ email, newPassword, token })
+            body: JSON.stringify({ email, newPassword, token, csrfToken })
         });
         if (!response.ok) {
           throw new Error('Unable to reset your password. Please try again later.');

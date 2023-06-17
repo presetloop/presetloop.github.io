@@ -5,7 +5,9 @@ import axios from 'axios';
 function RegistrationForm({apiUrl}) {
     const titleField = useRef(null);
     const router = useRouter();
-    
+
+    const [csrfToken, setCsrfToken] = useState('');
+
     const [email, setEmail] = useState('');
     const [password, setPassword] = useState('');
     const [errorMessage, setErrorMessage] = useState('');
@@ -18,6 +20,22 @@ function RegistrationForm({apiUrl}) {
         titleField.current.focus();
       }
     }, []);
+    
+    // Fetch the CSRF token on component mount
+    useEffect(() => {
+      getCsrfToken();
+    }, []);
+
+    const getCsrfToken = async () => {
+      try {
+        const response = await axios.get(`${apiUrl}/csrf.php`);
+        const get_csrfToken = response.data.csrf_token;
+        setCsrfToken(get_csrfToken);
+
+      } catch (error) {
+        console.error('Failed to fetch CSRF token:', error);
+      }
+    };
     
     const handleSubmit = async (event) => {
         setLoading(true);
@@ -33,7 +51,8 @@ function RegistrationForm({apiUrl}) {
         try {
             const response = await axios.post(`${apiUrl}/register.php`, {
                 email: email,
-                password: password
+                password: password,
+                csrfToken: csrfToken
             });
 
             const responseData = response.data;
