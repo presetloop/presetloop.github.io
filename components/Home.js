@@ -1,6 +1,7 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import HomeListItem from '@/components/HomeListItem';
+import getRandomColourClass, {random50, random100, random300, random400} from '@/helpers/GetRandomColourClass';
 
 export default function Home({isAdmin, loggedIn, totalCount }) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -109,9 +110,9 @@ setTimeout(() => {
     
     <div>
       
-      <div className="loadedAni flex justify-center mt-4 sm:mt-4 tracking-wide">
-        <div className='-skew-x-12 bg-[#fff] -mt-3 sm:-mt-4 px-2 sm:py-2 text-black'>
-          <div className='total-sample-sets text-sm sm:text-lg'>
+      <div className="loadedAni flex justify-center mt-4">
+        <div className={`-skew-y-0 -mt-3 px-2 opacity-70`}>
+          <div className='tracking-tight total-sample-sets text-sm sm:text-lg text-white'>
             Total Sample Sets<span className='inline-block ml-2'>({samplepackCount})</span>
           </div>
         </div>
