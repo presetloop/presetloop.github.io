@@ -67,7 +67,7 @@ export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmi
             href={href}
             isLoggedIn={isLoggedIn} 
             isAdmin={isAdmin} 
-            soundFile={packPreviewUrl || "https://samples.presetloops.com/frazzles_loop1.mp3"} 
+            soundFile={packPreviewUrl || ``} 
             image={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)} 
           />
 
@@ -109,7 +109,7 @@ export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmi
   return (
     <>
       { item.imgHref ? (
-        <SoundFile isLoggedIn={isLoggedIn} isAdmin={isAdmin} soundFile={packPreviewUrl || "https://samples.presetloops.com/frazzles_loop1.mp3"} image={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)} style={`max-w-[100%] h-auto md:w-[650px] epic:w-[850px]`} />
+        <SoundFile isLoggedIn={isLoggedIn} isAdmin={isAdmin} soundFile={packPreviewUrl || ``} image={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)} style={`max-w-[100%] h-auto md:w-[650px] epic:w-[850px]`} />
       ) : ( 
         <ImagePlaceholder 
           className={`transition-all duration-500 sm:mt-4 cursor-pointer ${className} w-[100%] h-auto max-w-[700px]`}
