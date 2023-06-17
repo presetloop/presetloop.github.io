@@ -97,7 +97,7 @@ if (loggedIn === undefined) {
 
 return (
 <>
-<div className="mt-1 sm:mt-8 flex flex-col h-screen">
+<div className="mt-1 sm:mt-8 flex flex-col min-h-screen">
 
 <div className='max-w-[1600px] w-[99%] m-auto flex-1'>
 

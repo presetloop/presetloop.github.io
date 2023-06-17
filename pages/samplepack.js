@@ -84,7 +84,7 @@ const sampleFileNames = Object.keys(data[0]).filter(key => key.startsWith('sampl
 
 return (
 <>
-<div className="mt-1 sm:mt-8 flex flex-col h-screen">
+<div className="mt-1 sm:mt-8 flex flex-col min-h-screen">
 
 
 
