@@ -43,12 +43,18 @@ export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmi
           )
         }
         <span className='absolute -right-0 top-1.5 text-white text-sm'>
-          <span className='p-0'>
-          {/* NEW Label or empty */}
-          { isNew ? (<span className='p-2 bg-green-400'>{sanitize(isNew)}</span> ) : (
-            <span className='p-0 bg-red-400'>{}</span>
-            )}
-          </span>
+        <span className='p-0'>
+        {/* Labels: New, P.O.T.W, coming soon or empty */}
+          {
+            isNew === "New" ?
+            <span className='p-2 bg-green-400'>{sanitize(isNew)}</span> :
+            isNew === "P.O.T.W" ?
+            <span className='p-2 bg-yellow-400'>{sanitize(isNew)}</span> :
+            isNew === "coming soon" ?
+            <span className='p-2 bg-black'>{sanitize(isNew)}</span> :
+            null
+          }
+        </span>
         </span>
 
         
@@ -93,10 +99,16 @@ export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmi
         <span className='absolute -right-0 top-1.5 text-white text-sm'>
           <span className='p-0'>
           {/* NEW Label or empty */}
-          { isNew ? (<span className='p-2 bg-green-400'>{sanitize(isNew)}</span> ) : (
-            <span className='p-0 bg-red-400'>{}</span>
-            )}
-          </span>
+          {
+            isNew === "New" ?
+            <span className='p-2 bg-green-400'>{sanitize(isNew)}</span> :
+            isNew === "P.O.T.W" ?
+            <span className='p-2 bg-yellow-400'>{sanitize(isNew)}</span> :
+            isNew === "coming soon" ?
+            <span className='p-2 bg-black'>{sanitize(isNew)}</span> :
+            null
+          }
+        </span>
         </span>
         
       

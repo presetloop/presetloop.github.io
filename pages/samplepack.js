@@ -149,9 +149,18 @@ return (
     <div className={`${isGuest ? "sm:-ml-80" : ""} lg:-ml-16 w-fit h-fit -rotate-[3deg] text-black`} key={item.id}>
       {item.isNew ? (
         <p className={`${getRandomColourClass(random100)} z-100 font-bold tracking-widest leading-4 text-sm -mt-2 px-2 py-4 uppercase`}>
-        <span className='inline-block border-b-4 border-red-600'>
-          {sanitize(item.isNew)}
-        </span></p>
+        
+          {
+            item.isNew === "New" ?
+            <span className='inline-block border-b-4 border-red-600'>{sanitize(item.isNew)}</span> :
+            item.isNew === "P.O.T.W" ?
+            <span className='inline-block border-b-4 border-red-600'>{sanitize(item.isNew)}</span> :
+            item.isNew === "coming soon" ?
+            <span className='inline-block border-b-4 border-red-600'>{sanitize(item.isNew.slice(7))}</span> :
+            null
+          }
+
+        </p>
       ) : (
         // add ${getRandomColourClass(random100)} for empty block
         <p className={`-rotate-90 tracking-widest text-sm mt-0 px-2 py-4 uppercase`}>&nbsp;&nbsp;</p>
