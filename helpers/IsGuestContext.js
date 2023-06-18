@@ -16,9 +16,11 @@ try {
   console.error('Error accessing localStorage:', error);
 }
 
+
  const [isGuest, setIsGuest] = useState(initialIsGuest ? JSON.parse(initialIsGuest) : false);
 
  const [hasMounted, setHasMounted] = useState(false);
+
 
 //  useEffect(() => {
 //   if (typeof window !== 'undefined') {
@@ -36,6 +38,7 @@ useEffect(() => {
     console.error('Error accessing localStorage:', error);
   }
 }, [isGuest]);
+
 
 
  useEffect(() => {
