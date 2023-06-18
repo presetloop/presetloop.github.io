@@ -326,7 +326,7 @@ return (
             <div className="-mr-3 md:pr-8 max-w-xl text-base -mt-8 lg:mt-8 leading-7 text-gray-700 lg:max-w-lg">
                 
                 {/* SAMPLES */}
-                {
+                { item.packPreviewUrl ?
                   Array.from({ length: sampleFileNames.length }, (_, index) => (
                     <SamplePackSample
                       key={index + 1}
@@ -336,6 +336,7 @@ return (
                       getRandomColourClass={getRandomColourClass(random400)}
                     />
                   ))
+                  : <p className='pl-2'>Sample pack coming soon...</p>
                 }
 
             <div className={`w-fit ml-4 mt-4 -rotate-2 text-white ${getRandomColourClass(random400)}`}>
