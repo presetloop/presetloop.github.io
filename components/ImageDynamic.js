@@ -1,6 +1,6 @@
 import { useState } from 'react';
 // import Image from 'next/image';
-import DOMPurify from 'dompurify';
+import { sanitize } from 'dompurify';
 import validUrl from 'valid-url';
 import SoundFile from '@/components/SoundFile';
 import ImagePlaceholder from '@/components/ImagePlaceholder';
@@ -18,11 +18,11 @@ export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmi
 // images when not logged in (redirects to /login)
   if ((!isLoggedIn === true) && !isAdmin) {
     return (
-      <a href={DOMPurify.sanitize(`${baseUrl}/login`).replace(/^http?:\/\//i, convertToHttps)}
+      <a href={sanitize(`${baseUrl}/login`).replace(/^http?:\/\//i, convertToHttps)}
          rel="noopener noreferrer">
         
         { imgHref ? ( 
-          <SoundFile isLoggedIn={isLoggedIn} soundFile={``} image={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)} />
+          <SoundFile isLoggedIn={isLoggedIn} soundFile={``} image={imgHref && validUrl.isWebUri(imgHref) && sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)} />
           
           
           ) : (
@@ -45,7 +45,7 @@ export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmi
         <span className='absolute -right-0 top-1.5 text-white text-sm'>
           <span className='p-0'>
           {/* NEW Label or empty */}
-          { isNew ? (<span className='p-2 bg-green-400'>{isNew}</span> ) : (
+          { isNew ? (<span className='p-2 bg-green-400'>{sanitize(isNew)}</span> ) : (
             <span className='p-0 bg-red-400'>{}</span>
             )}
           </span>
@@ -68,7 +68,7 @@ export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmi
             isLoggedIn={isLoggedIn} 
             isAdmin={isAdmin} 
             soundFile={packPreviewUrl || ``} 
-            image={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)} 
+            image={imgHref && validUrl.isWebUri(imgHref) && sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)} 
           />
 
 
@@ -93,7 +93,7 @@ export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmi
         <span className='absolute -right-0 top-1.5 text-white text-sm'>
           <span className='p-0'>
           {/* NEW Label or empty */}
-          { isNew ? (<span className='p-2 bg-green-400'>{isNew}</span> ) : (
+          { isNew ? (<span className='p-2 bg-green-400'>{sanitize(isNew)}</span> ) : (
             <span className='p-0 bg-red-400'>{}</span>
             )}
           </span>
@@ -109,7 +109,7 @@ export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmi
   return (
     <>
       { item.imgHref ? (
-        <SoundFile isLoggedIn={isLoggedIn} isAdmin={isAdmin} soundFile={packPreviewUrl || ``} image={imgHref && validUrl.isWebUri(imgHref) && DOMPurify.sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)} style={`max-w-[100%] h-auto md:w-[650px] epic:w-[850px]`} />
+        <SoundFile isLoggedIn={isLoggedIn} isAdmin={isAdmin} soundFile={packPreviewUrl || ``} image={imgHref && validUrl.isWebUri(imgHref) && sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)} style={`max-w-[100%] h-auto md:w-[650px] epic:w-[850px]`} />
       ) : ( 
         <ImagePlaceholder 
           className={`transition-all duration-500 sm:mt-4 cursor-pointer ${className} w-[100%] h-auto max-w-[700px]`}

@@ -1,5 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import { useRouter } from 'next/router';
+import { sanitize } from 'dompurify';
 // import Image from 'next/image';
 
 const SoundFile = ({ href, isLoggedIn, isAdmin, soundFile, image, style, wave }) => {
@@ -131,7 +132,7 @@ const SoundFile = ({ href, isLoggedIn, isAdmin, soundFile, image, style, wave })
         <div className="relative">
         
           {/* IMAGE */}
-          <img onClick={handleImageClick} className={`${style} rounded-md block ${!isSamplePack ? "cursor-pointer" : ""}`} src={image} alt="Preset Loop" />
+          <img onClick={handleImageClick} className={`${style} rounded-md block ${!isSamplePack ? "cursor-pointer" : ""}`} src={sanitize(image)} alt="Preset Loop" />
 
 
         {/* PLAY / PAUSE */}
