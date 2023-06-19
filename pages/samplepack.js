@@ -300,12 +300,16 @@ return (
 
         {/* GROUPED META  */}
         <div className={`max-w-[750px] -mr-6 py-4 px-4 mt-8 ${getRandomColourClass(random50)}`}>
+
        
         {/* SUB_TITLE  */}
           <p className={`rotate-1 text-center text-lg font-bold -mr-8 py-4 px-4 mt-0 ${getRandomColourClass(random300)}`}>{sanitize(item.sub_title)}</p>
 
+
         {/* INFO  */}
-          <p className={`-rotate-1 text-right -ml-8 py-4 px-4 mt-0 ${getRandomColourClass(random400)}`}>{sanitize(item.info)}</p>
+          <p dangerouslySetInnerHTML={{ __html: sanitize(item.info)}} className={`-rotate-1 text-right -ml-8 py-4 px-4 mt-0 ${getRandomColourClass(random400)}`}></p>
+          {/* <p className={`-rotate-1 text-right -ml-8 py-4 px-4 mt-0 ${getRandomColourClass(random400)}`}>{sanitize(item.info)}</p> */}
+
 
         {/* PACK_DETAILS */}
           <p className={`rotate-0 text-left -mr-6 py-4 px-4 mt-0 ${getRandomColourClass(random100)}`}><span>{sampleFileNames.length}</span> Samples. Royalty Free. .WAV Files.</p>
