@@ -193,7 +193,7 @@ return (
             </a>
           </div>
         )) : (
-          formSubmitted && <p>Currently there are no articles with that title.</p>
+          formSubmitted && <p>Currently there are no Sample Packs that match your search query. Please try again.</p>
         )
         ) : (
           <h1 className='font-bold text-white'>{message}</h1>
