@@ -3,14 +3,13 @@ import { useRouter } from 'next/router';
 import { sanitize } from 'dompurify';
 // import Image from 'next/image';
 
-const SoundFile = ({ href, isLoggedIn, isAdmin, soundFile, image, style, wave }) => {
+const SoundFile = ({ href, isLoggedIn, isAdmin, isHomeImg, soundFile, image, style, wave }) => {
   const router = useRouter();
   const { id } = router.query;
   const [isPlaying, setIsPlaying] = useState(false);
   const [isLooping, setIsLooping] = useState(false);
   const [isSamplePack, setIsSamplePack] = useState(false);
   const audioRef = useRef(null);
-
 
   useEffect(() => {
     if (id) {
@@ -123,6 +122,14 @@ const SoundFile = ({ href, isLoggedIn, isAdmin, soundFile, image, style, wave })
   };
 }, []);
 
+
+function getRandomBorderColor() {
+  const colors = ["border-blue-400", "border-red-400", "border-pink-400", "border-yellow-400", "border-green-400", "border-purple-400", "indigo-400"];
+  
+  const randomIndex = Math.floor(Math.random() * colors.length);
+  return colors[randomIndex];
+}
+
   return (
     <div>
       <audio ref={audioRef} className="hidden" src={soundFile} controls loop={isLooping} preload="auto" />
@@ -132,7 +139,15 @@ const SoundFile = ({ href, isLoggedIn, isAdmin, soundFile, image, style, wave })
         <div className="relative">
         
           {/* IMAGE */}
-          <img onClick={handleImageClick} className={`${style} rounded-md block ${!isSamplePack ? "cursor-pointer" : ""}`} src={sanitize(image)} alt="Preset Loop" />
+          {/* ${getRandomBorderColor()}  */}
+          <img 
+            onClick={handleImageClick} 
+            className={`
+              ${style} rounded-md block 
+              ${image !== "/waveform.svg" && !isHomeImg && isLoggedIn ? `rotate-1 outline-dashed outline-4 outline-red-100 border-transparent border-[24px] md:border-[44px]` : ""} 
+              ${!isSamplePack ? "cursor-pointer" : ""}
+            `} 
+            src={sanitize(image)} alt="Preset Loop" />
 
 
         {/* PLAY / PAUSE */}
