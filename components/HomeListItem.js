@@ -26,7 +26,7 @@ const HomeListItem = ({ id, title, linkTag, imgHref, infoExcerpt, producer, genr
       <a href={isValidHref ? href : null}>
 
 
-      <div className={`flex justify-between align-middle ${(loggedIn || isAdmin) ? "mt-2" : "mt-0"} pb-2 text-xs text-white`}>
+      <div className={`flex justify-between align-middle ${(loggedIn || isAdmin) ? "mt-2" : "mt-0.5"} pb-2 text-xs text-white`}>
 
       
 
@@ -42,15 +42,15 @@ const HomeListItem = ({ id, title, linkTag, imgHref, infoExcerpt, producer, genr
     
 
       {/* TITLE AND INFO-EXCERPT */}
-        <h3 className="text-lg font-semibold p-1 sm:mt-0 leading-6 bg-[#101010] text-white transition-all duration-500">
+        <h3 className="text-lg font-semibold px-2 py-1 sm:mt-0 leading-6 bg-[#101010] text-white transition-all duration-500">
           
           {sanitize(title)}
-          {/* <TruncatedTitle content={title} /> */}
           
         </h3>
-        <div className="p-1 mt-1 mb-0 text-sm leading-5 bg-[#101010] text-white transition-all duration-500">
-          {infoExcerpt.length === 100 ? sanitize(infoExcerpt?.replace(/<br\s*\/?>/gi, ''))+"..." : sanitize(infoExcerpt?.replace(/<br\s*\/?>/gi, ''))}
-          {/* <TruncatedInfo content={sanitize(infoExcerpt?.replace(/<br\s*\/?>/gi, ''))} /> */}
+        <div className="p-2 pb-2.5 mt-1 mb-0 text-sm leading-5 bg-[#101010] text-white transition-all duration-500">
+
+          <p dangerouslySetInnerHTML={{ __html: sanitize(infoExcerpt.length === 100 ? sanitize(infoExcerpt?.replace(/<br\s*\/?>/gi, ''))+"..." : sanitize(infoExcerpt?.replace(/<br\s*\/?>/gi, '')))}}></p>
+
         </div>
 
 
