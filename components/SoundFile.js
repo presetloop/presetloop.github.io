@@ -151,7 +151,8 @@ function getRandomBorderColor() {
 
 
         {/* PLAY / PAUSE */}
-        {soundFile && (
+        
+        {/* {soundFile && ( */}
           <button
           onClick={(isLoggedIn || isAdmin) ? toggleAudio : null}
           className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full px-0 py-0 transition-all ease-in-out duration-300 cursor-pointer"
@@ -162,25 +163,28 @@ function getRandomBorderColor() {
             <img className={`w-10 ${wave}`} src="/play.svg" alt="Preset Loop" />
           )}
           </button>
-        )} 
+        {/* )}  */}
 
-          {/* LOOP */}
-          {(isLoggedIn || isAdmin) && (image !== "/waveform.svg") && (  
-            <button
-              onClick={toggleLoop}
-              className="tracking-widest absolute -bottom-1.5 -left-1.5"
-            >
-              {isLooping ? (
-                <p className='rounded-full p-2.5 lg:p-2 bg-white border-black border-2 -m-1'>
-                <img src={"/loop-on.svg"} alt="Preset Loop" />
-                </p>
-              ) : (
-                <p className='pulseAni rounded-full p-2 lg:p-1.5 bg-[#101010]'>
-                <img src={"/loop-off.svg"} alt="Preset Loop" />
-                </p>
-              )}
-            </button>
-          )}
+
+
+        {/* LOOP */}
+        {(isLoggedIn || isAdmin) && (image !== "/waveform.svg") && (  
+          <button
+            onClick={toggleLoop}
+            className="tracking-widest absolute -bottom-1.5 -left-1.5"
+          >
+            {isLooping ? (
+              <p className='rounded-full p-2.5 lg:p-2 bg-white border-black border-2 -m-1'>
+              <img src={"/loop-on.svg"} alt="Preset Loop" />
+              </p>
+            ) : (
+              <p className='pulseAni rounded-full p-2 lg:p-1.5 bg-[#101010]'>
+              <img src={"/loop-off.svg"} alt="Preset Loop" />
+              </p>
+            )}
+          </button>
+        )}
+        
         </div>
       </div>
     </div>
