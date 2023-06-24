@@ -1,12 +1,8 @@
-export default function FormInputs({handleSubmit, titleField, title, handleChange, titleErrorMessage, linkTag, handleLinkTagChange, linkErrorMessage, imgHref, handleImageInputChange, imageErrorMessage, content, contentErrorMessage, disableSubmitBtn, loading}) {
+export default function SamplePackFormInputs({ titleField, title, handleChange, titleErrorMessage, linkTag, handleLinkTagChange, linkErrorMessage, imgHref, handleImageInputChange, imageErrorMessage, info, infoErrorMessage }) {
+  
   return (
-    <div className="max-w-[700px] w-[95%] m-auto">
-    {/* VIEW ALL */}
-    <div className="flex justify-end w-full mt-2 sm:mt-0 mb-4 sm:mb-2 border-t-2 border-slate-900">
-      <a className="block my-0 bg-[#1A0123] px-12 text-lg text-white ease ease-in-out duration-300 sm:hover:pl-8 sm:hover:pr-8" href="/">View all</a>
-    </div>
-    <form onSubmit={handleSubmit}>
-    
+
+    <>
     {/* TITLE */}
     <div className="relative">
       <input
@@ -49,32 +45,21 @@ export default function FormInputs({handleSubmit, titleField, title, handleChang
     {imageErrorMessage && <p className="absolute bottom-[5px] left-0 mb-0 text-red-500 text-md">{imageErrorMessage}</p>}
   </div>
 
-    {/* CONTENT */}
+    {/* INFO */}
     <div className="relative">
       <textarea
         required
         className="appearance-none border-slate-900 mt-9 border-[1px] w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-64 md:h-96 focus:shadow-outline"
-        id="content"
-        placeholder="Enter some content"
-        name="Content"
-        value={content}
+        id="info"
+        placeholder="Enter some info"
+        name="Info"
+        value={info}
         onChange={handleChange}
       />
-      {contentErrorMessage && <p className="absolute bottom-[5px] left-2 mb-0 text-red-500 text-md">{contentErrorMessage}</p>}
+      {infoErrorMessage && <p className="absolute bottom-[5px] left-2 mb-0 text-red-500 text-md">{infoErrorMessage}</p>}
     </div>
 
-    {/* SUBMIT BUTTON */}
-    <div className="mt-2 flex items-center justify-between">
-    { !disableSubmitBtn ? <button
-        className="border-slate-900 border-2 sm:hover:bg-slate-900 sm:hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150"
-        type="submit">{loading ? 'Uploading...' : 'Upload'}</button> 
-      : <button disabled
-        className="border-slate-900 border-2 sm:hover:bg-slate-900 sm:hover:text-white font-bold py-0 px-4 text-lg focus:outline-none focus:shadow-outline ease-in-out duration-150"
-        type="submit">Upload</button> 
-    } 
-    </div>
-
-  </form>
-  </div>
+ </>
+ 
   )
 }
