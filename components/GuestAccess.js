@@ -25,12 +25,12 @@ export default function GuestAccess({ setEmail, setPassword, setInputFieldType }
         <div className="flex flex-col sm:flex-row mt-4 gap-4">
          
           
-          <div className="bg-red-50 text-center items-center">
+          <div className="bg-green-600 text-center items-center">
               <button
                 className="ml-1 text-slate-900"
                 onClick={handleCopy}>
               <div className="flex">
-                <span className="text-center text-green-500 mx-1" ref={guestRef}>
+                <span className="text-xl text-center text-white mx-1" ref={guestRef}>
                   &rarr; click here &larr;
                 </span>
               </div>
@@ -40,10 +40,10 @@ export default function GuestAccess({ setEmail, setPassword, setInputFieldType }
         { isClient && (
           <>
             {isMobile ? (
-              <p className="text-center text-slate-800">5 Minute {'\u005E\u005E\u005E'} Guest Pass</p>
+              <p className="text-xl text-center text-slate-800">5 Minute {'\u005E\u005E\u005E'} Guest Pass</p>
               // 24 Hour Guest Pass
             ) : (
-              <p className="text-slate-800">{'\u003C\u003C\u003C'} 5 Minute Guest Pass</p>
+              <p className="text-xl text-slate-800">{'\u003C\u003C\u003C'} 5 Minute Guest Pass</p>
               // 24 Hour Guest Pass
             )}
           </>

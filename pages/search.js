@@ -150,7 +150,7 @@ return (
       <input
         ref={searchField}
         required
-        className="appearance-none bg-transparent border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 placeholder:text-white text-white leading-tight focus:outline-none focus:shadow-outline"
+        className="appearance-none bg-black md:bg-transparent border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 placeholder:text-white text-white leading-tight focus:outline-none focus:shadow-outline"
         id="title"
         type="text"
         placeholder="Enter a search query"
@@ -158,12 +158,12 @@ return (
         value={searchTerm} 
         onChange={handleInputChange}
       />
-      {searchErrorMessage && <p className="absolute px-1 bottom-[10px] left-0 mb-0 text-red-500 text-md">{searchErrorMessage}</p>}
+      {searchErrorMessage && <p className="absolute px-1 bottom-1 md:bottom-[10px] left-0 mb-0 text-red-500 text-md">{searchErrorMessage}</p>}
     </div>
 
     <div onClick={handleSearch} className="flex items-center justify-between pl-1 mt-0 m-auto w-96">
       { !disableSearchBtn ? <button
-          className="border-white border-2 hover:border-green-300 px-4 text-lg text-white ease-in-out duration-300"
+          className="border-white bg-black md:bg-transparent border-2 hover:border-green-300 px-4 text-lg text-white ease-in-out duration-300"
           type="submit">{loading ? 'Searching...' : 'Search'}</button> 
         : <button disabled
           className="border-slate-900 border-2 px-4 text-lg text-slate-900 sm:hover:bg-slate-900 sm:hover:text-white ease-in-out duration-300"
@@ -183,10 +183,10 @@ return (
             <a href={`/samplepack?id=${result.id}`}>
               <div className='flex my-8 items-center'>
                 {
-                  result.imgHref ? <img className="mr-4 h-10 w-10 rounded-full border-[2px] border-white" src={sanitize(validUrl.isWebUri(result.imgHref))} alt="Search result" />
+                  result.imgHref ? <img className="hidden sm:inline-block mr-4 h-10 w-10 rounded-full border-[2px] border-white" src={sanitize(validUrl.isWebUri(result.imgHref))} alt="Search result" />
                   : <img alt="Post Preview Image" className="mr-4 h-10 w-10 rounded-full" src="https://images.presetloops.com/placeholder/1682816223.jpg" />
                 }
-                <p className="w-fit text-xl">
+                <p className="ml-2 sm:ml-0 w-fit text-xl bg-white text-black">
                   {sanitize(result.title)}
                 </p>
               </div>
