@@ -11,7 +11,6 @@ import EditBtn from '../components/EditBtn';
 import ImageDynamic from '../components/ImageDynamic';
 import Footer from '@/components/Footer';
 import SamplePackSample from '@/components/SamplePackSample';
-import getRandomColourClass, {random50, random100, random300, random400} from '@/helpers/GetRandomColourClass';
 import generateRandomDate from '@/helpers/generateRandomDate';
 
 const apiUrl = process.env.NEXT_PUBLIC_API_URL;
@@ -81,6 +80,28 @@ function Samplepack() {
 
 // Count number of samples in pack to render UI list 
 const sampleFileNames = Object.keys(data[0]).filter(key => key.startsWith('sampleFileName_') && data[0][key] !== null);
+
+
+function getRandomColourClass(classesArray) {
+
+  const randomIndex = Math.floor(Math.random() * classesArray.length);
+    return classesArray[randomIndex];
+
+}
+  
+  const random50 = ["bg-cyan-50", "bg-rose-50", "bg-fuchsia-50", "bg-emerald-50", "bg-teal-50", "bg-sky-50", "bg-violet-50", "bg-lime-50", "bg-amber-50"];
+
+  const random100 = ["bg-cyan-100", "bg-rose-100", "bg-fuchsia-100", "bg-emerald-100", "bg-teal-100", "bg-sky-100", "bg-violet-100", "bg-lime-100", "bg-amber-100"];
+  
+  const random300 = ["bg-cyan-300", "bg-rose-300", "bg-fuchsia-300", "bg-emerald-300", "bg-teal-300", "bg-sky-300", "bg-violet-300", "bg-lime-300", "bg-amber-300"];
+  
+  const random400 = ["bg-cyan-400", "bg-rose-400", "bg-fuchsia-400", "bg-emerald-400", "bg-teal-400", "bg-sky-400", "bg-violet-400", "bg-lime-400", "bg-amber-400"];
+
+  // const random300 = ["bg-blue-300", "bg-red-300", "bg-pink-300", "bg-yellow-300", "bg-green-300", "bg-purple-300", "bg-indigo-300"];
+
+  // const random400 = ["bg-blue-400", "bg-red-400", "bg-pink-400", "bg-yellow-400", "bg-green-400", "bg-purple-400", "bg-indigo-400"];
+
+
 
 return (
 <>

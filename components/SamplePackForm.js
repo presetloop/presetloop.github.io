@@ -1,14 +1,17 @@
 import { useState, useRef, useEffect } from 'react';
 import {useRouter} from 'next/router';
 import {getAdminCookie} from '@/helpers/handleCookies';
-import DOMPurify from 'dompurify';
+import addHttpsToLink from '@/helpers/addHttpsToLink';
+import {sanitize} from 'dompurify';
 import SamplePackFormInputs from '@/components/SamplePackFormInputs';
-// import DynamicFormInput from './DynamicFormInput';
+import DynamicFormInput from './DynamicFormInput';
 
 function SamplePackForm({apiUrl}) {
   // const apiUrl = process.env.NEXT_PUBLIC_API_URL;
   const router = useRouter();
   const titleField = useRef(null);
+
+  const [formData, setFormData] = useState(new FormData());
 
   const [title, setTitle] = useState('');
   const [titleErrorMessage, setTitleErrorMessage] = useState("");
@@ -118,23 +121,6 @@ function handleImageInputChange(event) {
   }
 }
 
-// Convert all links (linkTag and imgHref field) to https (onSubmit)
-function addHttpsToLink(linkX) {
-  let updatedLink = linkX;
-  if (!updatedLink) return;
-  // const pattern = /^(htps?:\/\/(ww?\.)*|htp:\/\/(ww?\.)*|http:\/\/(ww?\.)*|w\.)/i;
-const pattern = /^(htps?:\/\/(ww?\.)*|htp:\/\/(ww?\.)*|http:\/\/(ww?\.)*|w{1,2}\.)/i;
-  if (!linkX.startsWith("https://")) {
-    (updatedLink = `https://${linkX.replace(pattern, (match) => {
-    if (match.startsWith("w")) {
-      return "www.";
-    } else {
-      return "";
-    }
-  })}`);
-  }
-  return updatedLink;
-}
 
 
 // Submit form after checks
@@ -160,12 +146,15 @@ const handleSubmit = async (event) => {
   setLoading(true);
   setDisableSubmitBtn(false);
   
-  const formData = new FormData();
-  formData.append('title', DOMPurify.sanitize(title));
-  formData.append('linkTag', DOMPurify.sanitize(addHttpsToLink(linkTag)));
-  formData.append('imgHref', DOMPurify.sanitize(addHttpsToLink(imgHref)));
-  formData.append('info', DOMPurify.sanitize(info));
-  
+  // const formData = new FormData();
+  formData.append('title', sanitize(title));
+  formData.append('linkTag', sanitize(addHttpsToLink(linkTag)));
+  formData.append('imgHref', sanitize(addHttpsToLink(imgHref)));
+  formData.append('info', sanitize(info));
+
+  // console.table(formData);
+  // return;
+
   try {
     const response = await fetch(`${apiUrl}/form.php`, {
       method: 'POST',
@@ -193,7 +182,17 @@ return (
     </div>
 
   <form onSubmit={handleSubmit}>
-    <SamplePackFormInputs titleField={titleField} title={title} handleChange={handleChange} titleErrorMessage={titleErrorMessage} handleLinkTagChange={handleLinkTagChange} linkTag={linkTag} linkErrorMessage={linkErrorMessage} imgHref={imgHref} handleImageInputChange={handleImageInputChange} imageErrorMessage={imageErrorMessage} info={info} infoErrorMessage={infoErrorMessage} disableSubmitBtn={disableSubmitBtn} loading={loading} handleSubmit={handleSubmit} />
+
+    <SamplePackFormInputs titleField={titleField} title={title} handleChange={handleChange} titleErrorMessage={titleErrorMessage} handleLinkTagChange={handleLinkTagChange} linkTag={linkTag} linkErrorMessage={linkErrorMessage} imgHref={imgHref} handleImageInputChange={handleImageInputChange} imageErrorMessage={imageErrorMessage} info={info} infoErrorMessage={infoErrorMessage} formData={formData} setFormData={setFormData} />
+
+
+    <DynamicFormInput dbName="producer" placeholder="Producer (optional)" formData={formData} setFormData={setFormData} />
+    
+    <DynamicFormInput dbName="genre" placeholder="Genre (optional)" formData={formData} setFormData={setFormData} />
+
+    
+    <DynamicFormInput dbName="packPreviewUrl" placeholder="Pack Preview Url (optional)" formData={formData} setFormData={setFormData} />
+
 
 
 

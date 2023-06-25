@@ -1,4 +1,6 @@
-export default function SamplePackFormInputs({ titleField, title, handleChange, titleErrorMessage, linkTag, handleLinkTagChange, linkErrorMessage, imgHref, handleImageInputChange, imageErrorMessage, info, infoErrorMessage }) {
+import DynamicFormInput from './DynamicFormInput';
+
+export default function SamplePackFormInputs({ titleField, title, handleChange, titleErrorMessage, linkTag, handleLinkTagChange, linkErrorMessage, imgHref, handleImageInputChange, imageErrorMessage, info, infoErrorMessage, formData, setFormData }) {
   
   return (
 
@@ -11,21 +13,24 @@ export default function SamplePackFormInputs({ titleField, title, handleChange, 
         className="appearance-none border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         id="title"
         type="text"
-        placeholder="Enter a title"
+        placeholder="Enter a Sample Pack Name"
         name="Title"
         value={title}
         onChange={handleChange}
       />
       {titleErrorMessage && <p className="absolute bottom-[5px] left-0 mb-0 text-red-500 text-md">{titleErrorMessage}</p>}
     </div>
-    
+
+    {/* SUB_TITLE */}
+    <DynamicFormInput dbName="sub_title" placeholder="Sub Title (optional)" formData={formData} setFormData={setFormData} />
+
     {/* LINK */}
     <div className="relative">
       <input
         className="appearance-none border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
         id="linkTag"
         type="text"
-        placeholder="Enter a link (optional)"
+        placeholder="Enter a Link (optional)"
         value={linkTag}
         onChange={handleLinkTagChange}
         />
@@ -38,7 +43,7 @@ export default function SamplePackFormInputs({ titleField, title, handleChange, 
       className="appearance-none border-slate-900 mb-8 border-b-[1px] w-full py-2 px-0 text-gray-700 leading-tight focus:outline-none focus:shadow-outline"
       id="imgHref"
       type="text"
-      placeholder={typeof window !== 'undefined' && window.innerWidth < 480 ? "External image link (optional)" : "Enter an external image link (optional)"}
+      placeholder={typeof window !== 'undefined' && window.innerWidth < 480 ? "External image link (optional)" : "Enter an External Image Link (optional)"}
       value={imgHref}
       onChange={handleImageInputChange}
     />
@@ -49,7 +54,7 @@ export default function SamplePackFormInputs({ titleField, title, handleChange, 
     <div className="relative">
       <textarea
         required
-        className="appearance-none border-slate-900 mt-9 border-[1px] w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-64 md:h-96 focus:shadow-outline"
+        className="appearance-none border-slate-900 my-4 mb-8 border-[1px] w-full py-2 px-2 text-gray-700 leading-tight focus:outline-none focus:shadow-outline h-64 md:h-96 focus:shadow-outline"
         id="info"
         placeholder="Enter some info"
         name="Info"

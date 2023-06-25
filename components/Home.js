@@ -1,7 +1,6 @@
 import { useState, useEffect, useRef } from 'react';
 import axios from 'axios';
 import HomeListItem from '@/components/HomeListItem';
-import getRandomColourClass, {random50, random100, random300, random400} from '@/helpers/GetRandomColourClass';
 
 export default function Home({isAdmin, loggedIn, totalCount }) {
   const apiUrl = process.env.NEXT_PUBLIC_API_URL;

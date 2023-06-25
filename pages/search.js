@@ -158,12 +158,12 @@ return (
         value={searchTerm} 
         onChange={handleInputChange}
       />
-      {searchErrorMessage && <p className="absolute bottom-[5px] left-0 mb-0 text-red-500 text-md">{searchErrorMessage}</p>}
+      {searchErrorMessage && <p className="absolute px-1 bottom-[10px] left-0 mb-0 text-red-500 text-md">{searchErrorMessage}</p>}
     </div>
 
     <div onClick={handleSearch} className="flex items-center justify-between pl-1 mt-0 m-auto w-96">
       { !disableSearchBtn ? <button
-          className="border-slate-900 border-2 px-4 text-lg text-slate-900 sm:hover:bg-slate-900 sm:hover:text-white ease-in-out duration-300"
+          className="border-white border-2 hover:border-green-300 px-4 text-lg text-white ease-in-out duration-300"
           type="submit">{loading ? 'Searching...' : 'Search'}</button> 
         : <button disabled
           className="border-slate-900 border-2 px-4 text-lg text-slate-900 sm:hover:bg-slate-900 sm:hover:text-white ease-in-out duration-300"
@@ -175,7 +175,7 @@ return (
 
 
     {/* Render results */}
-      <ul className='mt-4 m-auto w-96'>
+      <ul className='mt-4 m-auto w-96 text-white'>
         {searchResults ? (
           searchResults.length !== 0 ? searchResults.map(result => (
           <div key={result.id}>
@@ -183,7 +183,7 @@ return (
             <a href={`/samplepack?id=${result.id}`}>
               <div className='flex my-8 items-center'>
                 {
-                  result.imgHref ? <img className="mr-4 h-10 w-10 rounded-full" src={sanitize(validUrl.isWebUri(result.imgHref))} alt="Search result" />
+                  result.imgHref ? <img className="mr-4 h-10 w-10 rounded-full border-[2px] border-white" src={sanitize(validUrl.isWebUri(result.imgHref))} alt="Search result" />
                   : <img alt="Post Preview Image" className="mr-4 h-10 w-10 rounded-full" src="https://images.presetloops.com/placeholder/1682816223.jpg" />
                 }
                 <p className="w-fit text-xl">

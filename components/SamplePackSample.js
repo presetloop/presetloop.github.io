@@ -16,7 +16,7 @@ export default function SamplePackSample({getRandomColourClass
 
         <div className='flex flex-col px-2'>
           <div>
-            <p className='text-center text-xs pl-0 mb-0 text-slate-300'>
+            <p className='text-center text-xs pl-0 mb-0 text-white'>
               {sampleFileName || "No Sample"}
             </p>
           </div>
