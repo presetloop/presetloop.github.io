@@ -25,7 +25,7 @@ export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmi
           <SoundFile 
             isLoggedIn={isLoggedIn} 
             isHomeImg={isHomeImg} 
-            soundFile={``} 
+            soundFile={packPreviewUrl || ``}
             image={imgHref && validUrl.isWebUri(imgHref) && sanitize(imgHref).replace(/^http?:\/\//i, convertToHttps)} />
           
           

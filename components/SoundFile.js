@@ -122,13 +122,12 @@ const SoundFile = ({ href, isLoggedIn, isAdmin, isHomeImg, soundFile, image, sty
   };
 }, []);
 
-
-function getRandomBorderColor() {
-  const colors = ["border-blue-400", "border-red-400", "border-pink-400", "border-yellow-400", "border-green-400", "border-purple-400", "indigo-400"];
+// function getRandomBorderColor() {
+//   const colors = ["border-blue-400", "border-red-400", "border-pink-400", "border-yellow-400", "border-green-400", "border-purple-400", "indigo-400"];
   
-  const randomIndex = Math.floor(Math.random() * colors.length);
-  return colors[randomIndex];
-}
+//   const randomIndex = Math.floor(Math.random() * colors.length);
+//   return colors[randomIndex];
+// }
 
   return (
     <div>
@@ -152,10 +151,9 @@ function getRandomBorderColor() {
 
         {/* PLAY / PAUSE */}
         
-        {/* {soundFile && ( */}
           <button
-          onClick={(isLoggedIn || isAdmin) ? toggleAudio : null}
-          className="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full px-0 py-0 transition-all ease-in-out duration-300 cursor-pointer"
+            onClick={(isLoggedIn || isAdmin) ? toggleAudio : null}
+            className={`${soundFile ? "block" : "hidden"} absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 rounded-full px-0 py-0 transition-all ease-in-out duration-300 cursor-pointer`}
         >
           {isPlaying ? (
             <img className="w-8" src="/pause.svg" alt="Preset Loop" />
@@ -163,7 +161,6 @@ function getRandomBorderColor() {
             <img className={`w-10 ${wave}`} src="/play.svg" alt="Preset Loop" />
           )}
           </button>
-        {/* )}  */}
 
 
 
