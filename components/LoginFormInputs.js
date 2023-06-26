@@ -88,9 +88,9 @@ const LoginFormInputs = ({ titleField, handleSubmit, email, setEmail, password, 
           {inputFieldType ? (
             <input
               className="
-              border-green-400 
+              border-green-600 
               border-2 
-              bg-green-400 
+              bg-green-600 
               sm:hover:bg-white
               text-white
               text-lg
