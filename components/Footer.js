@@ -4,7 +4,7 @@ export default function Footer() {
   const currentYear = new Date().getFullYear();
   return (
     <>
-      <div className="loadedAni bg-[#101010] px-8 sm:px-0 py-8 sm:pt-36 sm:pb-44 flex flex-col text-center">
+      <div className="loadedAni bg-[#202020] px-8 sm:px-0 py-8 sm:pt-36 sm:pb-44 flex flex-col text-center">
  
           
             {/* LOGO */}

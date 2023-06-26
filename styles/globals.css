@@ -40,13 +40,18 @@ COLOR SCHEME:
 
 body {
   background-color: var(--bg-col);
-  
-  /* DOTS */
-  /* background-image: radial-gradient(var(--bg-light) 0.1px, transparent 1px);
-  background-size: calc(10 * 1px) calc(10 * 1px); */
-  
+  /*  */
+  padding: 0rem;
+  font-family: var(--font-mono);
+  overflow-x: hidden;
+  overflow-y: scroll;
+  -ms-scroll-chaining: none;
+  overscroll-behavior: none; /* IOS */
+
+  /* BACKGROUND PATTERNS */
+
   /* STRIPES */
-  background-image: -o-linear-gradient(135deg, var(--bg-light) 25%, transparent 25%),
+  /* background-image: -o-linear-gradient(135deg, var(--bg-light) 25%, transparent 25%),
     -o-linear-gradient(225deg, var(--bg-light) 25%, transparent 25%),
     -o-linear-gradient(315deg, var(--bg-light) 25%, transparent 25%),
     -o-linear-gradient(45deg, var(--bg-light) 25%, transparent 25%);
@@ -56,15 +61,13 @@ body {
     linear-gradient(45deg, var(--bg-light) 25%, transparent 25%);
   background-position-x: 0, 0, 0, 0;
   background-position-y: 0, 0, calc(var(--height) / 2), calc(var(--height) / 2);
-  background-size: var(--height) var(--height);
+  background-size: var(--height) var(--height); */
 
-  /*  */
-  padding: 0rem;
-  font-family: var(--font-mono);
-  overflow-x: hidden;
-  overflow-y: scroll;
-  -ms-scroll-chaining: none;
-      overscroll-behavior: none; /* IOS */
+
+  /* DOTS */
+  /* background-image: radial-gradient(var(--bg-light) 0.1px, transparent 1px);
+  background-size: calc(10 * 1px) calc(10 * 1px); */
+
 }
 
 body::-webkit-scrollbar {

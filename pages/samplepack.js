@@ -25,9 +25,7 @@ function Samplepack() {
 
   useEffect(() => {
     if (id) {
-      setTimeout(() => {
-        fetchData();
-      }, 0);
+      fetchData();
     }
   }, [id]);
 
@@ -59,7 +57,8 @@ function Samplepack() {
   if (loading) {
     return (
       <div className="fixed inset-0 flex items-center justify-center bg-[#101010]">
-      <p className="text-white transition-all duration-5000 text-[20vw]">Loading</p>
+      <p className="text-white transition-all duration-0 text-[20vw]"></p>
+      {/* <p className="text-white transition-all duration-5000 text-[20vw]">Loading</p> */}
     </div>
     )
   }
@@ -227,7 +226,8 @@ return (
 <div className={`-mt-2 lg:-mt-4 ${getRandomColourClass(random100)}`}>
 <div className='w-[100%] m-auto flex-1 min-h-screen'>
 
-    <div className={`loadedAni`}>
+    <div>
+    {/* <div className={`loadedAni`}> */}
 
   {data?.map(item => (
     <div key={item.id} className={`z-2 -mt-4 sm:-mt-4 lg:mt-12 relative overflow-hidden px-6 py-12 lg:overflow-visible lg:px-0`}>

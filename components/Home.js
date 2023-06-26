@@ -101,8 +101,9 @@ setTimeout(() => {
       
   {progress !== '' ? (
     
-    <div className="fixed inset-0 flex items-center justify-center bg-[#101010]">
-      <p className="text-white transition-all duration-5000 text-[20vw]">{progress}</p>
+    <div className="fixed inset-0 flex items-center justify-center bg-[#202020]">
+      <p className="text-white transition-all duration-0 text-[20vw]"></p>
+      {/* <p className="text-white transition-all duration-5000 text-[20vw]">{progress}</p> */}
     </div>
 
   ) : data.length > 0 && (

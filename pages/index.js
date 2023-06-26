@@ -1,3 +1,4 @@
+import Head from 'next/head'
 import { useState, useEffect, useContext } from 'react';
 import IsGuestContext from '@/helpers/IsGuestContext';
 import axios from 'axios';
@@ -88,8 +89,9 @@ export default function App() {
 
 if (loggedIn === undefined) {
   return (
-    <div className="fixed inset-0 flex items-center justify-center bg-[#101010]">
-      <p className="text-white transition-all duration-5000 text-[20vw]">Loading</p>
+    <div className="fixed inset-0 flex items-center justify-center bg-[#202020]">
+      <p className="text-white transition-all duration-0 text-[20vw]"></p>
+      {/* <p className="text-white transition-all duration-5000 text-[20vw]">Loading</p> */}
     </div>
   )
 }
@@ -97,6 +99,11 @@ if (loggedIn === undefined) {
 
 return (
 <>
+<Head>
+  <title>Preset Loop - Audio Samples for Music Makers</title>
+  <meta property="og:title" content="Preset Loop - Audio Samples for Music Makers" key="title" />
+</Head>
+
 <div className="mt-1 sm:mt-8 flex flex-col min-h-screen">
 
 <div className='max-w-[1600px] w-[99%] m-auto flex-1'>

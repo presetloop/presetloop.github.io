@@ -86,9 +86,13 @@ function Search() {
     setSearchTerm(event.target.value);
   };
 
-  if (loading) {
-    return <p className={`text-slate-200 transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[20vw]`}>Loading</p>;
-  }
+
+if (loading) {
+  return (
+    <p className={`text-slate-200 transition-all duration-0 flex items-center justify-center h-screen -mt-[100px] text-[20vw]`}></p>
+    // <p className={`text-slate-200 transition-all duration-5000 flex items-center justify-center h-screen -mt-[100px] text-[20vw]`}>Loading</p>
+  )
+}
 
 
 return (
