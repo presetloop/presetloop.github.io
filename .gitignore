@@ -33,3 +33,5 @@ yarn-error.log*
 .vercel
 notes.js
 archive/*
+
+DEVREADME.md

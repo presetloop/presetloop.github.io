@@ -1,7 +1,6 @@
 import validUrl from 'valid-url';
 import { sanitize } from 'dompurify';
 import ImageDynamic from './ImageDynamic';
-// import getRandomColourClass, {random50, random100, random300, random400} from '@/helpers/getRandomColourClass';
 
 const baseUrl = process.env.NEXT_PUBLIC_BASE_URL;
 

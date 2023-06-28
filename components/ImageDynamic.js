@@ -12,7 +12,7 @@ export default function ImageDynamic({ href, item = null, packPreviewUrl, isAdmi
 
   const [className, setClassName] = useState('object-cover');
   
-  const convertToHttps = "http://"; // CHANGE to https:// BEFORE BUILD AND DEPLOY
+  const convertToHttps = "https://"; // CHANGE to https:// BEFORE BUILD AND DEPLOY
   const imgHref = item && item.imgHref || item;
 
 // images when not logged in (redirects to /login)
