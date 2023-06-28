@@ -32,8 +32,9 @@ yarn-error.log*
 # vercel
 .vercel
 notes.js
-archive/*
 
+archive/*
 api-on-server/*
+php/*
 
 DEVREADME.md
