@@ -1,6 +1,6 @@
 async function fetchAndProcessData() {
   // Fetch data
-  const res = await fetch("https://mvmapi.olk1.com/tracks");
+  const res = await fetch("https://api-music.presetloops.com/tracks");
   const json = await res.json();
 
 
