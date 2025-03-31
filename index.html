@@ -1,38 +1,64 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>PRESETLOOP - Original music, independently made.</title>
-  <link rel='shortcut icon' href='favicon.jpg' type='image/x-icon' />
-  <link rel='stylesheet' href='style.css' />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preset Loop</title>
+    <script src='tailwindcss.min.js'></script>
+    <script type="module" src="scripts.js"></script>
+    <link rel='stylesheet' href='style.css' />
+    <link rel='shortcut icon' href='/images/trans.png' type='image/x-icon' />
 </head>
-<body>
-  <nav>
-    <img src="https://dropzone.olk1.com/uploads/logo.png" alt="Preset Loop">
-    <h1>Original music, independently made.</h1>
-  </nav>
+
+<body class="space-mono-regular pb-[330px] lg:pb-[500px] fade-in">
+
+ 
+  <record-label-header></record-label-header>
   
-  <div class="gallery">
-        <img src="https://dropzone.olk1.com/uploads/pl2.jpg" alt="Preset Loop">
-        <img src="https://dropzone.olk1.com/uploads/pl1.jpg" alt="Preset Loop">
-        <img src="https://dropzone.olk1.com/uploads/pl3.jpg" alt="Preset Loop">
-        <img src="https://dropzone.olk1.com/uploads/pl5.jpg" alt="Preset Loop">
-        <img src="https://dropzone.olk1.com/uploads/pl6.jpg" alt="Preset Loop">
-        <img src="https://dropzone.olk1.com/uploads/pl8.jpg" alt="Preset Loop">
-        <img src="https://dropzone.olk1.com/uploads/pl4.jpg" alt="Preset Loop">
-        <img src="https://dropzone.olk1.com/uploads/pl7.jpg" alt="Preset Loop">
-        <img src="https://dropzone.olk1.com/uploads/trans.png" alt="Preset Loop">
-    </div>
+
+  <div class="sm:p-8 max-w-[1200px] mx-auto lg:grid grid-cols-3 gap-4">
+
+    <hero-section
+      class="col-span-3" 
+      section-subtitle="Original Music"  
+      image-src="https://cdn.presetloops.com/uploads/logo.png" 
+      section-title="Independently Made" 
+      section-paragraph="[Welcome to the new wave]">
+    </hero-section>
+
+    <hero-section
+      link="https://www.youtube.com/@presetloop" 
+      class="col-span-3 col-start-1 lg:ml-24"
+      section-subtitle="Recording Artist" 
+      image-src="https://cdn.presetloops.com/uploads/pl9.png" 
+      section-title="Matthew" 
+      section-paragraph="Discover the latest sounds from our featured artist, unbound by genre, multi instrumental, hyper creative."
+      button-text="Listen Now">
+    </hero-section>
+
+    <hero-section 
+      link="https://samplepacks.presetloops.com/"
+      class="col-span-3"
+      section-subtitle="Global Event" 
+      image-src="https://cdn.presetloops.com/uploads/flower2.png" 
+      section-title="2025 Sample Packs" 
+      section-paragraph="Due to popular demand we have added another 100 special guest passes. The sample bank is bigger than ever, with more sounds added on the regular." 
+      button-text="Discover">
+    </hero-section>
+
+    <hero-section 
+      link="mailto:presetloop@gmail.com"
+      class="col-span-3 col-start-2"
+      section-subtitle="Join the Community" 
+      image-src="https://cdn.presetloops.com/uploads/pl1.png" 
+      section-title="Stay Connected" 
+      section-paragraph="Find us on social media to hear about new tracks, artwork and more or send us some email love." 
+      button-text="Message">
+    </hero-section>
+  </div>
 
 
-    <div id="myModal" class="modal">
-        <span class="close">&times;</span>
-        <span class="arrow left">&#10094;</span>
-        <span class="arrow right">&#10095;</span>
-        <img class="modal-content" id="modalImage">
-    </div>
+    <record-label-footer></record-label-footer>
 
-<script src="app.js"></script>
 </body>
 </html>

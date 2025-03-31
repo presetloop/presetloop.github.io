@@ -1,11 +1,11 @@
- var modal = document.getElementById("myModal");
-        var modalImg = document.getElementById("modalImage");
-        var span = document.getElementsByClassName("close")[0];
-        var gallery = document.querySelector('.gallery');
-        var images = document.querySelectorAll('.gallery img');
-        
-        // displaying modal on large screens
-        if(window.innerWidth > 1024){
+        const modal = document.getElementById("myModal");
+        const modalImg = document.getElementById("modalImage");
+        const span = document.getElementsByClassName("close")[0];
+        const gallery = document.querySelector('.gallery');
+        const images = document.querySelectorAll('.gallery img');
+
+if(window.innerWidth > 768){
+
           images.forEach((image, index) => {
               image.addEventListener('click', function(){
                   currentIndex = index;
@@ -14,23 +14,21 @@
                   gallery.style.position = "fixed";
               });
           });
-        }
 
-        span.onclick = function() { 
+
+
+          span.onclick = function() { 
             modal.style.display = "none";
             gallery.style.position = "relative";
      
         }
 
-        // displaying modal on large screens
-        if(window.innerWidth > 1024){
           modalImg.onclick = function() { 
             modal.style.display = "none";
             gallery.style.position = "relative";
      
           }
-        }
-
+        
         window.onclick = function(event) {
             if (event.target == modal) {
               modal.style.display = "none";
@@ -38,6 +36,11 @@
      
             }
         }
+
+
+
+
+
 
         function showImage(index) {
             currentIndex = (index + images.length) % images.length;
@@ -75,4 +78,4 @@
         });
 
 
-
+};

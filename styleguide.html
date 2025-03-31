@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preset Loop</title>
+    <script src='tailwindcss.min.js'></script>
+    <script type="module" src="scripts.js"></script>
+    <link rel='stylesheet' href='style.css' />
+    <link rel='shortcut icon' href='/images/trans.png' type='image/x-icon' />
+<style>
+body{
+    background-size: 40px 40px;
+    background-image:
+      linear-gradient(to right, #eee 1px, transparent 1px),
+      linear-gradient(to bottom, #eee 1px, transparent 1px);
+      /* radial-gradient(circle, #000000 1px, rgba(0, 0, 0, 0) 1px); */
+  }
+pre{
+  max-width: 300px;
+  margin: 0 auto;
+}
+.logo{
+  margin: 50px 0;
+}
+.serif{
+  font-family: serif;
+  font-size: 300px;
+  align-items: center;
+  white-space: no-wrap;
+  letter-spacing: -1px;
+  line-height: 50px;
+  color: white;
+  text-shadow: -.5px -.5px 0 #000, .5px -.5px 0 #000, -.5px .5px 0 #000, .5px .5px 0 #000; 
+}
+
+.tagline{
+  font-family: monospace;
+  line-height: 1;
+  background: white;
+  text-align: right;
+  margin-right: 10px;
+  margin-top: 10px;
+}
+</style>
+
+</head>
+
+<body class="space-mono-regular fade-in">
+  
+  <record-label-header></record-label-header>
+
+<div class="max-w-xl mx-auto mt-8 sm:mt-36 mb-96">
+
+<div class="pl-8 lg:pl-0">
+<pre>
+.serif{
+  font-family: serif;
+  font-size: 90px;
+  align-items: center;
+  white-space: no-wrap;
+  letter-spacing: -1px;
+  line-height: 50px;
+  color: white;
+  text-shadow: -.5px -.5px 0 #000, 
+      .5px -.5px 0 #000, 
+      -.5px .5px 0 #000, 
+      .5px .5px 0 #000;
+}
+
+</pre>
+</div>
+
+<div class="logo">
+    <p class="serif">∞</p>
+</div>
+
+<div>
+  <img src="https://cdn.presetloops.com/uploads/logo.png" alt="Preset Loop">
+</div>
+
+<div>
+  <p class="tagline">Original music, independently made.</p>
+</div>
+
+
+</div>
+
+  <record-label-footer></record-label-footer>
+</body>
+</html>

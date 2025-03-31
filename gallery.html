@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Preset Loop</title>
+    <script src='tailwindcss.min.js'></script>
+    <script type="module" src="scripts.js"></script>
+    <link rel='stylesheet' href='style.css' />
+    <link rel='stylesheet' href='gallery/gallery.css' />
+    <link rel='shortcut icon' href='/images/trans.png' type='image/x-icon' />
+</head>
+
+<body class="space-mono-regular fade-in">
+  
+  <record-label-header></record-label-header>
+
+
+ 
+<!-- 
+  <nav>
+    <img src="https://cdn.presetloops.com/uploads/logo.png" alt="Preset Loop">
+    <h1>Original music, independently made.</h1>
+  </nav>
+   -->
+
+  <div class="gallery sm:p-8 mx-auto lg:grid grid-cols-3 gap-8">
+
+        <img src="https://cdn.presetloops.com/uploads/pl2.png" alt="Preset Loop">
+        <img src="https://cdn.presetloops.com/uploads/pl1.png" alt="Preset Loop">
+        <img src="https://cdn.presetloops.com/uploads/pl3.png" alt="Preset Loop">
+        <img src="https://cdn.presetloops.com/uploads/pl5.png" alt="Preset Loop">
+        <img src="https://cdn.presetloops.com/uploads/pl6.png" alt="Preset Loop">
+        <img src="https://cdn.presetloops.com/uploads/pl8.png" alt="Preset Loop">
+        <img src="https://cdn.presetloops.com/uploads/pl4.png" alt="Preset Loop">
+        <img src="https://cdn.presetloops.com/uploads/pl7.png" alt="Preset Loop">
+        <img src="https://cdn.presetloops.com/uploads/logos-various.png" alt="Preset Loop">
+        <!-- <img src="https://cdn.presetloops.com/uploads/trans.png" alt="Preset Loop"> -->
+    </div>
+
+
+    <div id="myModal" class="modal">
+      <span class="close">&times;</span>
+      <span class="arrow left">&#10094;</span>
+      <span class="arrow right">&#10095;</span>
+      <img class="modal-content" id="modalImage">
+    </div>
+
+
+ <record-label-footer></record-label-footer>
+
+</body>
+</html>
+
+
+<script src="gallery/gallery.js"></script>
+
+<script>
+if(window.innerWidth > 768){
+    window.addEventListener("resize", () => {
+      location.reload();
+  });
+};
+</script>
+</body>
+</html>
