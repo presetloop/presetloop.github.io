@@ -53,7 +53,7 @@ class RecordLabelHeader extends HTMLElement {
               </li>
           </ul>
 
-          <button id="burger" class="md:hidden text-3xl -mt-2 text-black">&#9776;</button>
+          <button id="burger" class="md:hidden text-3xl mt-2.5 text-black">&#9776;</button>
     
  </nav>
 </header></div>
@@ -63,7 +63,7 @@ class RecordLabelHeader extends HTMLElement {
 
 
 
-    <!-- Mobile Menu -->
+    <!-- Mobile Modal Overlay Nav -->
     <div id="mobileMenu">
   
       <div id="nav-content">
