@@ -4,7 +4,7 @@
         const gallery = document.querySelector('.gallery');
         const images = document.querySelectorAll('.gallery img');
 
-if(window.innerWidth > 768){
+if(window.innerWidth > 960){
 
           images.forEach((image, index) => {
               image.addEventListener('click', function(){

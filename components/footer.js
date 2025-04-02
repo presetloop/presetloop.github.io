@@ -2,7 +2,7 @@ class RecordLabelFooter extends HTMLElement {
   constructor() {
     super();
     this.innerHTML = `
-      <footer class="fixed bottom-0 left-0 right-0 bg-[#f3f4f6] p-0 text-center z-10">
+      <footer class="fixed bottom-0 left-0 right-0 bg-[#f3f4f6] p-0 text-center z-1">
         
         <!-- Curved Divider above the footer -->
         <div class="w-full overflow-hidden leading-[0] absolute top-[-3.99rem]">
