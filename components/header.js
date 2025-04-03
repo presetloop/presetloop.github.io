@@ -47,6 +47,7 @@ class RecordLabelHeader extends HTMLElement {
                   <ul id="apiDropdownMenu" class="absolute left-0 mt-2 w-48 bg-white shadow-lg rounded-lg hidden">
                     <li><a href="/api/" class="nav-link block px-4 py-2 hover:bg-gray-100">Track Search</a></li>
                     <li><a href="/api/visuals" class="nav-link block px-4 py-2 hover:bg-gray-100">Visuals</a></li>
+                    <li><a href="/api/artwork" class="nav-link block px-4 py-2 hover:bg-gray-100">Artwork</a></li>
                     <li><a href="/api/charts" class="nav-link block px-4 py-2 hover:bg-gray-100">Charts</a></li>
                     <li><a href="/api/docs" class="nav-link block px-4 py-2 hover:bg-gray-100">API Docs</a></li>
                   </ul>
@@ -89,6 +90,7 @@ class RecordLabelHeader extends HTMLElement {
 
             <a href="/api/" class="block">Track Search</a>
             <a href="/api/visuals" class="block">Visuals</a>
+            <a href="/api/artwork" class="block">Artwork</a>
             <a href="/api/charts" class="block">Charts</a>
             <a href="/api/docs" class="block">API Docs</a>
           </div>
