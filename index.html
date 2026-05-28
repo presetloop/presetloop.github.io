@@ -14,7 +14,7 @@
 <link rel='stylesheet' href='style.css' />
 </head>
 
-<body class="bg-black text-white">
+<body class="bg-[#111] text-white">
 
 <!-- ====================================================== -->
 <!-- APP -->
@@ -27,25 +27,32 @@
   <!-- ==================================================== -->
 
   <header
-    class="h-16 border-b border-zinc-800 flex items-center justify-between px-6 shrink-0 bg-zinc-950 z-50"
+    class="max-w-[2192px] h-11 mb-0.5 flex items-center justify-between p-4 shrink-0 z-50"
   >
 
-    <div class="flex items-center gap-4">
+    <div class="flex justify-between items-end gap-4">
 
-      <h1 class="text-lg font-semibold tracking-wide">
-        MAGAZINE VIEWER
+
+      <div class="-ml-1">
+        <h1 class="text-lg font-semibold tracking-[10px]">
+        PRESET LOOP
+
       </h1>
+      
+      <p class="p-0 -mt-2.5 tracking-[2px]">Typographic design dzine</p>
+
+      </div>
 
       <div
         id="issueLabel"
-        class="text-sm text-zinc-400"
+        class="text-sm mb-[1px] -ml-1 text-zinc-400"
       >
         Select Issue
       </div>
 
     </div>
 
-    <div class="flex items-center gap-2">
+    <div class="flex gap-2">
 
       <button
         id="prevBtn"
@@ -76,7 +83,7 @@
     <!-- ================================================== -->
 
     <aside
-      class="w-64 border-r border-zinc-800 bg-zinc-950 p-4 overflow-y-auto shrink-0"
+      class="w-64 px-2 overflow-y-auto shrink-0"
     >
 
       <div
@@ -90,7 +97,7 @@
     <!-- VIEWER -->
     <!-- ================================================== -->
 
-    <main class="relative flex-1 bg-black overflow-hidden">
+    <main class="relative flex-1 overflow-hidden">
 
       <!-- CANVAS STACK -->
       <div class="absolute inset-0">
