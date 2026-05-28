@@ -146,12 +146,17 @@ function renderIssueList() {
     btn.className =
       `
       w-full
-      text-left
-      px-4
-      py-3
+      text-center
+      px-2
+      pt-2.5
+      pb-2
+      text-sm
+      md:text-lg
+      leading-[0.75rem]
+      md:leading-[1rem]
       rounded
-      bg-zinc-900
-      hover:bg-zinc-800
+      bg-[#111]
+      hover:bg-zinc-900
       transition
       border
       border-zinc-800
@@ -187,8 +192,8 @@ function selectIssue(index) {
   const issue =
     state.issues[index];
 
-  el.issueLabel.textContent =
-    `${issue.title} — Page 1`;
+  el.issueLabel.innerHTML =
+    `You are viewing: <br/> ${issue.title} — Page 1`;
 
   loadBlockIfNeeded(0);
 

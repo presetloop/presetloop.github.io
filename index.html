@@ -7,7 +7,7 @@
   content="width=device-width, initial-scale=1.0"
 />
 <link rel='icon' href='data:;base64,='>
-<title>Magazine Issues Viewer</title>
+<title>PRESET LOOP - Typographic design dzine</title>
 
 <script src='tailwindcss.min.js'></script>
 
@@ -27,51 +27,56 @@
   <!-- ==================================================== -->
 
   <header
-    class="max-w-[2192px] h-11 mb-0.5 flex items-center justify-between p-4 shrink-0 z-50"
+  class="relative max-w-[2068px] h-11 mb-0.5 flex items-center justify-between p-4 shrink-0 z-50"
+>
+
+  <!-- LEFT -->
+  <div class="flex gap-4 z-10">
+
+    <div
+      id="issueLabel"
+      class="text-[10px] md:text-sm mt-1 text-zinc-400"
+    >
+      Select Issue
+    </div>
+
+  </div>
+
+  <!-- CENTER -->
+  <div
+    class="md:absolute left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none"
   >
 
-    <div class="flex justify-between items-end gap-4">
+    <h1 class="text-lg font-semibold md:tracking-[20px]">
+      PRESET LOOP
+    </h1>
 
+    <p class="text-[10px] md:text-sm p-0 -mt-1.5 md:tracking-[10px]">
+      Typographic design dzine
+    </p>
 
-      <div class="-ml-1">
-        <h1 class="text-lg font-semibold tracking-[10px]">
-        PRESET LOOP
+  </div>
 
-      </h1>
-      
-      <p class="p-0 -mt-2.5 tracking-[2px]">Typographic design dzine</p>
+  <!-- RIGHT -->
+  <div class="hidden md:flex gap-2 -mr-3 z-10">
 
-      </div>
+    <button
+      id="prevBtn"
+      class="w-10 h-10 rounded bg-zinc-800 hover:bg-zinc-700 transition"
+    >
+      ←
+    </button>
 
-      <div
-        id="issueLabel"
-        class="text-sm mb-[1px] -ml-1 text-zinc-400"
-      >
-        Select Issue
-      </div>
+    <button
+      id="nextBtn"
+      class="w-10 h-10 rounded bg-zinc-800 hover:bg-zinc-700 transition"
+    >
+      →
+    </button>
 
-    </div>
+  </div>
 
-    <div class="flex gap-2">
-
-      <button
-        id="prevBtn"
-        class="w-10 h-10 rounded bg-zinc-800 hover:bg-zinc-700 transition"
-      >
-        ←
-      </button>
-
-      <button
-        id="nextBtn"
-        class="w-10 h-10 rounded bg-zinc-800 hover:bg-zinc-700 transition"
-      >
-        →
-      </button>
-
-    </div>
-
-  </header>
-
+</header>
   <!-- ==================================================== -->
   <!-- MAIN -->
   <!-- ==================================================== -->
@@ -83,7 +88,7 @@
     <!-- ================================================== -->
 
     <aside
-      class="w-64 px-2 overflow-y-auto shrink-0"
+      class="w-[105px] md:w-36 px-2 overflow-y-auto shrink-0"
     >
 
       <div
@@ -100,24 +105,27 @@
     <main class="relative flex-1 overflow-hidden">
 
       <!-- CANVAS STACK -->
-      <div class="absolute inset-0">
+<div class="absolute inset-0">
 
-        <canvas
-          id="canvasA"
-          class="fade-layer active"
-          width="1920"
-          height="1080"
-        ></canvas>
+  <div class="w-full max-w-[1920px] aspect-[16/9] relative">
 
-        <canvas
-          id="canvasB"
-          class="fade-layer"
-          width="1920"
-          height="1080"
-        ></canvas>
+    <canvas
+      id="canvasA"
+      class="fade-layer active w-full h-full"
+      width="1920"
+      height="1080"
+    ></canvas>
 
-      </div>
+    <canvas
+      id="canvasB"
+      class="fade-layer w-full h-full"
+      width="1920"
+      height="1080"
+    ></canvas>
 
+  </div>
+
+</div>
       <!-- THUMBNAILS -->
       <div
         id="thumbnailOverlay"
