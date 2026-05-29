@@ -7,8 +7,8 @@ const API_ENDPOINT =
   'https://presetloop.olk1.com/fetch_images.php';
 
 const config = {
-  issueTotalPages: 3,
-  lazyLoadPages: 2
+  issueTotalPages: 35,
+  lazyLoadPages: 12
 }
 
 /* =========================================================
