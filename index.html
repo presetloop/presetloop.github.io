@@ -22,43 +22,83 @@
 
 <div class="w-screen h-screen flex flex-col">
 
-  <!-- ==================================================== -->
-  <!-- TOP BAR -->
-  <!-- ==================================================== -->
+<header class="relative max-w-[1980px]">
+    
+    
+<!-- MASTHEAD -->
+<div id="masthead" class="md:mr-1 h-24 bg-[#ffd5d1] flex items-center p-4 shrink-0 z-50">
+  
+  <!-- hidden link - masking smoking rabbit image -->
+  <!-- hidden link -->
+  <a
+    href="https://presetloop.olk1.com/gif.html"
+    target="_blank"
+    rel="noopener noreferrer"
+    class="absolute top-4 right-4 z-10 bg-transparent text-transparent px-7 py-6"
+  >
+    .
+  </a>
+  <!-- \hidden link -->
+  <!-- \hidden link -->
 
-  <header
-  class="relative max-w-[2068px] h-11 mb-0.5 flex items-center justify-between p-4 shrink-0 z-50"
->
 
+  <div
+    class="flex flex-col sm:flex-row items-center pointer-events-none text-black"
+  >
+
+    <h1 class="text-3xl flex">
+      PRESET L<span><img src="pl-logo-trans.png" alt="Preset Loop" class="h-8 w-auto"></span>P
+    </h1>
+
+    <p class="text-[10px] md:text-sm p-0 -mt-1.5 tracking-[5px] sm:tracking-[10px] bg-white italic">
+      <span class="text-black">
+        TypoGraphic Design
+      </span>
+    </p>
+
+  </div>
+<!--  -->
+</div>
+<!-- \MASTHEAD -->
+
+
+
+
+<!-- nav info / ticker / arrows -->
+<div class="h-11 mb-0.5 flex items-center justify-between p-0 shrink-0 z-50">
+  
+  
   <!-- LEFT -->
   <div class="flex gap-4 z-10">
 
     <div
       id="issueLabel"
-      class="text-[10px] md:text-sm mt-1 text-gray-300"
+      class="text-[10px] -ml-3 sm:ml-0 sm:text-sm mt-1 text-gray-300"
     >
       Select Issue
     </div>
 
   </div>
 
-  <!-- CENTER -->
-  <div
-    class="md:absolute left-1/2 -translate-x-1/2 flex flex-col items-center pointer-events-none"
-  >
 
-    <h1 class="text-lg font-semibold md:tracking-[20px]">
-      PRESET LOOP
-    </h1>
 
-    <p class="text-[10px] md:text-sm p-0 -mt-1.5 md:tracking-[10px]">
-      TypoGraphic Design
-    </p>
+<!--  -->
+<!--  -->
+<!-- CENTER -->
+<!-- ======================================================
+TICKER
+====================================================== -->
 
-  </div>
+<div id="ticker" class="relative overflow-hidden h-36 w-full"></div>
+
+<!--  -->
+<!--  -->
+
+
+
 
   <!-- RIGHT -->
-  <div class="hidden md:flex gap-2 -mr-3 z-10">
+  <div class="hidden sm:flex gap-1 lg:mr-1 z-10">
 
     <button
       id="prevBtn"
@@ -75,7 +115,8 @@
     </button>
 
   </div>
-
+  <!--  -->
+</div>
 </header>
   <!-- ==================================================== -->
   <!-- MAIN -->
@@ -88,7 +129,7 @@
     <!-- ================================================== -->
 
     <aside
-      class="w-[105px] md:w-36 px-2 overflow-y-auto shrink-0"
+      class="w-[55px] px-2 overflow-y-auto shrink-0"
     >
 
       <div
@@ -153,9 +194,7 @@
 
 </div>
 
-<script src="script.js">
-
-</script>
+<script type="module" src="script.js"></script>
 
 </body>
 </html>

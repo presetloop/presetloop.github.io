@@ -6,7 +6,7 @@
 const API_ENDPOINT =
   'https://presetloop.olk1.com/fetch_images.php';
 
-config = {
+const config = {
   issueTotalPages: 3,
   lazyLoadPages: 2
 }
@@ -113,7 +113,7 @@ function buildIssues(images) {
 
     state.issues.push({
       id: state.issues.length,
-      title: `Issue ${state.issues.length + 1}`,
+      title: `&#35;${state.issues.length + 1}`,
       pages: chunk
     });
   }
@@ -168,7 +168,7 @@ function renderIssueList() {
       </div>
 
       <div class="text-xs text-zinc-500 mt-1">
-        ${issue.pages.length} pages
+        x ${issue.pages.length}
       </div>
     `;
 
@@ -190,9 +190,9 @@ function updateIssueLabel() {
   if (!issue) return;
 
   el.issueLabel.innerHTML = `
-    <div class="flex flex-col leading-4">
+    <div class="w-28 flex flex-col text-center leading-[18px]">
       <p>You are viewing:</p>
-      <p>${issue.title} — Page ${state.currentPage + 1}</p>
+      <p>Issue ${issue.title} <span>Page ${state.currentPage + 1}</span></p>
     </div>
   `;
 }
@@ -549,8 +549,99 @@ window.addEventListener('keydown', (e) => {
   if (e.key === 'Escape') navigate('OPEN_THUMBS');
 });
 
+
+
+
+
+/* ======================================================
+TICKER
+====================================================== */
+
+/* ======================================================
+LINK DATA
+====================================================== */
+
+import { tickerLinks }
+  from './tickerlinks.js';
+
+/* ======================================================
+ELEMENTS
+====================================================== */
+
+const ticker =
+  document.getElementById('ticker');
+
+/* ======================================================
+STATE
+====================================================== */
+
+let currentTickerIndex = 0;
+
+/* ======================================================
+RENDER
+====================================================== */
+
+function renderTicker() {
+
+  ticker.innerHTML =
+    tickerLinks.map((item, index) => {
+
+      return `
+        <div
+          class="
+            ticker-item
+            ${index === 0 ? 'active' : ''}
+          "
+        >
+
+          <a
+            href="${item.url}"
+            target="_blank"
+            rel="noopener noreferrer"
+            class="ticker-link"
+          >
+            ${item.title}
+          </a>
+
+        </div>
+      `;
+    }).join('');
+}
+
+/* ======================================================
+ROTATE
+====================================================== */
+
+function rotateTicker() {
+
+  const items =
+    ticker.querySelectorAll('.ticker-item');
+
+  items[currentTickerIndex]
+    .classList.remove('active');
+
+  currentTickerIndex =
+    (currentTickerIndex + 1)
+    % items.length;
+
+  items[currentTickerIndex]
+    .classList.add('active');
+}
+
+
 /* =========================================================
    START
 ========================================================= */
 
+renderTicker();
 fetchImages();
+
+
+
+setInterval(
+  rotateTicker,
+  10000
+);
+
+
+

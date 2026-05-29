@@ -13,3 +13,67 @@
   .thumb-scroll {
     scrollbar-width: thin;
   }
+
+
+
+
+#masthead {
+  background-image: url('smoking-rabbit.png');
+  background-repeat: no-repeat;
+  background-position: center right;
+  background-size: contain; /* or cover */
+}
+
+
+
+  /* ======================================================
+TICKER
+====================================================== */
+
+.ticker-item {
+  position: absolute;
+  inset: 0;
+
+  display: flex;
+  align-items: center;
+  justify-content: center;
+
+  opacity: 0;
+
+  transition:
+    opacity 0.8s ease,
+    transform 0.8s ease;
+
+  transform: translateY(8px);
+
+  pointer-events: none;
+}
+
+.ticker-item.active {
+  opacity: 1;
+  transform: translateY(0);
+
+  pointer-events: auto;
+}
+
+.ticker-link {
+  color: white;
+
+  text-decoration: none;
+
+  font-size: 0.95rem;
+  font-weight: 500;
+
+  letter-spacing: 0.02em;
+
+  opacity: 0.9;
+
+  transition:
+    opacity 0.2s ease,
+    color 0.2s ease;
+}
+
+.ticker-link:hover {
+  opacity: 1;
+  color: #60a5fa;
+}
