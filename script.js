@@ -7,8 +7,8 @@ const API_ENDPOINT =
   'https://presetloop.olk1.com/fetch_images.php';
 
 config = {
-  issueTotalPages: 1,
-  lazyLoadPages: 1
+  issueTotalPages: 3,
+  lazyLoadPages: 2
 }
 
 /* =========================================================
@@ -183,17 +183,36 @@ function renderIssueList() {
 /* =========================================================
    SELECT ISSUE
 ========================================================= */
+function updateIssueLabel() {
+
+  const issue = getIssue();
+
+  if (!issue) return;
+
+  el.issueLabel.innerHTML = `
+    <div class="flex flex-col leading-4">
+      <p>You are viewing:</p>
+      <p>${issue.title} — Page ${state.currentPage + 1}</p>
+    </div>
+  `;
+}
 
 function selectIssue(index) {
 
   state.currentIssue = index;
   state.currentPage = 0;
 
-  const issue =
-    state.issues[index];
+  // force page mode
+  state.mode = 'page';
 
-  el.issueLabel.innerHTML =
-    `You are viewing: <br/> ${issue.title} — Page 1`;
+  // close thumbnail overlay if open
+  closeThumbs();
+
+  // const issue =
+  //   state.issues[index];
+
+  // el.issueLabel.innerHTML =
+  //   `You are viewing: <br/> ${issue.title} — Page 1`;
 
   loadBlockIfNeeded(0);
 
@@ -252,30 +271,6 @@ function getImageUrl(item) {
   return item?.filename || item?.image_url || item?.url || null;
 }
 
-function loadImage(item) {
-
-  return new Promise((resolve) => {
-
-    if (state.imageCache.has(item.url)) {
-      resolve();
-      return;
-    }
-
-    const img = new Image();
-
-    img.src = item.url;
-
-    img.onload = () => {
-      state.imageCache.set(item.url, img);
-      resolve();
-    };
-
-    img.onerror = () => {
-      console.error('FAILED TO LOAD:', item.url);
-      resolve();
-    };
-  });
-}
 
 /* =========================================================
    DRAW IMAGE
@@ -317,20 +312,6 @@ const VIEW = {
   PAGE: 'page',
   THUMBS: 'thumbs'
 };
-
-function getIssue() {
-  return state.issues[state.currentIssue];
-}
-
-function clampPage(index) {
-  const issue = getIssue();
-  if (!issue) return 0;
-
-  return Math.max(0, Math.min(index, issue.pages.length - 1));
-}
-
-
-
 
 
 /* =========================================================
@@ -402,6 +383,8 @@ async function renderPage(index) {
   ctx.drawImage(img, 0, 0, 1920, 1080);
 
   state.currentPage = safeIndex;
+
+  updateIssueLabel();
 }
 
 

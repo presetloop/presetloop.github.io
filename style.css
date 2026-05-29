@@ -1,7 +1,6 @@
   html,
   body {
     margin: 0;
-    background: #050505;
     overflow: hidden;
     font-family: sans-serif;
   }
@@ -10,17 +9,6 @@
     display: block;
   }
 
-  .fade-layer {
-    position: absolute;
-    inset: 0;
-    opacity: 0;
-    transition: opacity 0.5s ease;
-    pointer-events: none;
-  }
-
-  .fade-layer.active {
-    opacity: 1;
-  }
 
   .thumb-scroll {
     scrollbar-width: thin;
