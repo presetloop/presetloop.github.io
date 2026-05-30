@@ -7,8 +7,8 @@ const API_ENDPOINT =
   'https://presetloop.olk1.com/fetch_images.php';
 
 const config = {
-  issueTotalPages: 16,
-  lazyLoadPages: 8
+  issueTotalPages: 5,
+  lazyLoadPages: 6
 }
 
 /* =========================================================
@@ -76,7 +76,7 @@ function buildIssues(images) {
 
     state.issues.push({
       id: state.issues.length,
-      title: `#${state.issues.length + 1}`,
+      title: `${state.issues.length + 1}`,
       pages: chunk
     });
   }
@@ -100,16 +100,11 @@ function renderIssueList() {
   state.issues.forEach((issue, index) => {
     const btn = document.createElement('button');
 
-    btn.className = `
-      w-full text-center px-2 pt-2.5 pb-2 text-sm md:text-lg
-      leading-[0.75rem] md:leading-[1rem]
-      rounded bg-[#111] hover:bg-zinc-900
-      transition border border-zinc-800
-    `;
+    btn.className = `w-full text-center mt-2 p-2 pb-1.5 text-sm md:text-lg leading-[0.75rem] md:leading-[1.3rem] rounded bg-[#000] transition border border-zinc-800 hover:bg-white hover:text-black`;
 
     btn.innerHTML = `
-      <div class="font-medium">${issue.title}</div>
-      <div class="text-xs text-zinc-500 mt-1">
+      <div class="tracking-widest">&#35;${issue.title}</div>
+      <div class="text-xs">
         x ${issue.pages.length}
       </div>
     `;
@@ -139,10 +134,8 @@ function updateIssueLabel() {
   if (!issue) return;
 
   el.issueLabel.innerHTML = `
-    <div class="w-28 flex flex-col text-center leading-[18px]">
-      <p>You are viewing:</p>
-      <p>Issue ${issue.title} <span>Page ${state.currentPage + 1}</span></p>
-    </div>
+      <p>You are viewing</p>
+      <p>Issue: ${issue.title} Page: ${state.currentPage + 1}</p>
   `;
 }
 

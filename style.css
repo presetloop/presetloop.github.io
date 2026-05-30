@@ -27,11 +27,11 @@ canvas.is-wiping {
 
 
 
-#masthead {
+#ticker-bar {
   background-image: url('smoking-rabbit.png');
   background-repeat: no-repeat;
-  background-position: center right;
-  background-size: contain; /* or cover */
+  background-position: center left;
+  background-size: 55px 55px; 
 }
 
 

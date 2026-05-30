@@ -26,7 +26,7 @@
     
     
 <!-- MASTHEAD -->
-<div id="masthead" class="md:mr-1 h-24 bg-[#ffd5d1] flex items-center p-4 shrink-0 z-50">
+<div id="masthead" class="md:mr-1 h-24 bg-[#fff] flex items-center p-4 shrink-0">
   
   <!-- hidden link - masking smoking rabbit image -->
   <!-- hidden link -->
@@ -34,7 +34,7 @@
     href="https://presetloop.olk1.com/gif.html"
     target="_blank"
     rel="noopener noreferrer"
-    class="absolute top-4 right-4 z-10 bg-transparent text-transparent px-7 py-6"
+    class="absolute top-[95px] left-0 z-50 text-transparent px-6 py-2.5 cursor-crosshair"
   >
     .
   </a>
@@ -43,15 +43,18 @@
 
 
   <div
-    class="flex flex-col sm:flex-row items-center pointer-events-none text-black"
+    class="w-full flex flex-col md:flex-row items-center pointer-events-none text-black"
   >
 
-    <h1 class="text-3xl flex">
-      PRESET L<span><img src="pl-logo-trans.png" alt="Preset Loop" class="h-8 w-auto"></span>P
+    <h1 class="font-mono font-bold text-4xl leading-[30px] sm:-ml-3.5">
+      <span class="inline-block">PRESET</span> 
+      <span class="inline-block -ml-4">
+        L<span><img src="pl-logo-trans.png" alt="Preset Loop" class="h-[30px] w-auto"></span>P
+      </span>
     </h1>
 
-    <p class="text-[10px] md:text-sm p-0 -mt-1.5 tracking-[5px] sm:tracking-[10px] bg-white italic">
-      <span class="text-black">
+    <p class="text-[10px] md:text-sm p-0 mt-0.5 tracking-[10px] sm:tracking-[15px] bg-white italic">
+      <span class="bg-white inline-block text-black -rotate-3 -ml-0.5 xs:ml-3 md:ml-3">
         TypoGraphic Design
       </span>
     </p>
@@ -65,15 +68,15 @@
 
 
 <!-- nav info / ticker / arrows -->
-<div class="h-11 mb-0.5 flex items-center justify-between p-0 shrink-0 z-50">
+<div id="ticker-bar" class="border-t border-[#ffd5d1] lg:mr-1 h-11 flex items-center justify-between p-0 shrink-0 z-50">
   
   
   <!-- LEFT -->
-  <div class="flex gap-4 z-10">
+  <div class="flex gap-0 z-10">
 
     <div
       id="issueLabel"
-      class="text-[10px] -ml-3 sm:ml-0 sm:text-sm mt-1 text-gray-300"
+      class="w-36 hidden md:flex flex-col leading-[16px] tracking-tight sm:ml-[60px] sm:text-sm my-1 text-gray-300"
     >
       Select Issue
     </div>
@@ -89,7 +92,7 @@
 TICKER
 ====================================================== -->
 
-<div id="ticker" class="relative overflow-hidden h-36 w-full"></div>
+<div id="ticker" class="relative overflow-hidden h-36 w-full ml-6 sm:-ml-12"></div>
 
 <!--  -->
 <!--  -->
@@ -98,7 +101,7 @@ TICKER
 
 
   <!-- RIGHT -->
-  <div class="hidden sm:flex gap-1 lg:mr-1 z-10">
+  <div class="hidden sm:flex gap-1 z-10">
 
     <button
       id="prevBtn"
@@ -129,7 +132,7 @@ TICKER
     <!-- ================================================== -->
 
     <aside
-      class="w-[55px] px-2 overflow-y-auto shrink-0"
+      class="w-[55px] px-1 overflow-y-auto shrink-0"
     >
 
       <div
@@ -148,7 +151,7 @@ TICKER
       <!-- CANVAS STACK -->
 <div class="absolute inset-0">
 
-  <div class="w-full max-w-[1920px] aspect-[16/9] relative">
+  <div class="-ml-1 2xl:ml-0 w-full max-w-[1920px] aspect-[16/9] relative">
 
     <canvas
       id="canvas"
@@ -177,9 +180,9 @@ TICKER
       <!-- LOADING -->
       <div
         id="loading"
-        class="absolute bottom-6 left-1/2 -translate-x-1/2 bg-zinc-900 px-4 py-2 rounded text-sm hidden"
+        class="absolute -mt-32 top-1/2 left-1/2 -translate-x-1/2 bg-zinc-900 px-4 py-0 rounded text-7xl hidden"
       >
-        Loading images...
+        Loading...
       </div>
 
     </main>
