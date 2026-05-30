@@ -28,10 +28,12 @@ canvas.is-wiping {
 
 
 #ticker-bar {
+  width: 55px;
+  height: 55px;
   background-image: url('smoking-rabbit.png');
   background-repeat: no-repeat;
   background-position: center left;
-  background-size: 55px 55px; 
+  background-size: cover; 
 }
 
 
