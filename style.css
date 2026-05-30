@@ -5,10 +5,13 @@
     font-family: sans-serif;
   }
 
-  canvas {
-    display: block;
-  }
+canvas {
+  transition: opacity 180ms ease;
+}
 
+canvas.is-fading {
+  opacity: 0;
+}
 
   .thumb-scroll {
     scrollbar-width: thin;

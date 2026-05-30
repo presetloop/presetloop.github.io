@@ -221,18 +221,31 @@ async function renderPage(index) {
   const item = issue.pages[safeIndex];
   if (!item) return;
 
+  const canvas = el.canvas;
+
+  // fade out
+  canvas.classList.add('is-fading');
+
+  // wait for fade-out
+  await new Promise(r => setTimeout(r, 120));
+
   await loadImage(item);
 
   const img = state.imageCache.get(item.url);
   if (!img) return;
 
-  const ctx = el.canvas.getContext('2d');
+  const ctx = canvas.getContext('2d');
 
   ctx.clearRect(0, 0, 1920, 1080);
   ctx.drawImage(img, 0, 0, 1920, 1080);
 
   state.currentPage = safeIndex;
   updateIssueLabel();
+
+  // fade in
+  requestAnimationFrame(() => {
+    canvas.classList.remove('is-fading');
+  });
 }
 
 
