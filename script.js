@@ -7,8 +7,8 @@ const API_ENDPOINT =
   'https://presetloop.olk1.com/fetch_images.php';
 
 const config = {
-  issueTotalPages: 35,
-  lazyLoadPages: 12
+  issueTotalPages: 16,
+  lazyLoadPages: 8
 }
 
 /* =========================================================
@@ -16,29 +16,17 @@ const config = {
 ========================================================= */
 
 const el = {
-  issueList:
-    document.getElementById('issueList'),
+  issueList: document.getElementById('issueList'),
+  issueLabel: document.getElementById('issueLabel'),
+  prevBtn: document.getElementById('prevBtn'),
+  nextBtn: document.getElementById('nextBtn'),
 
-  issueLabel:
-    document.getElementById('issueLabel'),
+  canvas: document.getElementById('canvas'),
 
-  prevBtn:
-    document.getElementById('prevBtn'),
+  loading: document.getElementById('loading'),
 
-  nextBtn:
-    document.getElementById('nextBtn'),
-
-  canvas:
-    document.getElementById('canvas'),
-
-  loading:
-    document.getElementById('loading'),
-
-  thumbnailOverlay:
-    document.getElementById('thumbnailOverlay'),
-
-  thumbnailGrid:
-    document.getElementById('thumbnailGrid')
+  thumbnailOverlay: document.getElementById('thumbnailOverlay'),
+  thumbnailGrid: document.getElementById('thumbnailGrid')
 };
 
 
@@ -51,18 +39,11 @@ const state = {
   currentIssue: 0,
   currentPage: 0,
 
-  visibleCanvas: 'A',
-
   imageCache: new Map(),
-
   loadedBlocks: new Set(),
 
-  showingThumbs: false,
-
-  mode: 'page' // 'page' | 'thumbs'
+  mode: 'page' // page | thumbs
 };
-
-
 
 
 /* =========================================================
@@ -70,22 +51,17 @@ const state = {
 ========================================================= */
 
 async function fetchImages() {
-
-  const res =
-    await fetch(API_ENDPOINT);
-
-  const data =
-    await res.json();
-
-  // console.table(data);
+  const res = await fetch(API_ENDPOINT);
+  const data = await res.json();
   buildIssues(data);
 }
+
+
 /* =========================================================
    BUILD ISSUES
 ========================================================= */
 
 function buildIssues(images) {
-
   const chunkSize = config.issueTotalPages;
 
   state.issues = [];
@@ -96,85 +72,70 @@ function buildIssues(images) {
   }
 
   for (let i = 0; i < images.length; i += chunkSize) {
-
     const chunk = images.slice(i, i + chunkSize);
 
     state.issues.push({
       id: state.issues.length,
-      title: `&#35;${state.issues.length + 1}`,
+      title: `#${state.issues.length + 1}`,
       pages: chunk
     });
   }
 
-  renderIssueList();
-
-  // reset navigation state deterministically
   state.currentIssue = 0;
   state.currentPage = 0;
   state.mode = 'page';
 
-  if (state.issues.length > 0) {
-    selectIssue(0);
-  }
+  renderIssueList();
+  selectIssue(0);
 }
+
 
 /* =========================================================
    ISSUE LIST
 ========================================================= */
 
 function renderIssueList() {
-
   el.issueList.innerHTML = '';
 
   state.issues.forEach((issue, index) => {
+    const btn = document.createElement('button');
 
-    const btn =
-      document.createElement('button');
-
-    btn.className =
-      `
-      w-full
-      text-center
-      px-2
-      pt-2.5
-      pb-2
-      text-sm
-      md:text-lg
-      leading-[0.75rem]
-      md:leading-[1rem]
-      rounded
-      bg-[#111]
-      hover:bg-zinc-900
-      transition
-      border
-      border-zinc-800
-      `;
+    btn.className = `
+      w-full text-center px-2 pt-2.5 pb-2 text-sm md:text-lg
+      leading-[0.75rem] md:leading-[1rem]
+      rounded bg-[#111] hover:bg-zinc-900
+      transition border border-zinc-800
+    `;
 
     btn.innerHTML = `
-      <div class="font-medium">
-        ${issue.title}
-      </div>
-
+      <div class="font-medium">${issue.title}</div>
       <div class="text-xs text-zinc-500 mt-1">
         x ${issue.pages.length}
       </div>
     `;
 
-    btn.addEventListener('click', () => {
-      selectIssue(index);
-    });
-
+    btn.addEventListener('click', () => selectIssue(index));
     el.issueList.appendChild(btn);
   });
 }
 
+
 /* =========================================================
-   SELECT ISSUE
+   ISSUE SELECT
 ========================================================= */
-function updateIssueLabel() {
 
+function getIssue() {
+  return state.issues[state.currentIssue];
+}
+
+function clamp(index) {
   const issue = getIssue();
+  if (!issue) return 0;
+  return Math.max(0, Math.min(index, issue.pages.length - 1));
+}
 
+function updateIssueLabel() {
+  const issue = getIssue();
   if (!issue) return;
 
   el.issueLabel.innerHTML = `
@@ -186,173 +147,73 @@ function updateIssueLabel() {
 }
 
 function selectIssue(index) {
-
   state.currentIssue = index;
   state.currentPage = 0;
-
-  // force page mode
   state.mode = 'page';
 
-  // close thumbnail overlay if open
   closeThumbs();
-
-  // const issue =
-  //   state.issues[index];
-
-  // el.issueLabel.innerHTML =
-  //   `You are viewing: <br/> ${issue.title} — Page 1`;
-
   loadBlockIfNeeded(0);
-
   renderPage(0);
 }
+
 
 /* =========================================================
    BLOCK LOADING
 ========================================================= */
 
 async function loadBlockIfNeeded(pageIndex) {
+  const issue = getIssue();
+  if (!issue) return;
 
   const lazyLoadPages = config.lazyLoadPages;
+  const blockIndex = Math.floor(pageIndex / lazyLoadPages);
 
-  const issue =
-    state.issues[state.currentIssue];
+  const key = `${state.currentIssue}-${blockIndex}`;
 
-  const blockIndex =
-    Math.floor(pageIndex / lazyLoadPages);
-
-  if (
-    state.loadedBlocks.has(
-      `${state.currentIssue}-${blockIndex}`
-    )
-  ) {
-    return;
-  }
-
-  state.loadedBlocks.add(
-    `${state.currentIssue}-${blockIndex}`
-  );
+  if (state.loadedBlocks.has(key)) return;
+  state.loadedBlocks.add(key);
 
   el.loading.classList.remove('hidden');
 
-  const start =
-    blockIndex * lazyLoadPages;
+  const start = blockIndex * lazyLoadPages;
+  const end = start + lazyLoadPages;
 
-  const end =
-    start + lazyLoadPages;
-
-  const pages =
-    issue.pages.slice(start, end);
-
-  await Promise.all(
-    pages.map(loadImage)
-  );
+  const pages = issue.pages.slice(start, end);
+  await Promise.all(pages.map(loadImage));
 
   el.loading.classList.add('hidden');
 }
+
 
 /* =========================================================
    IMAGE LOADER
 ========================================================= */
 
-function getImageUrl(item) {
-  return item?.filename || item?.image_url || item?.url || null;
-}
-
-
-/* =========================================================
-   DRAW IMAGE
-========================================================= */
-
-function drawCoverImage(ctx, img) {
-
-  ctx.clearRect(0, 0, 1920, 1080);
-
-  const scale =
-    Math.max(
-      1920 / img.width,
-      1080 / img.height
-    );
-
-  const w =
-    img.width * scale;
-
-  const h =
-    img.height * scale;
-
-  const x =
-    (1920 - w) / 2;
-
-  const y =
-    (1080 - h) / 2;
-
-  ctx.drawImage(img, x, y, w, h);
-
-  /* subtle overlay */
-
-  ctx.fillStyle =
-    'rgba(0,0,0,0.2)';
-
-  ctx.fillRect(0, 0, 1920, 1080);
-}
-
-const VIEW = {
-  PAGE: 'page',
-  THUMBS: 'thumbs'
-};
-
-
-/* =========================================================
-   HELPERS
-========================================================= */
-
-function getIssue() {
-  return state.issues[state.currentIssue];
-}
-
-function clamp(index) {
-  const issue = getIssue();
-  if (!issue) return 0;
-
-  return Math.max(0, Math.min(index, issue.pages.length - 1));
-}
-
-
-/* =========================================================
-   IMAGE LOADING
-========================================================= */
-
-async function loadImage(item) {
-
+function loadImage(item) {
   return new Promise((resolve) => {
+    const url = item?.url;
+    if (!url) return resolve();
 
-    if (state.imageCache.has(item.url)) {
-      resolve();
-      return;
-    }
+    if (state.imageCache.has(url)) return resolve();
 
     const img = new Image();
-    img.src = item.url;
+    img.src = url;
 
     img.onload = () => {
-      state.imageCache.set(item.url, img);
+      state.imageCache.set(url, img);
       resolve();
     };
 
-    img.onerror = () => {
-      console.error('Image failed:', item.url);
-      resolve();
-    };
+    img.onerror = () => resolve();
   });
 }
 
 
 /* =========================================================
-   CORE RENDER (ONLY PLACE CANVAS IS UPDATED)
+   RENDER PAGE
 ========================================================= */
 
 async function renderPage(index) {
-
   const issue = getIssue();
   if (!issue) return;
 
@@ -371,29 +232,25 @@ async function renderPage(index) {
   ctx.drawImage(img, 0, 0, 1920, 1080);
 
   state.currentPage = safeIndex;
-
   updateIssueLabel();
 }
 
 
 /* =========================================================
-   THUMB RENDER (NO CANVAS SIDE EFFECTS)
+   THUMBNAILS
 ========================================================= */
 
 function renderThumbnails() {
-
   const issue = getIssue();
   if (!issue) return;
 
   el.thumbnailGrid.innerHTML = '';
 
   issue.pages.forEach((item, index) => {
-
     const btn = document.createElement('button');
 
-    btn.className = `
-      relative bg-zinc-900 border border-zinc-800 rounded overflow-hidden aspect-[16/9]
-    `;
+    btn.className =
+      'relative bg-zinc-900 border border-zinc-800 rounded overflow-hidden aspect-[16/9]';
 
     btn.innerHTML = `
       <img src="${item.url}" class="w-full h-full object-cover" />
@@ -402,9 +259,7 @@ function renderThumbnails() {
       </div>
     `;
 
-    btn.addEventListener('click', () => {
-      navigate('GOTO', index);
-    });
+    btn.addEventListener('click', () => navigate('GOTO', index));
 
     el.thumbnailGrid.appendChild(btn);
   });
@@ -412,7 +267,7 @@ function renderThumbnails() {
 
 
 /* =========================================================
-   VIEW SWITCH
+   VIEW MODES
 ========================================================= */
 
 function openThumbs() {
@@ -428,97 +283,53 @@ function closeThumbs() {
 
 
 /* =========================================================
-   NAVIGATION CONTROLLER (ONLY ENTRY POINT)
+   NAVIGATION
 ========================================================= */
 
 async function navigate(action, value = 1) {
-
   const issue = getIssue();
   if (!issue) return;
 
   const max = issue.pages.length;
 
-  /* =======================
-     THUMB MODE RULES
-  ======================= */
-
   if (state.mode === 'thumbs') {
-
     switch (action) {
-
-      case 'NEXT': {
-        state.mode = 'page';
-        await renderPage(0);
+      case 'NEXT':
         closeThumbs();
-        return;
-      }
+        return renderPage(0);
 
-      case 'PREV': {
-        state.mode = 'page';
-        await renderPage(max - 1);
+      case 'PREV':
         closeThumbs();
-        return;
-      }
+        return renderPage(max - 1);
 
-      case 'GOTO': {
-        state.mode = 'page';
+      case 'GOTO':
         closeThumbs();
-        await renderPage(value);
-        return;
-      }
-
-      case 'OPEN_THUMBS': {
-        return; // already open
-      }
+        return renderPage(value);
     }
+    return;
   }
 
-  /* =======================
-     PAGE MODE RULES
-  ======================= */
-
   switch (action) {
-
     case 'NEXT': {
-
       const next = state.currentPage + value;
-
-      if (next >= max) {
-        openThumbs();
-        return;
-      }
-
-      await renderPage(next);
-      return;
+      if (next >= max) return openThumbs();
+      return renderPage(next);
     }
 
     case 'PREV': {
-
       const prev = state.currentPage - value;
-
-      if (prev < 0) {
-        openThumbs();
-        return;
-      }
-
-      await renderPage(prev);
-      return;
+      if (prev < 0) return openThumbs();
+      return renderPage(prev);
     }
 
-    case 'GOTO': {
-      await renderPage(value);
-      return;
-    }
+    case 'GOTO':
+      return renderPage(value);
 
-    case 'OPEN_THUMBS': {
-      openThumbs();
-      return;
-    }
+    case 'OPEN_THUMBS':
+      return openThumbs();
 
-    case 'CLOSE_THUMBS': {
-      closeThumbs();
-      return;
-    }
+    case 'CLOSE_THUMBS':
+      return closeThumbs();
   }
 }
 
@@ -531,105 +342,61 @@ el.nextBtn.addEventListener('click', () => navigate('NEXT'));
 el.prevBtn.addEventListener('click', () => navigate('PREV'));
 
 window.addEventListener('keydown', (e) => {
-
   if (e.key === 'ArrowRight') navigate('NEXT');
   if (e.key === 'ArrowLeft') navigate('PREV');
   if (e.key === 'Escape') navigate('OPEN_THUMBS');
 });
 
 
-
-
-
 /* ======================================================
-TICKER
+   TICKER
 ====================================================== */
 
-/* ======================================================
-LINK DATA
-====================================================== */
+import { tickerLinks } from './tickerlinks.js';
 
-import { tickerLinks }
-  from './tickerlinks.js';
-
-/* ======================================================
-ELEMENTS
-====================================================== */
-
-const ticker =
-  document.getElementById('ticker');
-
-/* ======================================================
-STATE
-====================================================== */
-
+const ticker = document.getElementById('ticker');
 let currentTickerIndex = 0;
 
+
 /* ======================================================
-RENDER
+   TICKER RENDER
 ====================================================== */
 
 function renderTicker() {
-
-  ticker.innerHTML =
-    tickerLinks.map((item, index) => {
-
-      return `
-        <div
-          class="
-            ticker-item
-            ${index === 0 ? 'active' : ''}
-          "
-        >
-
-          <a
-            href="${item.url}"
-            target="_blank"
-            rel="noopener noreferrer"
-            class="ticker-link"
-          >
-            ${item.title}
-          </a>
-
-        </div>
-      `;
-    }).join('');
+  ticker.innerHTML = tickerLinks
+    .map((item, i) => `
+      <div class="ticker-item ${i === 0 ? 'active' : ''}">
+        <a href="${item.url}" target="_blank" rel="noopener noreferrer">
+          ${item.title}
+        </a>
+      </div>
+    `)
+    .join('');
 }
 
+
 /* ======================================================
-ROTATE
+   TICKER ROTATION
 ====================================================== */
 
 function rotateTicker() {
+  const items = ticker.querySelectorAll('.ticker-item');
+  if (!items.length) return;
 
-  const items =
-    ticker.querySelectorAll('.ticker-item');
-
-  items[currentTickerIndex]
-    .classList.remove('active');
+  items[currentTickerIndex].classList.remove('active');
 
   currentTickerIndex =
-    (currentTickerIndex + 1)
-    % items.length;
+    (currentTickerIndex + 1) % items.length;
 
-  items[currentTickerIndex]
-    .classList.add('active');
+  items[currentTickerIndex].classList.add('active');
 }
 
 
 /* =========================================================
-   START
+   INIT
 ========================================================= */
 
 renderTicker();
 fetchImages();
 
-
-
-setInterval(
-  rotateTicker,
-  10000
-);
-
-
-
+setInterval(rotateTicker, 10000);
