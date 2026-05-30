@@ -28,11 +28,8 @@ const el = {
   nextBtn:
     document.getElementById('nextBtn'),
 
-  canvasA:
-    document.getElementById('canvasA'),
-
-  canvasB:
-    document.getElementById('canvasB'),
+  canvas:
+    document.getElementById('canvas'),
 
   loading:
     document.getElementById('loading'),
@@ -44,15 +41,6 @@ const el = {
     document.getElementById('thumbnailGrid')
 };
 
-/* =========================================================
-   CANVAS
-========================================================= */
-
-const ctxA =
-  el.canvasA.getContext('2d');
-
-const ctxB =
-  el.canvasB.getContext('2d');
 
 /* =========================================================
    STATE
@@ -377,7 +365,7 @@ async function renderPage(index) {
   const img = state.imageCache.get(item.url);
   if (!img) return;
 
-  const ctx = el.canvasA.getContext('2d');
+  const ctx = el.canvas.getContext('2d');
 
   ctx.clearRect(0, 0, 1920, 1080);
   ctx.drawImage(img, 0, 0, 1920, 1080);
