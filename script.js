@@ -223,11 +223,11 @@ async function renderPage(index) {
 
   const canvas = el.canvas;
 
-  // fade out
-  canvas.classList.add('is-fading');
+  // page wipe animation
+  canvas.classList.add('is-wiping');
 
-  // wait for fade-out
-  await new Promise(r => setTimeout(r, 120));
+  // wait for wipe animation
+  await new Promise(r => setTimeout(r, 250));
 
   await loadImage(item);
 
@@ -244,7 +244,7 @@ async function renderPage(index) {
 
   // fade in
   requestAnimationFrame(() => {
-    canvas.classList.remove('is-fading');
+    canvas.classList.remove('is-wiping');
   });
 }
 

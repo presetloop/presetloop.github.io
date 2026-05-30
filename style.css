@@ -5,13 +5,20 @@
     font-family: sans-serif;
   }
 
+
+
+/* control speed with js */
+/* await new Promise(r => setTimeout(r, 250)); */
 canvas {
-  transition: opacity 180ms ease;
+  transition: clip-path 220ms ease;
+  clip-path: inset(0 0 0 0);
 }
 
-canvas.is-fading {
-  opacity: 0;
+canvas.is-wiping {
+  clip-path: inset(0 100% 0 0);
 }
+
+
 
   .thumb-scroll {
     scrollbar-width: thin;
