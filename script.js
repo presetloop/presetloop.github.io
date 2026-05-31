@@ -7,9 +7,8 @@ const API_ENDPOINT =
   'https://presetloop.olk1.com/fetch_images.php';
 
 const config = {
-  issueTotalPages: 5,
   lazyLoadPages: 6
-}
+};
 
 /* =========================================================
    ELEMENTS
@@ -51,43 +50,21 @@ const state = {
 ========================================================= */
 
 async function fetchImages() {
-  const res = await fetch(API_ENDPOINT);
-  const data = await res.json();
-  buildIssues(data);
-}
 
+  const res = await fetch(
+    'https://presetloop.olk1.com/fetch_issues.php'
+  );
 
-/* =========================================================
-   BUILD ISSUES
-========================================================= */
-
-function buildIssues(images) {
-  const chunkSize = config.issueTotalPages;
-
-  state.issues = [];
-
-  if (!Array.isArray(images) || images.length === 0) {
-    renderIssueList();
-    return;
-  }
-
-  for (let i = 0; i < images.length; i += chunkSize) {
-    const chunk = images.slice(i, i + chunkSize);
-
-    state.issues.push({
-      id: state.issues.length,
-      title: `${state.issues.length + 1}`,
-      pages: chunk
-    });
-  }
-
-  state.currentIssue = 0;
-  state.currentPage = 0;
-  state.mode = 'page';
+  state.issues = await res.json();
 
   renderIssueList();
-  selectIssue(0);
+
+  if (state.issues.length) {
+    selectIssue(0);
+  }
 }
+
+
 
 
 /* =========================================================
