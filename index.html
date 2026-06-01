@@ -71,7 +71,7 @@
 
 
 <!-- nav info / ticker / arrows -->
-<div id="ticker-bar" class="border-t border-[#ffd5d1] lg:mr-1 h-11 flex items-center justify-between p-0 shrink-0 z-50">
+<div id="ticker-bar" class="hidden border-t border-[#ffd5d1] lg:mr-1 h-11 md:flex items-center justify-between p-0 shrink-0 z-50">
   
   
   <!-- LEFT -->
@@ -141,7 +141,7 @@ TICKER
     <!-- ================================================== -->
 
     <aside
-      class="w-[55px] px-1 overflow-y-auto shrink-0"
+      class="hidden md:block w-[55px] px-1 overflow-y-auto shrink-0"
     >
 
       <div
@@ -160,17 +160,17 @@ TICKER
       <!-- CANVAS STACK -->
 <div class="absolute inset-0">
 
-  <div class="-ml-1 2xl:ml-0 w-full max-w-[1920px] aspect-[16/9] relative">
-
-    <canvas
-      id="canvas"
-      class="w-full h-full"
-      width="1920"
-      height="1080"
-    ></canvas>
-
-
-  </div>
+<div
+  id="pagesContainer"
+  class="-ml-1 2xl:ml-0 w-full max-w-[1920px] aspect-[16/9] relative"
+>
+  <canvas
+    id="canvas"
+    class="w-full h-auto"
+    width="1920"
+    height="1080"
+  ></canvas>
+</div>
 
 </div>
       <!-- THUMBNAILS -->
@@ -200,7 +200,12 @@ TICKER
 
 </div>
 
-<script type="module" src="script.js"></script>
 
+<script>
+
+</script>
+
+
+<script type="module" src="script.js"></script>
 </body>
 </html>

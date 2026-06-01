@@ -2,13 +2,15 @@
    CONFIG
 ========================================================= */
 
-// Replace with your endpoint.
-const API_ENDPOINT =
-  'https://presetloop.olk1.com/fetch_images.php';
+
+const API_ENDPOINT = 'https://presetloop.olk1.com/fetch_issues.php';
 
 const config = {
   lazyLoadPages: 6
 };
+
+
+
 
 /* =========================================================
    ELEMENTS
@@ -25,7 +27,9 @@ const el = {
   loading: document.getElementById('loading'),
 
   thumbnailOverlay: document.getElementById('thumbnailOverlay'),
-  thumbnailGrid: document.getElementById('thumbnailGrid')
+  thumbnailGrid: document.getElementById('thumbnailGrid'),
+
+  pagesContainer: document.getElementById('pagesContainer')
 };
 
 
@@ -36,7 +40,9 @@ const el = {
 const state = {
   issues: [],
   currentIssue: 0,
-  currentPage: 0,
+
+  // CHANGED: page -> view (virtual index)
+  currentView: 0,
 
   imageCache: new Map(),
   loadedBlocks: new Set(),
@@ -46,14 +52,48 @@ const state = {
 
 
 /* =========================================================
+   RESPONSIVE SPLIT MODE
+========================================================= */
+
+function isSplitMode() {
+  return window.innerWidth < 640 && window.innerHeight > window.innerWidth;
+}
+
+function getIssue() {
+  return state.issues[state.currentIssue];
+}
+
+function getTotalViews() {
+  const issue = getIssue();
+  if (!issue) return 0;
+  return isSplitMode()
+    ? issue.pages.length * 2
+    : issue.pages.length;
+}
+
+function getImageIndex(viewIndex) {
+  return isSplitMode()
+    ? Math.floor(viewIndex / 2)
+    : viewIndex;
+}
+
+function getViewSide(viewIndex) {
+  if (!isSplitMode()) return 'full';
+  return viewIndex % 2 === 0 ? 'left' : 'right';
+}
+
+function clampView(index) {
+  const max = getTotalViews();
+  return Math.max(0, Math.min(index, max - 1));
+}
+
+
+/* =========================================================
    FETCH IMAGES
 ========================================================= */
 
 async function fetchImages() {
-
-  const res = await fetch(
-    'https://presetloop.olk1.com/fetch_issues.php'
-  );
+  const res = await fetch(API_ENDPOINT);
 
   state.issues = await res.json();
 
@@ -63,8 +103,6 @@ async function fetchImages() {
     selectIssue(0);
   }
 }
-
-
 
 
 /* =========================================================
@@ -77,7 +115,8 @@ function renderIssueList() {
   state.issues.forEach((issue, index) => {
     const btn = document.createElement('button');
 
-    btn.className = `w-full text-center mt-2 p-2 pb-1.5 text-sm md:text-lg leading-[0.75rem] md:leading-[1.3rem] rounded bg-[#000] transition border border-zinc-800 hover:bg-white hover:text-black`;
+    btn.className =
+      `w-full text-center mt-2 p-2 pb-1.5 text-sm md:text-lg leading-[0.75rem] md:leading-[1.3rem] rounded bg-[#000] transition border border-zinc-800 hover:bg-white hover:text-black`;
 
     btn.innerHTML = `
       <div class="tracking-widest">&#35;${issue.title}</div>
@@ -96,34 +135,15 @@ function renderIssueList() {
    ISSUE SELECT
 ========================================================= */
 
-function getIssue() {
-  return state.issues[state.currentIssue];
-}
-
-function clamp(index) {
-  const issue = getIssue();
-  if (!issue) return 0;
-  return Math.max(0, Math.min(index, issue.pages.length - 1));
-}
-
-function updateIssueLabel() {
-  const issue = getIssue();
-  if (!issue) return;
-
-  el.issueLabel.innerHTML = `
-      <p>You are viewing</p>
-      <p>Issue: ${issue.title} Page: ${state.currentPage + 1}</p>
-  `;
-}
-
 function selectIssue(index) {
   state.currentIssue = index;
-  state.currentPage = 0;
+  state.currentView = 0;
   state.mode = 'page';
 
   closeThumbs();
+
   loadBlockIfNeeded(0);
-  renderPage(0);
+  renderView(0);
 }
 
 
@@ -180,23 +200,33 @@ function loadImage(item) {
 
 
 /* =========================================================
-   RENDER PAGE
+   RENDER VIEW (UPDATED CORE LOGIC ONLY)
 ========================================================= */
 
-async function renderPage(index) {
+async function renderView(viewIndex) {
   const issue = getIssue();
   if (!issue) return;
 
-  const safeIndex = clamp(index);
-  const item = issue.pages[safeIndex];
+  const safeView = clampView(viewIndex);
+
+  const imageIndex = getImageIndex(safeView);
+  const side = getViewSide(safeView);
+
+  const item = issue.pages[imageIndex];
   if (!item) return;
 
   const canvas = el.canvas;
 
-  // page wipe animation
+  if (isSplitMode()) {
+    canvas.width = 1080;
+    canvas.height = 1920;
+  } else {
+    canvas.width = 1920;
+    canvas.height = 1080;
+  }
+
   canvas.classList.add('is-wiping');
 
-  // wait for wipe animation
   await new Promise(r => setTimeout(r, 250));
 
   await loadImage(item);
@@ -206,16 +236,98 @@ async function renderPage(index) {
 
   const ctx = canvas.getContext('2d');
 
-  ctx.clearRect(0, 0, 1920, 1080);
-  ctx.drawImage(img, 0, 0, 1920, 1080);
+  ctx.clearRect(
+    0,
+    0,
+    canvas.width,
+    canvas.height
+  );
 
-  state.currentPage = safeIndex;
+  if (side === 'full') {
+
+    ctx.drawImage(
+      img,
+      0,
+      0,
+      img.width,
+      img.height,
+      0,
+      0,
+      canvas.width,
+      canvas.height
+    );
+
+  } else {
+
+    const cropWidth =
+      img.width / 2;
+
+    const cropHeight =
+      img.height;
+
+    const sx =
+      side === 'left'
+        ? 0
+        : cropWidth;
+
+    // Preserve aspect ratio
+    const scale = Math.min(
+      canvas.width / cropWidth,
+      canvas.height / cropHeight
+    );
+
+    const drawWidth =
+      cropWidth * scale;
+
+    const drawHeight =
+      cropHeight * scale;
+
+    const dx =
+      (canvas.width - drawWidth) / 2;
+
+    const dy = 0;
+
+    ctx.drawImage(
+      img,
+      sx,
+      0,
+      cropWidth,
+      cropHeight,
+      dx,
+      dy,
+      drawWidth,
+      drawHeight
+    );
+  }
+
+  state.currentView = safeView;
+
   updateIssueLabel();
 
-  // fade in
   requestAnimationFrame(() => {
     canvas.classList.remove('is-wiping');
   });
+}
+
+/* =========================================================
+   ISSUE LABEL
+========================================================= */
+
+function updateIssueLabel() {
+  const issue = getIssue();
+  if (!issue) return;
+
+  const imageIndex = getImageIndex(state.currentView);
+  const side = getViewSide(state.currentView);
+
+  const suffix =
+    side === 'left' ? ' (L)' :
+    side === 'right' ? ' (R)' : '';
+
+  el.issueLabel.innerHTML = `
+      <p>You are viewing</p>
+      <p>Issue: ${issue.title} Page: ${imageIndex + 1}${suffix}</p>
+  `;
 }
 
 
@@ -242,7 +354,9 @@ function renderThumbnails() {
       </div>
     `;
 
-    btn.addEventListener('click', () => navigate('GOTO', index));
+    btn.addEventListener('click', () => {
+      navigate('GOTO', isSplitMode() ? index * 2 : index);
+    });
 
     el.thumbnailGrid.appendChild(btn);
   });
@@ -266,47 +380,47 @@ function closeThumbs() {
 
 
 /* =========================================================
-   NAVIGATION
+   NAVIGATION (UPDATED FOR VIEWS)
 ========================================================= */
 
 async function navigate(action, value = 1) {
   const issue = getIssue();
   if (!issue) return;
 
-  const max = issue.pages.length;
+  const max = getTotalViews();
 
   if (state.mode === 'thumbs') {
     switch (action) {
       case 'NEXT':
         closeThumbs();
-        return renderPage(0);
+        return renderView(0);
 
       case 'PREV':
         closeThumbs();
-        return renderPage(max - 1);
+        return renderView(max - 1);
 
       case 'GOTO':
         closeThumbs();
-        return renderPage(value);
+        return renderView(value);
     }
     return;
   }
 
   switch (action) {
     case 'NEXT': {
-      const next = state.currentPage + value;
+      const next = state.currentView + value;
       if (next >= max) return openThumbs();
-      return renderPage(next);
+      return renderView(next);
     }
 
     case 'PREV': {
-      const prev = state.currentPage - value;
+      const prev = state.currentView - value;
       if (prev < 0) return openThumbs();
-      return renderPage(prev);
+      return renderView(prev);
     }
 
     case 'GOTO':
-      return renderPage(value);
+      return renderView(value);
 
     case 'OPEN_THUMBS':
       return openThumbs();
@@ -331,6 +445,44 @@ window.addEventListener('keydown', (e) => {
 });
 
 
+
+
+
+/* =========================================================
+   SWIPE NAVIGATION 
+========================================================= */
+
+function attachSwipeNavigation(target = el.pagesContainer || document) {
+  let startX = 0;
+  let startY = 0;
+
+  const MIN_DISTANCE = 50;
+  const MAX_VERTICAL_DRIFT = 75;
+
+  target.addEventListener('touchstart', (e) => {
+    const touch = e.changedTouches[0];
+    startX = touch.clientX;
+    startY = touch.clientY;
+  }, { passive: true });
+
+  target.addEventListener('touchend', (e) => {
+    const touch = e.changedTouches[0];
+
+    const dx = touch.clientX - startX;
+    const dy = touch.clientY - startY;
+
+    if (Math.abs(dy) > MAX_VERTICAL_DRIFT) return;
+    if (Math.abs(dx) < MIN_DISTANCE) return;
+
+    if (dx < 0) navigate('NEXT');
+    else navigate('PREV');
+
+  }, { passive: true });
+}
+
+attachSwipeNavigation();
+
+
 /* ======================================================
    TICKER
 ====================================================== */
@@ -339,11 +491,6 @@ import { tickerLinks } from './tickerlinks.js';
 
 const ticker = document.getElementById('ticker');
 let currentTickerIndex = 0;
-
-
-/* ======================================================
-   TICKER RENDER
-====================================================== */
 
 function renderTicker() {
   ticker.innerHTML = tickerLinks
@@ -356,11 +503,6 @@ function renderTicker() {
     `)
     .join('');
 }
-
-
-/* ======================================================
-   TICKER ROTATION
-====================================================== */
 
 function rotateTicker() {
   const items = ticker.querySelectorAll('.ticker-item');
@@ -375,11 +517,33 @@ function rotateTicker() {
 }
 
 
+
+
+
+function applyCanvasAspect() {
+  const wrapper = document.getElementById('pagesContainer');
+
+  if (!wrapper) return;
+
+  wrapper.style.aspectRatio =
+  isSplitMode()
+    ? '9 / 16'
+    : '16 / 9';
+}
+
+
 /* =========================================================
    INIT
 ========================================================= */
 
 renderTicker();
 fetchImages();
+applyCanvasAspect();
 
 setInterval(rotateTicker, 10000);
+
+window.addEventListener('resize', applyCanvasAspect);
+window.addEventListener('orientationchange', applyCanvasAspect);
+
+
+// canvas.style.aspectRatio = isSplitMode() ? "9 / 16" : "16 / 9";
