@@ -34,7 +34,7 @@
     href="https://presetloop.olk1.com/gif.html"
     target="_blank"
     rel="noopener noreferrer"
-    class="absolute top-[95px] left-0 z-50 text-transparent px-6 py-2.5 cursor-crosshair"
+    class="absolute top-[43px] left-0 z-50 text-transparent px-6 py-2.5 cursor-crosshair"
   >
     .
   </a>
@@ -43,10 +43,10 @@
 
 
   <div
-    class="w-full flex flex-col md:flex-row items-center pointer-events-none text-black"
+    class="w-full flex flex-col md:flex-row items-center md:ml-16 pointer-events-none text-black"
   >
 
-    <h1 class="font-mono font-bold text-4xl leading-[30px] sm:-ml-3.5 flex items-center">
+    <h1 class="font-mono font-bold text-4xl leading-[30px] mt-0.5 sm:-ml-3.5 flex items-center">
       <span class="inline-block">PRESET</span> 
       <span class="inline-block ml-0.5">
         L<span><img src="pl-logo-trans.png" alt="Preset Loop" class="h-[30px] w-auto"></span>P
@@ -71,17 +71,17 @@
 
 
 <!-- nav info / ticker / arrows -->
-<div id="ticker-bar" class="hidden border-t border-[#ffd5d1] lg:mr-1 h-11 md:flex items-center justify-between p-0 shrink-0 z-50">
+<div id="ticker-bar" class="border-t border-[#ffd5d1] lg:mr-1 h-11 flex items-center justify-between p-0 shrink-0 z-50">
   
   
   <!-- LEFT -->
   <div class="flex gap-0 z-10">
   
-  <div class="rabbit"></div>   
+  <div class="rabbit -mt-10 md:-mt-[73px]"></div>   
   
     <div
       id="issueLabel"
-      class="w-36 hidden md:flex flex-col leading-[16px] tracking-tight sm:ml-[6px] sm:text-sm mt-2 text-gray-300"
+      class="w-36 hidden md:flex flex-col leading-[16px] tracking-tight -ml-[10px] sm:text-sm my-2 text-gray-300"
     >
       Select Issue
     </div>
@@ -97,7 +97,7 @@
 TICKER
 ====================================================== -->
 
-<div id="ticker" class="relative overflow-hidden h-36 w-full ml-6 sm:-ml-12"></div>
+<div id="ticker" class="relative overflow-hidden h-36 w-full -ml-8 sm:-ml-20"></div>
 
 <!--  -->
 <!--  -->
@@ -140,16 +140,13 @@ TICKER
     <!-- SIDEBAR -->
     <!-- ================================================== -->
 
-    <aside
-      class="hidden md:block w-[55px] px-1 overflow-y-auto shrink-0"
-    >
+<!-- js - switches based on viewport -->
+<aside
+  id="issueListDesktop"
+  class="hidden md:flex flex-col mt-0 mr-1 overflow-y-auto shrink-0"
+></aside>
 
-      <div
-        id="issueList"
-        class="space-y-2"
-      ></div>
 
-    </aside>
 
     <!-- ================================================== -->
     <!-- VIEWER -->
@@ -158,21 +155,30 @@ TICKER
     <main class="relative flex-1 overflow-hidden">
 
       <!-- CANVAS STACK -->
-<div class="absolute inset-0">
+<div class="flex flex-col">
 
 <div
   id="pagesContainer"
   class="-ml-1 2xl:ml-0 w-full max-w-[1920px] aspect-[16/9] relative"
 >
+<!-- js - switches based on viewport -->
+<div
+  id="issueListMobile"
+  class="flex -mt-0 md:hidden"
+></div>
+  
   <canvas
     id="canvas"
     class="w-full h-auto"
     width="1920"
     height="1080"
   ></canvas>
+
 </div>
 
 </div>
+
+
       <!-- THUMBNAILS -->
       <div
         id="thumbnailOverlay"
@@ -201,11 +207,9 @@ TICKER
 </div>
 
 
-<script>
-
-</script>
-
-
 <script type="module" src="script.js"></script>
+
+
+
 </body>
 </html>

@@ -17,7 +17,7 @@ const config = {
 ========================================================= */
 
 const el = {
-  issueList: document.getElementById('issueList'),
+  // issueList: document.getElementById('issueList'),
   issueLabel: document.getElementById('issueLabel'),
   prevBtn: document.getElementById('prevBtn'),
   nextBtn: document.getElementById('nextBtn'),
@@ -33,6 +33,16 @@ const el = {
 };
 
 
+const ISSUE_LIST_TARGETS = {
+  mobile: () => document.getElementById('issueListMobile'),
+  desktop: () => document.getElementById('issueListDesktop')
+};
+
+function getIssueListEl() {
+  return window.innerWidth < 768
+    ? ISSUE_LIST_TARGETS.mobile()
+    : ISSUE_LIST_TARGETS.desktop();
+}
 /* =========================================================
    STATE
 ========================================================= */
@@ -110,13 +120,16 @@ async function fetchImages() {
 ========================================================= */
 
 function renderIssueList() {
-  el.issueList.innerHTML = '';
+ const list = getIssueListEl();
+if (!list) return;
+
+list.innerHTML = '';
 
   state.issues.forEach((issue, index) => {
     const btn = document.createElement('button');
 
-    btn.className =
-      `w-full text-center mt-2 p-2 pb-1.5 text-sm md:text-lg leading-[0.75rem] md:leading-[1.3rem] rounded bg-[#000] transition border border-zinc-800 hover:bg-white hover:text-black`;
+     btn.className =
+      `text-center mt-0 p-2 pb-1.5 text-sm md:text-md leading-[0.75rem] md:leading-[1rem] rounded bg-[#000] transition border border-zinc-800 hover:bg-white hover:text-black`;
 
     btn.innerHTML = `
       <div class="tracking-widest">&#35;${issue.title}</div>
@@ -126,7 +139,8 @@ function renderIssueList() {
     `;
 
     btn.addEventListener('click', () => selectIssue(index));
-    el.issueList.appendChild(btn);
+
+    list.appendChild(btn);
   });
 }
 
@@ -532,6 +546,14 @@ function applyCanvasAspect() {
 }
 
 
+
+function debounce(fn, delay = 150) {
+  let t;
+  return (...args) => {
+    clearTimeout(t);
+    t = setTimeout(() => fn(...args), delay);
+  };
+}
 /* =========================================================
    INIT
 ========================================================= */
@@ -542,7 +564,11 @@ applyCanvasAspect();
 
 setInterval(rotateTicker, 10000);
 
-window.addEventListener('resize', applyCanvasAspect);
+window.addEventListener('resize', debounce(() => {
+  applyCanvasAspect();
+  renderIssueList();
+}));
+
 window.addEventListener('orientationchange', applyCanvasAspect);
 
 
