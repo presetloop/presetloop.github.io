@@ -119,23 +119,35 @@ async function fetchImages() {
    ISSUE LIST
 ========================================================= */
 
-function renderIssueList() {
- const list = getIssueListEl();
-if (!list) return;
 
-list.innerHTML = '';
+function renderIssueList() {
+  const BASE_CLASS = `text-center mt-0 mb-0.5 pl-3 md:pl-2 pr-2 pt-2 pb-1 text-sm md:text-md leading-[0.75rem] md:leading-[0.90rem] bg-[#000] transition hover:bg-white hover:text-black leading-[12px] tracking-tight`;
+  
+  const list = getIssueListEl();
+  if (!list) return;
+
+  list.innerHTML = '';
 
   state.issues.forEach((issue, index) => {
     const btn = document.createElement('button');
 
-     btn.className =
-      `text-center mt-0 p-2 pb-1.5 text-sm md:text-md leading-[0.75rem] md:leading-[1rem] rounded bg-[#000] transition border border-zinc-800 hover:bg-white hover:text-black`;
+    const isActive = index === state.currentIssue;
+
+    btn.className = BASE_CLASS;
+
+    btn.className = BASE_CLASS;
+
+    if (isActive) {
+      btn.classList.add(
+        'bg-gray-50',
+        'text-black'
+      );
+    }
+
 
     btn.innerHTML = `
-      <div class="tracking-widest">&#35;${issue.title}</div>
-      <div class="text-xs">
-        x ${issue.pages.length}
-      </div>
+      <div class="tracking-widest">#${issue.title}</div>
+      <div class="text-xs">x ${issue.pages.length}</div>
     `;
 
     btn.addEventListener('click', () => selectIssue(index));
@@ -143,7 +155,6 @@ list.innerHTML = '';
     list.appendChild(btn);
   });
 }
-
 
 /* =========================================================
    ISSUE SELECT
@@ -158,6 +169,8 @@ function selectIssue(index) {
 
   loadBlockIfNeeded(0);
   renderView(0);
+
+  renderIssueList();
 }
 
 
