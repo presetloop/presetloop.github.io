@@ -57,6 +57,9 @@ const state = {
   imageCache: new Map(),
   loadedBlocks: new Set(),
 
+  // for canvas border draw and position shift
+  hasRendered: false, 
+
   mode: 'page' // page | thumbs
 };
 
@@ -227,7 +230,7 @@ function loadImage(item) {
 
 
 /* =========================================================
-   RENDER VIEW (UPDATED CORE LOGIC ONLY)
+   RENDER VIEW
 ========================================================= */
 
 async function renderView(viewIndex) {
@@ -244,6 +247,9 @@ async function renderView(viewIndex) {
 
   const canvas = el.canvas;
 
+  // -----------------------------
+  // Set canvas resolution first
+  // -----------------------------
   if (isSplitMode()) {
     canvas.width = 1080;
     canvas.height = 1920;
@@ -252,81 +258,77 @@ async function renderView(viewIndex) {
     canvas.height = 1080;
   }
 
-  canvas.classList.add('is-wiping');
+  const ctx = canvas.getContext('2d');
 
-  await new Promise(r => setTimeout(r, 250));
-
+  // -----------------------------
+  // Ensure image is ready FIRST
+  // -----------------------------
   await loadImage(item);
 
   const img = state.imageCache.get(item.url);
   if (!img) return;
 
-  const ctx = canvas.getContext('2d');
+  // -----------------------------
+  // Start transition only when ready
+  // -----------------------------
+  canvas.classList.add('is-wiping');
+  await new Promise(r => setTimeout(r, 120));
 
-  ctx.clearRect(
-    0,
-    0,
-    canvas.width,
-    canvas.height
-  );
+  // -----------------------------
+  // Clear ONLY right before draw
+  // -----------------------------
+  ctx.clearRect(0, 0, canvas.width, canvas.height);
 
+  // -----------------------------
+  // Render
+  // -----------------------------
   if (side === 'full') {
 
     ctx.drawImage(
       img,
-      0,
-      0,
-      img.width,
-      img.height,
-      0,
-      0,
-      canvas.width,
-      canvas.height
+      0, 0, img.width, img.height,
+      0, 0, canvas.width, canvas.height
     );
 
+    // avoids canvas border draw and position shift
+    if (!state.hasRendered) {
+      state.hasRendered = true;
+      el.pagesContainer.classList.remove('opacity-0');
+    }
   } else {
 
-    const cropWidth =
-      img.width / 2;
+    const cropWidth = img.width / 2;
+    const cropHeight = img.height;
 
-    const cropHeight =
-      img.height;
+    const sx = side === 'left' ? 0 : cropWidth;
 
-    const sx =
-      side === 'left'
-        ? 0
-        : cropWidth;
-
-    // Preserve aspect ratio
     const scale = Math.min(
       canvas.width / cropWidth,
       canvas.height / cropHeight
     );
 
-    const drawWidth =
-      cropWidth * scale;
+    const drawWidth = cropWidth * scale;
+    const drawHeight = cropHeight * scale;
 
-    const drawHeight =
-      cropHeight * scale;
-
-    const dx =
-      (canvas.width - drawWidth) / 2;
-
+    const dx = (canvas.width - drawWidth) / 2;
     const dy = 0;
 
     ctx.drawImage(
       img,
-      sx,
-      0,
-      cropWidth,
-      cropHeight,
-      dx,
-      dy,
-      drawWidth,
-      drawHeight
+      sx, 0, cropWidth, cropHeight,
+      dx, dy, drawWidth, drawHeight
     );
+
+    // avoids canvas border draw and position shift
+    if (!state.hasRendered) {
+      state.hasRendered = true;
+      el.pagesContainer.classList.remove('opacity-0');
+    }
   }
 
+  // -----------------------------
+  // Commit state + UI
+  // -----------------------------
   state.currentView = safeView;
 
   updateIssueLabel();
@@ -335,7 +337,6 @@ async function renderView(viewIndex) {
     canvas.classList.remove('is-wiping');
   });
 }
-
 /* =========================================================
    ISSUE LABEL
 ========================================================= */
