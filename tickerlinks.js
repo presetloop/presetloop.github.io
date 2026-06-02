@@ -9,5 +9,10 @@ export const tickerLinks = [
     title: 'We are currently listening to...',
     url: 'https://youtu.be/oquchOrRtzQ?si=9c9Le_-OcxqmY7h1'
   },
+  
+  {
+    title: 'Check out our apps for creatives',
+    url: 'https://apps.olk1.com/'
+  },
 
 ];
