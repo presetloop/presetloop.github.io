@@ -524,9 +524,7 @@ function renderTicker() {
   ticker.innerHTML = tickerLinks
     .map((item, i) => `
       <div class="ticker-item ${i === 0 ? 'active' : ''}">
-        <a href="${item.url}" target="_blank" rel="noopener noreferrer">
-          ${item.title}
-        </a>
+        <a href="${item.url}" class="md:pt-1 text-blue-500" target="_blank" rel="noopener noreferrer">** ${item.title} **</a>
       </div>
     `)
     .join('');

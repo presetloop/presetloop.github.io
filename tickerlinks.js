@@ -1,12 +1,12 @@
 export const tickerLinks = [
 
   {
-    title: 'New Music Click Here',
+    title: 'New Music Catalogue Discovery',
     url: 'https://www.youtube.com/@electrocomposer'
   },
 
   {
-    title: 'Brand New Electro Playlist',
+    title: 'We are currently listening to...',
     url: 'https://youtu.be/oquchOrRtzQ?si=9c9Le_-OcxqmY7h1'
   },
 
