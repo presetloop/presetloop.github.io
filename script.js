@@ -163,20 +163,44 @@ function renderIssueList() {
    ISSUE SELECT
 ========================================================= */
 
-function selectIssue(index) {
-  state.currentIssue = index;
-  state.currentView = 0;
-  state.mode = 'page';
+// 
+// 
+// choose from:
 
-  closeThumbs();
+  // load as page 1 image 1
+  // same when issue button clicked
 
-  loadBlockIfNeeded(0);
-  renderView(0);
+  // function selectIssue(index) {
+  //   state.currentIssue = index;
+  //   state.currentView = 0;
+  //   state.mode = 'page';
 
-  renderIssueList();
-}
+  //   closeThumbs();
 
+  //   loadBlockIfNeeded(0);
+  //   renderView(0);
 
+  //   renderIssueList();
+  // }
+
+// OR
+
+  // load as thumbnails for issue
+  // same when issue button is clicked 
+  function selectIssue(index) {
+    state.currentIssue = index;
+    // state.currentView = 0;
+
+    renderIssueList();
+
+    loadBlockIfNeeded(0);
+
+    openThumbs();
+  }
+
+// 
+// 
+// 
 /* =========================================================
    BLOCK LOADING
 ========================================================= */
