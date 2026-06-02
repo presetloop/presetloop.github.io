@@ -39,27 +39,23 @@
   <!-- \hidden link -->
 
 
-  <div
-    class="w-full flex flex-col md:flex-row items-center md:ml-16 pointer-events-none text-black"
-  >
+<div
+    class="w-full flex flex-col items-center pointer-events-none text-black md:mt-[88px]">
 
-    <h1 class="font-mono font-bold text-4xl leading-[30px] mt-0.5 sm:-ml-3.5 flex items-center">
+    <h1 class="font-mono font-bold text-4xl leading-[30px] mt-0.5 -ml-7 sm:-ml-3.5 flex items-center">
       <span class="inline-block">PRESET</span> 
-      <span class="inline-block ml-0.5">
-        L<span><img src="pl-logo-trans.png" alt="Preset Loop" class="h-[30px] w-auto"></span>P
-      </span>
+      <span class="inline-block ml-0.5 mt-0.5 sm:-mt-0.5">
+        L<img src="pl-logo-trans.png" alt="Preset Loop" class="h-[30px] w-auto"><span class="relative z-50 block">P</span></span>
     </h1>
 
     <p class="text-[10px] md:text-sm p-0 mt-0.5 tracking-[10px] sm:tracking-[15px] bg-white italic">
-      <span class="bg-white inline-block text-black -rotate-3 -ml-0.5 xs:ml-3 md:ml-3 relative z-50">
+      <span class="bg-white block text-black -rotate-1 -ml-0.5 sm:-ml-3 md:sm:-ml-5 -mt-3 relative z-40">
         TypoGraphic Design
       </span>
     </p>
-
-    <div class="bg-red-50 hidden md:block ml-auto text-sm w-16 text-zinc-500 text-center">you can use keyboard arrows</div>
-
-<!--  -->
 </div>
+
+    <div class="bg-red-50 hidden md:block ml-auto text-sm w-16 -mr-4 text-zinc-500 text-center">You can use keyboard arrows</div>
 
 </div>
 <!-- \MASTHEAD -->
@@ -166,7 +162,7 @@ TICKER
   
 <canvas
   id="canvas"
-  class="w-full h-auto sm:border-b border-[#ffd5d1]"
+  class="w-full h-auto sm:border-b sm:border-r border-[#ffd5d1]"
   width="1920"
   height="1080"
 ></canvas>
