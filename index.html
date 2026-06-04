@@ -7,170 +7,81 @@
   content="width=device-width, initial-scale=1.0"
 />
 <link rel='icon' href='data:;base64,='>
-<title>PRESET LOOP - TypoGraphic Design</title>
+<title>PRESET LOOP</title>
 
 <script src='tailwindcss.min.js'></script>
 
 <link rel='stylesheet' href='style.css' />
 </head>
 
-<body class="text-white">
-
-
+<body class="bg-white text-white">
 <div class="w-screen h-screen flex flex-col">
 
-<header class="relative lg:max-w-[1966px]">
-    
-    
-<!-- MASTHEAD -->
-<div id="masthead" class="select-none md:mr-[4px] lg:mr-[5px] 2xl:mr-[9px] h-24 bg-[#fff] flex items-center p-4 shrink-0">
-  
-  <!-- hidden link - masking smoking rabbit image -->
-  <!-- hidden link -->
-  <a
-    href="https://presetloop.olk1.com/gif.html"
-    target="_blank"
-    rel="noopener noreferrer"
-    class="absolute top-[23px] left-0 z-50 text-transparent px-6 py-2.5 cursor-crosshair"
+
+
+<header class="relative">
+
+  <!-- ISSUE LIST -->
+  <aside
+    id="issueList"
+    class="absolute top-0 left-0 flex flex-col overflow-y-auto z-50"
+  ></aside>
+
+  <!-- MASTHEAD -->
+  <div
+    id="masthead"
+    class="h-24 bg-white grid grid-cols-3 items-center px-2 select-none"
   >
-    .
-  </a>
-  <!-- \hidden link -->
-  <!-- \hidden link -->
 
-<!--  -->
-<!-- home link -->
-<!--  -->
-<div class="w-full flex flex-col items-center text-black">
+    <!-- LEFT (empty spacer) -->
+    <div></div>
 
-<a href="https://presetloop.github.io/"
-  target="_blank"
-  rel="noopener noreferrer"
-  id="logoLink"
-  class="w-full flex flex-col items-center text-black cursor-pointer">
-  <h1 class="font-mono font-bold text-4xl leading-[30px] mt-0.5 -ml-7 sm:-ml-3.5 flex items-center">
-    <span class="inline-block">PRESET</span> 
-    <span class="inline-block ml-0.5 mt-0.5 sm:-mt-0.5">
-      L<img src="pl-logo-trans.png" alt="Preset Loop" class="h-[30px] w-auto"><span class="relative z-50 block">P</span></span>
-  </h1>
-</a>
+    <!-- CENTER (strictly centered) -->
+    <div class="flex justify-center -ml-12 sm:ml-0">
+      <div class="key-instructions inline-flex flex-col items-center text-sm sm:text-lg">
+        <div class="key-row">
+          <span class="key">←</span>
+          <span class="key">→</span>
+          <span class="label">Navigate</span>
+        </div>
 
-  <p class="text-[10px] md:text-sm p-0 mt-0.5 tracking-[10px] sm:tracking-[15px] bg-white italic">
-    <span class="bg-white block text-black -rotate-1 -ml-0.5 sm:-ml-3 md:sm:-ml-5 -mt-3 relative z-40">
-      TypoGraphic Design
-    </span>
-  </p>
-</div>
+        <div class="key-row">
+          <span class="key">Esc</span>
+          <span class="label mr-8">EXIT</span>
+        </div>
+      </div>
+    </div>
 
-
-    <div class="bg-red-50 hidden md:block ml-auto text-sm w-16 -mr-4 text-zinc-500 text-center">You can use keyboard arrows</div>
-
-</div>
-<!-- \MASTHEAD -->
-
-
-
-
-<!-- nav info / ticker / arrows -->
-<div id="ticker-bar" class="bg-[#111] md:mr-[4px] lg:mr-[5px] xl:mr-[9px] h-11 flex items-center justify-between p-0 shrink-0 z-50">
-  
-  
-  <!-- LEFT -->
-  <div class="flex gap-0 z-10">
-  
-  <div class="rabbit -mt-10 md:-mt-[73px]"></div>   
-  
-    <div
-      id="issueLabel"
-      class="w-36 hidden md:flex flex-col leading-[16px] tracking-tight -ml-[10px] sm:text-sm my-2 text-gray-300"
-    >
-      Select Issue
+    <!-- RIGHT (logo pinned) -->
+    <div class="flex justify-end">
+      <a href="about.html">
+        <img
+          src="pl-logo-trans.png"
+          alt="Preset Loop"
+          class="h-[55px] w-auto mr-2 -mt-3 hover:opacity-20" title="click me"/>
+      </a>
     </div>
 
   </div>
 
-
-
-<!--  -->
-<!--  -->
-<!-- CENTER -->
-<!-- ======================================================
-TICKER
-====================================================== -->
-
-<div id="ticker" class="relative overflow-hidden h-36 w-full -ml-8 sm:-ml-20"></div>
-
-<!--  -->
-<!--  -->
-
-
-
-
-  <!-- RIGHT -->
-  <div class="hidden md:flex gap-1 z-10 6xl:-mr-1 7xl:mr-0">
-
-    <button
-      id="prevBtn"
-      class="w-10 h-10 rounded bg-zinc-800 hover:bg-zinc-700 transition"
-    >
-      ←
-    </button>
-
-    <button
-      id="nextBtn"
-      class="w-10 h-10 rounded bg-zinc-800 hover:bg-zinc-700 transition"
-    >
-      →
-    </button>
-
-  </div>
-  
-  
-<!-- /ticker-bar -->
-</div>
-
-<!--  -->
 </header>
-  <!-- ==================================================== -->
-  <!-- MAIN -->
-  <!-- ==================================================== -->
 
   <div class="flex flex-1 overflow-hidden">
 
-    <!-- ================================================== -->
-    <!-- SIDEBAR -->
-    <!-- ================================================== -->
-
-<!-- js - switches based on viewport -->
-<aside
-  id="issueListDesktop"
-  class="bg-[#111] hidden md:flex flex-col mt-0 mr-0 overflow-y-auto shrink-0"
-></aside>
-
-
-
-    <!-- ================================================== -->
-    <!-- VIEWER -->
-    <!-- ================================================== -->
 
     <main class="relative flex-1 overflow-hidden">
 
-      <!-- CANVAS STACK -->
+
 <div class="flex flex-col">
 
 <div
   id="pagesContainer"
   class="-ml-1 2xl:ml-0 w-full max-w-[1920px] aspect-[16/9] relative opacity-0 transition-opacity"
 >
-<!-- js - switches based on viewport -->
-<div
-  id="issueListMobile"
-  class="flex -mt-0 md:hidden"
-></div>
   
 <canvas
   id="canvas"
-  class="w-full h-auto sm:border-b sm:border-r border-[#ffd5d1]"
+  class="w-full h-auto"
   width="1920"
   height="1080"
 ></canvas>
@@ -180,20 +91,20 @@ TICKER
 </div>
 
 
-      <!-- THUMBNAILS -->
+
       <div
         id="thumbnailOverlay"
-        class="mt-[42px] md:mt-0 absolute inset-0 overflow-y-auto thumb-scroll"
+        class="md:mt-0 absolute inset-0 overflow-y-auto thumb-scroll"
       >
 
         <div
           id="thumbnailGrid"
-          class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 max-w-[1942px] gap-4 p-6 mb-24"
+          class="ml-8 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 max-w-[1942px] gap-4 p-6 mb-24"
         ></div>
 
       </div>
 
-      <!-- LOADING -->
+
       <div
         id="loading"
         class="absolute -mt-32 md:-ml-40 top-1/2 left-1/2 -translate-x-1/2 text-black px-4 py-0 rounded text-7xl hidden"
@@ -207,7 +118,78 @@ TICKER
 
 </div>
 
+<script>
+const canvas = document.getElementById('canvas');
+const thumbnailOverlay = document.getElementById('thumbnailOverlay');
 
+let hiddenElements = [];
+let canvasOnlyMode = false;
+
+function enableCanvasOnlyMode() {
+  if (canvasOnlyMode) return;
+
+  hiddenElements = [];
+
+  document.querySelectorAll('body *').forEach(el => {
+    const keepVisible =
+      el === canvas ||
+      el.contains(canvas);
+
+    if (!keepVisible) {
+      hiddenElements.push(el);
+      el.style.display = 'none';
+    }
+  });
+
+  canvas.style.position = 'fixed';
+  canvas.style.top = '0';
+  canvas.style.left = '0';
+  canvas.style.width = '100vw';
+  canvas.style.height = '100vh';
+  canvas.style.zIndex = '999999';
+
+  canvasOnlyMode = true;
+}
+
+function disableCanvasOnlyMode() {
+  if (!canvasOnlyMode) return;
+
+  hiddenElements.forEach(el => {
+    el.style.display = '';
+  });
+
+  canvas.style.position = '';
+  canvas.style.top = '';
+  canvas.style.left = '';
+  canvas.style.width = '';
+  canvas.style.height = '';
+  canvas.style.zIndex = '';
+
+  hiddenElements = [];
+  canvasOnlyMode = false;
+}
+
+function enterCanvasOnlyMode() {
+  enableCanvasOnlyMode();
+}
+
+document.addEventListener('keydown', e => {
+  const tag = document.activeElement.tagName;
+  const ignoreTyping = tag === 'INPUT' || tag === 'TEXTAREA';
+
+  // Escape exits only
+  if (e.key === 'Escape') {
+    disableCanvasOnlyMode();
+    return;
+  }
+
+  // Arrow keys only ENTER mode (never exit)
+  if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !ignoreTyping) {
+    e.preventDefault();
+    enableCanvasOnlyMode();
+  }
+});
+</script>
 <!--  -->
 <script type="module" src="script.js"></script>
 </body>

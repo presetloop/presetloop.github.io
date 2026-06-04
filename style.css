@@ -16,17 +16,9 @@ body {
   font-family: sans-serif;
 }
 
-/* #pagesContainer {
-  width: 100%;
-  max-width: 1920px;
-} */
-
 /* control speed with js */
 /* await new Promise(r => setTimeout(r, 250)); */
 canvas {
-  /* width: 100%;
-  height: auto;
-  display: block; */
 
   transition: clip-path 220ms ease;
   clip-path: inset(0 0 0 0);
@@ -45,65 +37,43 @@ canvas.is-wiping {
 
 
 
-.rabbit {
-  width: 55px;
-  height: 55px;
-  background-image: url('smoking-rabbit.png');
-  background-repeat: no-repeat;
-  background-position: center left;
-  background-size: cover; 
+.key-instructions {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  font-family: system-ui, -apple-system, sans-serif;
+  color: black;
+  z-index: 10;
 }
 
-
-
-  /* ======================================================
-TICKER
-====================================================== */
-
-.ticker-item {
-  position: absolute;
-  inset: 0;
-
+.key-row {
   display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.key {
+  display: inline-flex;
   align-items: center;
   justify-content: center;
 
-  opacity: 0;
+  min-width: 34px;
+  height: 28px;
 
-  transition:
-    opacity 0.8s ease,
-    transform 0.8s ease;
+  padding: 0 6px;
 
-  transform: translateY(8px);
+  border: 1px solid rgba(255, 255, 255, 0.25);
+  border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+  border-radius: 6px;
 
-  pointer-events: none;
-}
+  background: rgba(0, 0, 0, 0.35);
+  backdrop-filter: blur(6px);
 
-.ticker-item.active {
-  opacity: 1;
-  transform: translateY(0);
-
-  pointer-events: auto;
-}
-
-.ticker-link {
-  color: white;
-
-  text-decoration: none;
-
-  font-size: 0.95rem;
-  font-weight: 500;
-
+  font-size: 11px;
   letter-spacing: 0.02em;
-
-  opacity: 0.9;
-
-  transition:
-    opacity 0.2s ease,
-    color 0.2s ease;
+  color: white;
 }
 
-.ticker-link:hover {
-  opacity: 1;
-  color: #60a5fa;
+.label {
+  opacity: 0.75;
 }

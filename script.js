@@ -1,7 +1,3 @@
-/* =========================================================
-   CONFIG
-========================================================= */
-
 
 const API_ENDPOINT = 'https://presetloop.olk1.com/fetch_issues.php';
 
@@ -11,16 +7,7 @@ const config = {
 
 
 
-
-/* =========================================================
-   ELEMENTS
-========================================================= */
-
 const el = {
-  // issueList: document.getElementById('issueList'),
-  issueLabel: document.getElementById('issueLabel'),
-  prevBtn: document.getElementById('prevBtn'),
-  nextBtn: document.getElementById('nextBtn'),
 
   canvas: document.getElementById('canvas'),
 
@@ -33,25 +20,11 @@ const el = {
 };
 
 
-const ISSUE_LIST_TARGETS = {
-  mobile: () => document.getElementById('issueListMobile'),
-  desktop: () => document.getElementById('issueListDesktop')
-};
-
-function getIssueListEl() {
-  return window.innerWidth < 768
-    ? ISSUE_LIST_TARGETS.mobile()
-    : ISSUE_LIST_TARGETS.desktop();
-}
-/* =========================================================
-   STATE
-========================================================= */
-
 const state = {
   issues: [],
   currentIssue: 0,
 
-  // CHANGED: page -> view (virtual index)
+
   currentView: 0,
 
   imageCache: new Map(),
@@ -64,9 +37,6 @@ const state = {
 };
 
 
-/* =========================================================
-   RESPONSIVE SPLIT MODE
-========================================================= */
 
 function isSplitMode() {
   return window.innerWidth < 640 && window.innerHeight > window.innerWidth;
@@ -101,9 +71,6 @@ function clampView(index) {
 }
 
 
-/* =========================================================
-   FETCH IMAGES
-========================================================= */
 
 async function fetchImages() {
   const res = await fetch(API_ENDPOINT);
@@ -118,15 +85,11 @@ async function fetchImages() {
 }
 
 
-/* =========================================================
-   ISSUE LIST
-========================================================= */
-
-
 function renderIssueList() {
-  const BASE_CLASS = `text-center mt-0 mb-0.5 pl-3 md:pl-2 pr-2 pt-2 pb-1 text-sm md:text-md leading-[0.75rem] md:leading-[0.90rem] bg-[#000] transition hover:bg-white hover:text-black leading-[12px] tracking-tight`;
+  const BASE_CLASS = `text-center mt-0 mb-0.5 pl-1.5 pr-1.5 pt-2 pb-1 text-sm md:text-md leading-[0.75rem] md:leading-[0.90rem] bg-[#000] transition hover:bg-[#f33] hover:text-white leading-[12px] tracking-tight`;
   
-  const list = getIssueListEl();
+  
+  const list = document.getElementById('issueList');
   if (!list) return;
 
   list.innerHTML = '';
@@ -142,8 +105,8 @@ function renderIssueList() {
 
     if (isActive) {
       btn.classList.add(
-        'bg-gray-50',
-        'text-black'
+        'bg-[#f33]',
+        'text-white'
       );
     }
 
@@ -159,51 +122,18 @@ function renderIssueList() {
   });
 }
 
-/* =========================================================
-   ISSUE SELECT
-========================================================= */
+function selectIssue(index) {
+  state.currentIssue = index;
+  state.currentView = 0;
+  state.hasRendered = false;
 
-// 
-// 
-// choose from:
+  clearCanvas();
 
-  // load as page 1 image 1
-  // same when issue button clicked
+  renderIssueList();
+  loadBlockIfNeeded(0);
 
-  // function selectIssue(index) {
-  //   state.currentIssue = index;
-  //   state.currentView = 0;
-  //   state.mode = 'page';
-
-  //   closeThumbs();
-
-  //   loadBlockIfNeeded(0);
-  //   renderView(0);
-
-  //   renderIssueList();
-  // }
-
-// OR
-
-  // load as thumbnails for issue
-  // same when issue button is clicked 
-  function selectIssue(index) {
-    state.currentIssue = index;
-    // state.currentView = 0;
-
-    renderIssueList();
-
-    loadBlockIfNeeded(0);
-
-    openThumbs();
-  }
-
-// 
-// 
-// 
-/* =========================================================
-   BLOCK LOADING
-========================================================= */
+  openThumbs();
+}
 
 async function loadBlockIfNeeded(pageIndex) {
   const issue = getIssue();
@@ -229,9 +159,6 @@ async function loadBlockIfNeeded(pageIndex) {
 }
 
 
-/* =========================================================
-   IMAGE LOADER
-========================================================= */
 
 function loadImage(item) {
   return new Promise((resolve) => {
@@ -253,9 +180,6 @@ function loadImage(item) {
 }
 
 
-/* =========================================================
-   RENDER VIEW
-========================================================= */
 
 async function renderView(viewIndex) {
   const issue = getIssue();
@@ -271,9 +195,6 @@ async function renderView(viewIndex) {
 
   const canvas = el.canvas;
 
-  // -----------------------------
-  // Set canvas resolution first
-  // -----------------------------
   if (isSplitMode()) {
     canvas.width = 1080;
     canvas.height = 1920;
@@ -284,28 +205,16 @@ async function renderView(viewIndex) {
 
   const ctx = canvas.getContext('2d');
 
-  // -----------------------------
-  // Ensure image is ready FIRST
-  // -----------------------------
   await loadImage(item);
 
   const img = state.imageCache.get(item.url);
   if (!img) return;
 
-  // -----------------------------
-  // Start transition only when ready
-  // -----------------------------
   canvas.classList.add('is-wiping');
   await new Promise(r => setTimeout(r, 120));
 
-  // -----------------------------
-  // Clear ONLY right before draw
-  // -----------------------------
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  // -----------------------------
-  // Render
-  // -----------------------------
   if (side === 'full') {
 
     ctx.drawImage(
@@ -350,42 +259,12 @@ async function renderView(viewIndex) {
     }
   }
 
-  // -----------------------------
-  // Commit state + UI
-  // -----------------------------
   state.currentView = safeView;
-
-  updateIssueLabel();
 
   requestAnimationFrame(() => {
     canvas.classList.remove('is-wiping');
   });
 }
-/* =========================================================
-   ISSUE LABEL
-========================================================= */
-
-function updateIssueLabel() {
-  const issue = getIssue();
-  if (!issue) return;
-
-  const imageIndex = getImageIndex(state.currentView);
-  const side = getViewSide(state.currentView);
-
-  const suffix =
-    side === 'left' ? ' (L)' :
-    side === 'right' ? ' (R)' : '';
-
-  el.issueLabel.innerHTML = `
-      <p>You are viewing</p>
-      <p>Issue: ${issue.title} Page: ${imageIndex + 1}${suffix}</p>
-  `;
-}
-
-
-/* =========================================================
-   THUMBNAILS
-========================================================= */
 
 function renderThumbnails() {
   const issue = getIssue();
@@ -401,26 +280,32 @@ function renderThumbnails() {
 
     btn.innerHTML = `
       <img src="${item.url}" class="w-full h-full object-cover" />
-      <div class="absolute bottom-0 left-0 right-0 bg-black/60 text-xs px-2 py-1">
+      <!-- <div class="absolute bottom-0 left-0 right-0 bg-black/60 text-xs px-2 py-1">
         Page ${index + 1}
-      </div>
+      </div> -->
     `;
 
     btn.addEventListener('click', () => {
-      navigate('GOTO', isSplitMode() ? index * 2 : index);
-    });
+  if (!canvasOnlyMode) enableCanvasOnlyMode();
+
+  navigate('GOTO', isSplitMode() ? index * 2 : index);
+
+  requestAnimationFrame(() => {
+    if (canvasOnlyMode) enableCanvasOnlyMode();
+  });
+});
 
     el.thumbnailGrid.appendChild(btn);
   });
 }
 
 
-/* =========================================================
-   VIEW MODES
-========================================================= */
 
 function openThumbs() {
   state.mode = 'thumbs';
+
+  clearCanvas(); // important: remove last rendered frame
+
   el.thumbnailOverlay.classList.remove('hidden');
   renderThumbnails();
 }
@@ -428,12 +313,9 @@ function openThumbs() {
 function closeThumbs() {
   state.mode = 'page';
   el.thumbnailOverlay.classList.add('hidden');
+
+  clearCanvas();
 }
-
-
-/* =========================================================
-   NAVIGATION (UPDATED FOR VIEWS)
-========================================================= */
 
 async function navigate(action, value = 1) {
   const issue = getIssue();
@@ -483,12 +365,6 @@ async function navigate(action, value = 1) {
 }
 
 
-/* =========================================================
-   EVENTS
-========================================================= */
-
-el.nextBtn.addEventListener('click', () => navigate('NEXT'));
-el.prevBtn.addEventListener('click', () => navigate('PREV'));
 
 window.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowRight') navigate('NEXT');
@@ -500,9 +376,6 @@ window.addEventListener('keydown', (e) => {
 
 
 
-/* =========================================================
-   SWIPE NAVIGATION 
-========================================================= */
 
 function attachSwipeNavigation(target = el.pagesContainer || document) {
   let startX = 0;
@@ -535,39 +408,6 @@ function attachSwipeNavigation(target = el.pagesContainer || document) {
 attachSwipeNavigation();
 
 
-/* ======================================================
-   TICKER
-====================================================== */
-
-import { tickerLinks } from './tickerlinks.js';
-
-const ticker = document.getElementById('ticker');
-let currentTickerIndex = 0;
-
-function renderTicker() {
-  ticker.innerHTML = tickerLinks
-    .map((item, i) => `
-      <div class="ticker-item ${i === 0 ? 'active' : ''}">
-        <a href="${item.url}" class="md:pt-1 text-blue-500" target="_blank" rel="noopener noreferrer">** ${item.title} **</a>
-      </div>
-    `)
-    .join('');
-}
-
-function rotateTicker() {
-  const items = ticker.querySelectorAll('.ticker-item');
-  if (!items.length) return;
-
-  items[currentTickerIndex].classList.remove('active');
-
-  currentTickerIndex =
-    (currentTickerIndex + 1) % items.length;
-
-  items[currentTickerIndex].classList.add('active');
-}
-
-
-
 
 
 function applyCanvasAspect() {
@@ -590,15 +430,12 @@ function debounce(fn, delay = 150) {
     t = setTimeout(() => fn(...args), delay);
   };
 }
-/* =========================================================
-   INIT
-========================================================= */
 
-renderTicker();
+
 fetchImages();
 applyCanvasAspect();
 
-setInterval(rotateTicker, 10000);
+
 
 window.addEventListener('resize', debounce(() => {
   applyCanvasAspect();
@@ -608,4 +445,12 @@ window.addEventListener('resize', debounce(() => {
 window.addEventListener('orientationchange', applyCanvasAspect);
 
 
-// canvas.style.aspectRatio = isSplitMode() ? "9 / 16" : "16 / 9";
+
+function clearCanvas() {
+  const ctx = el.canvas.getContext('2d');
+
+  ctx.clearRect(0, 0, el.canvas.width, el.canvas.height);
+
+  // force blank frame
+  el.canvas.width = el.canvas.width;
+}
