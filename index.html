@@ -14,9 +14,11 @@
 <link rel='stylesheet' href='style.css' />
 </head>
 
-<body class="bg-white text-white">
+<body class="text-white">
 <div class="w-screen h-screen flex flex-col">
 
+
+<button id="closeFullViewBtn" class="hidden fixed top-3 right-3 z-[999999] w-10 h-10 rounded-full bg-black/10 text-white backdrop-blur">✕</button>
 
 
 <header class="relative">
@@ -27,17 +29,21 @@
     class="absolute top-0 left-0 flex flex-col overflow-y-auto z-50"
   ></aside>
 
+  <!-- animated hint arrow -->
+  <div id="hintArrow" class="absolute top-2 left-12 flex flex-col overflow-y-auto z-50 text-[#111] arrow-bounce">&larr; SELECT</div>
+  
+  
   <!-- MASTHEAD -->
   <div
     id="masthead"
-    class="h-24 bg-white grid grid-cols-3 items-center px-2 select-none"
+    class="bg-white h-24 grid grid-cols-3 items-center px-2 select-none transition transform"
   >
 
     <!-- LEFT (empty spacer) -->
     <div></div>
 
     <!-- CENTER (strictly centered) -->
-    <div class="flex justify-center -ml-12 sm:ml-0">
+    <div class="hidden sm:flex justify-center -ml-12 sm:ml-0">
       <div class="key-instructions inline-flex flex-col items-center text-sm sm:text-lg">
         <div class="key-row">
           <span class="key">←</span>
@@ -47,7 +53,7 @@
 
         <div class="key-row">
           <span class="key">Esc</span>
-          <span class="label mr-8">EXIT</span>
+          <span class="hidden sm:inline-block label mr-8">EXIT</span>
         </div>
       </div>
     </div>
@@ -68,126 +74,72 @@
 
   <div class="flex flex-1 overflow-hidden">
 
+  <main class="relative flex-1 overflow-hidden">
 
-    <main class="relative flex-1 overflow-hidden">
+    <!-- CENTER WRAPPER (X ONLY) -->
+    <div class="w-full flex justify-center">
 
+      <!-- STAGE WRAPPER -->
+      <div class="w-full max-w-[2360px]">
 
-<div class="flex flex-col">
-
-<div
-  id="pagesContainer"
-  class="-ml-1 2xl:ml-0 w-full max-w-[1920px] aspect-[16/9] relative opacity-0 transition-opacity"
->
-  
-<canvas
-  id="canvas"
-  class="w-full h-auto"
-  width="1920"
-  height="1080"
-></canvas>
-
-</div>
-
-</div>
-
-
-
-      <div
-        id="thumbnailOverlay"
-        class="md:mt-0 absolute inset-0 overflow-y-auto thumb-scroll"
-      >
-
+        <!-- CANVAS STAGE -->
         <div
-          id="thumbnailGrid"
-          class="ml-8 grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 max-w-[1942px] gap-4 p-6 mb-24"
-        ></div>
+          id="pagesContainer"
+          class="relative w-full aspect-[16/9] mt-0 transition transform"
+        >
 
+          <canvas
+            id="canvas"
+            width="1920"
+            height="1080"
+            class="w-full h-full block"
+          ></canvas>
+
+          <!-- THUMBNAIL OVERLAY -->
+          <div
+            id="thumbnailOverlay"
+            class="absolute inset-0 overflow-y-auto thumb-scroll"
+          >
+            <div
+              id="thumbnailGrid"
+              class="grid grid-cols-2 md:grid-cols-4 lg:grid-cols-5 gap-4 p-6 mx-auto max-w-[1920px] mb-64"
+            ></div>
+          </div>
+
+          <!-- LOADING -->
+          <div
+            id="loading"
+            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-7xl hidden -mt-32"
+          >
+            Loading...
+          </div>
+
+        </div>
       </div>
 
+    </div>
 
-      <div
-        id="loading"
-        class="absolute -mt-32 md:-ml-40 top-1/2 left-1/2 -translate-x-1/2 text-black px-4 py-0 rounded text-7xl hidden"
-      >
-        Loading...
-      </div>
+  </main>
+</div>
 
-    </main>
-
-  </div>
-
+<!--  -->
 </div>
 
 <script>
-const canvas = document.getElementById('canvas');
-const thumbnailOverlay = document.getElementById('thumbnailOverlay');
+window.addEventListener('load', () => {
+  const el = document.getElementById('hintArrow');
+  if (!el) return;
 
-let hiddenElements = [];
-let canvasOnlyMode = false;
+  // visible for initial moment
+  setTimeout(() => {
+    el.classList.add('arrow-hidden');
 
-function enableCanvasOnlyMode() {
-  if (canvasOnlyMode) return;
+    // fully remove from DOM after fade
+    setTimeout(() => {
+      el.remove();
+    }, 350);
 
-  hiddenElements = [];
-
-  document.querySelectorAll('body *').forEach(el => {
-    const keepVisible =
-      el === canvas ||
-      el.contains(canvas);
-
-    if (!keepVisible) {
-      hiddenElements.push(el);
-      el.style.display = 'none';
-    }
-  });
-
-  canvas.style.position = 'fixed';
-  canvas.style.top = '0';
-  canvas.style.left = '0';
-  canvas.style.width = '100vw';
-  canvas.style.height = '100vh';
-  canvas.style.zIndex = '999999';
-
-  canvasOnlyMode = true;
-}
-
-function disableCanvasOnlyMode() {
-  if (!canvasOnlyMode) return;
-
-  hiddenElements.forEach(el => {
-    el.style.display = '';
-  });
-
-  canvas.style.position = '';
-  canvas.style.top = '';
-  canvas.style.left = '';
-  canvas.style.width = '';
-  canvas.style.height = '';
-  canvas.style.zIndex = '';
-
-  hiddenElements = [];
-  canvasOnlyMode = false;
-}
-
-function enterCanvasOnlyMode() {
-  enableCanvasOnlyMode();
-}
-
-document.addEventListener('keydown', e => {
-  const tag = document.activeElement.tagName;
-  const ignoreTyping = tag === 'INPUT' || tag === 'TEXTAREA';
-
-  // Escape exits only
-  if (e.key === 'Escape') {
-    disableCanvasOnlyMode();
-    return;
-  }
-
-  // Arrow keys only ENTER mode (never exit)
-  if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !ignoreTyping) {
-    e.preventDefault();
-    enableCanvasOnlyMode();
-  }
+  }, 5000); // visible duration
 });
 </script>
 <!--  -->

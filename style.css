@@ -15,6 +15,19 @@ body {
     
   font-family: sans-serif;
 }
+/* subtle dot grid bg pattern */
+body{
+  background-color: #111;
+
+  background-image:
+    radial-gradient(
+      circle,
+      rgba(255,255,255,0.08) 1px,
+      transparent 1px
+    );
+
+  background-size: 24px 24px;
+}
 
 /* control speed with js */
 /* await new Promise(r => setTimeout(r, 250)); */
@@ -25,7 +38,7 @@ canvas {
 }
 
 canvas.is-wiping {
-  clip-path: inset(0 100% 0 0);
+  clip-path: inset(100% 0% 0 0);
 }
 
 
@@ -76,4 +89,16 @@ canvas.is-wiping {
 
 .label {
   opacity: 0.75;
+}
+
+/* hint arrow */
+@keyframes arrowBounceDown {
+  0%   { transform: translateY(0); }
+  50%   { transform: translateY(50px); }
+  75%   { transform: translateY(10px); }
+  100%  { transform: translateY(100px); }
+}
+
+.arrow-bounce {
+  animation: arrowBounceDown 5.5s cubic-bezier(0.4, 0, 0.2, 1) infinite;
 }

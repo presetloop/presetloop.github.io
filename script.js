@@ -16,9 +16,11 @@ const el = {
   thumbnailOverlay: document.getElementById('thumbnailOverlay'),
   thumbnailGrid: document.getElementById('thumbnailGrid'),
 
-  pagesContainer: document.getElementById('pagesContainer')
-};
+  pagesContainer: document.getElementById('pagesContainer'),
 
+  closeFullViewBtn: document.getElementById('closeFullViewBtn')
+  
+};
 
 const state = {
   issues: [],
@@ -37,6 +39,74 @@ const state = {
 };
 
 
+const canvas = document.getElementById('canvas');
+const thumbnailOverlay = document.getElementById('thumbnailOverlay');
+
+let hiddenElements = [];
+let canvasOnlyMode = false;
+
+function enableCanvasOnlyMode() {
+  if (canvasOnlyMode) return;
+
+  hiddenElements = [];
+
+document.querySelectorAll('body *').forEach(node => {
+
+  const keepVisible =
+    node === canvas ||
+    node.contains(canvas) ||
+    node === el.closeFullViewBtn ||
+    node.contains(el.closeFullViewBtn) ||
+    node === el.thumbnailOverlay ||
+    node.contains(el.thumbnailOverlay);
+
+  if (!keepVisible) {
+    hiddenElements.push(node);
+    node.style.display = 'none';
+  }
+
+});
+
+  canvas.style.boxSizing = 'border-box';
+  canvas.style.border = '50px solid white';
+
+  canvasOnlyMode = true;
+
+// canvas.style.position = 'fixed';
+// canvas.style.top = '0';
+// canvas.style.left = '0';
+
+// canvas.style.width = '100vw';
+// canvas.style.height = '100vh'
+
+// canvas.style.maxWidth = '2360px';
+// canvas.style.maxHeight = '1330px';;
+
+}
+
+function disableCanvasOnlyMode() {
+  if (!canvasOnlyMode) return;
+
+  hiddenElements.forEach(el => {
+    el.style.display = '';
+  });
+
+  canvas.style.zIndex = '';
+  canvas.style.position = '';
+  canvas.style.top = '';
+  canvas.style.left = '';
+   canvas.style.transform = '';
+  canvas.style.width = '';
+  canvas.style.height = '';
+  canvas.style.border = '';
+
+  hiddenElements = [];
+  canvasOnlyMode = false;
+}
+
+function enterCanvasOnlyMode() {
+  enableCanvasOnlyMode();
+}
 
 function isSplitMode() {
   return window.innerWidth < 640 && window.innerHeight > window.innerWidth;
@@ -85,8 +155,9 @@ async function fetchImages() {
 }
 
 
+
 function renderIssueList() {
-  const BASE_CLASS = `text-center mt-0 mb-0.5 pl-1.5 pr-1.5 pt-2 pb-1 text-sm md:text-md leading-[0.75rem] md:leading-[0.90rem] bg-[#000] transition hover:bg-[#f33] hover:text-white leading-[12px] tracking-tight`;
+  const BASE_CLASS = `text-center mt-0 mb-0.5 pl-1.5 pr-1.5 pt-2 pb-1 text-sm md:text-md leading-[0.75rem] md:leading-[0.90rem] bg-[#000] transform transition hover:bg-[#f33] hover:text-white leading-[12px] tracking-tight`;
   
   
   const list = document.getElementById('issueList');
@@ -98,8 +169,6 @@ function renderIssueList() {
     const btn = document.createElement('button');
 
     const isActive = index === state.currentIssue;
-
-    btn.className = BASE_CLASS;
 
     btn.className = BASE_CLASS;
 
@@ -180,7 +249,6 @@ function loadImage(item) {
 }
 
 
-
 async function renderView(viewIndex) {
   const issue = getIssue();
   if (!issue) return;
@@ -194,16 +262,37 @@ async function renderView(viewIndex) {
   if (!item) return;
 
   const canvas = el.canvas;
+  const ctx = canvas.getContext('2d');
+
+  /* =====================================================
+     CANVAS SETUP
+  ===================================================== */
 
   if (isSplitMode()) {
-    canvas.width = 1080;
-    canvas.height = 1920;
+    const dpr = window.devicePixelRatio || 1;
+
+    canvas.width = window.innerWidth * dpr;
+    canvas.height = window.innerHeight * dpr;
+
+    canvas.style.width = `${window.innerWidth}px`;
+    canvas.style.height = `${window.innerHeight}px`;
+    
+    canvas.style.border = '';
+
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
   } else {
     canvas.width = 1920;
     canvas.height = 1080;
+
+    canvas.style.width = '';
+    canvas.style.height = '';
+
+    ctx.setTransform(1, 0, 0, 1, 0, 0);
   }
 
-  const ctx = canvas.getContext('2d');
+  /* =====================================================
+     IMAGE LOAD
+  ===================================================== */
 
   await loadImage(item);
 
@@ -211,52 +300,87 @@ async function renderView(viewIndex) {
   if (!img) return;
 
   canvas.classList.add('is-wiping');
-  await new Promise(r => setTimeout(r, 120));
+  await new Promise(resolve => setTimeout(resolve, 120));
 
   ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-  if (side === 'full') {
+  /* =====================================================
+     FULL PAGE MODE
+  ===================================================== */
 
+  if (side === 'full') {
     ctx.drawImage(
       img,
-      0, 0, img.width, img.height,
-      0, 0, canvas.width, canvas.height
+      0,
+      0,
+      img.width,
+      img.height,
+      0,
+      0,
+      canvas.width,
+      canvas.height
     );
+  }
 
-    // avoids canvas border draw and position shift
-    if (!state.hasRendered) {
-      state.hasRendered = true;
-      el.pagesContainer.classList.remove('opacity-0');
-    }
-  } else {
+  /* =====================================================
+     SPLIT MODE
+  ===================================================== */
 
+  else {
     const cropWidth = img.width / 2;
     const cropHeight = img.height;
 
-    const sx = side === 'left' ? 0 : cropWidth;
+    const sx =
+      side === 'left'
+        ? 0
+        : cropWidth;
 
-    const scale = Math.min(
-      canvas.width / cropWidth,
-      canvas.height / cropHeight
-    );
+    const viewWidth = window.innerWidth;
+    const viewHeight = window.innerHeight;
 
-    const drawWidth = cropWidth * scale;
-    const drawHeight = cropHeight * scale;
+    const imageRatio = cropWidth / cropHeight;
+    const viewportRatio = viewWidth / viewHeight;
 
-    const dx = (canvas.width - drawWidth) / 2;
-    const dy = 0;
+    let drawWidth;
+    let drawHeight;
+    let dx;
+    let dy;
+
+    // Cover viewport without distortion
+    if (imageRatio > viewportRatio) {
+      drawHeight = viewHeight;
+      drawWidth = drawHeight * imageRatio;
+
+      dx = (viewWidth - drawWidth) / 2;
+      dy = 0;
+    } else {
+      drawWidth = viewWidth;
+      drawHeight = drawWidth / imageRatio;
+
+      dx = 0;
+      dy = (viewHeight - drawHeight) / 2;
+    }
 
     ctx.drawImage(
       img,
-      sx, 0, cropWidth, cropHeight,
-      dx, dy, drawWidth, drawHeight
+      sx,
+      0,
+      cropWidth,
+      cropHeight,
+      dx,
+      dy,
+      drawWidth,
+      drawHeight
     );
+  }
 
-    // avoids canvas border draw and position shift
-    if (!state.hasRendered) {
-      state.hasRendered = true;
-      el.pagesContainer.classList.remove('opacity-0');
-    }
+  /* =====================================================
+     FIRST RENDER
+  ===================================================== */
+
+  if (!state.hasRendered) {
+    state.hasRendered = true;
+    el.pagesContainer.classList.remove('opacity-0');
   }
 
   state.currentView = safeView;
@@ -265,6 +389,8 @@ async function renderView(viewIndex) {
     canvas.classList.remove('is-wiping');
   });
 }
+
+
 
 function renderThumbnails() {
   const issue = getIssue();
@@ -286,13 +412,13 @@ function renderThumbnails() {
     `;
 
     btn.addEventListener('click', () => {
-  if (!canvasOnlyMode) enableCanvasOnlyMode();
+      if (!canvasOnlyMode) enableCanvasOnlyMode();
 
-  navigate('GOTO', isSplitMode() ? index * 2 : index);
+      navigate('GOTO', isSplitMode() ? index * 2 : index);
 
-  requestAnimationFrame(() => {
-    if (canvasOnlyMode) enableCanvasOnlyMode();
-  });
+      requestAnimationFrame(() => {
+        if (canvasOnlyMode) enableCanvasOnlyMode();
+      });
 });
 
     el.thumbnailGrid.appendChild(btn);
@@ -301,18 +427,31 @@ function renderThumbnails() {
 
 
 
+
 function openThumbs() {
+  disableCanvasOnlyMode();
+
   state.mode = 'thumbs';
 
-  clearCanvas(); // important: remove last rendered frame
+  clearCanvas();
 
   el.thumbnailOverlay.classList.remove('hidden');
   renderThumbnails();
+
+  el.closeFullViewBtn?.classList.add('hidden');
+
 }
 
 function closeThumbs() {
   state.mode = 'page';
+
   el.thumbnailOverlay.classList.add('hidden');
+
+  if (window.innerWidth < 768) {
+    el.closeFullViewBtn?.classList.remove('hidden');
+  }
+
+  enableCanvasOnlyMode();
 
   clearCanvas();
 }
@@ -364,7 +503,27 @@ async function navigate(action, value = 1) {
   }
 }
 
+el.closeFullViewBtn?.addEventListener('click', () => {
+  navigate('OPEN_THUMBS');
+});
 
+
+document.addEventListener('keydown', e => {
+  const tag = document.activeElement.tagName;
+  const ignoreTyping = tag === 'INPUT' || tag === 'TEXTAREA';
+
+  // Escape exits only
+  if (e.key === 'Escape') {
+    disableCanvasOnlyMode();
+    return;
+  }
+
+  // Arrow keys only ENTER mode (never exit)
+  if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !ignoreTyping) {
+    e.preventDefault();
+    enableCanvasOnlyMode();
+  }
+});
 
 window.addEventListener('keydown', (e) => {
   if (e.key === 'ArrowRight') navigate('NEXT');
