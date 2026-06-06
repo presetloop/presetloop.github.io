@@ -16,17 +16,22 @@ body {
   font-family: sans-serif;
 }
 /* subtle dot grid bg pattern */
-body{
-  background-color: #111;
-
+body {
   background-image:
     radial-gradient(
       circle,
-      rgba(255,255,255,0.08) 1px,
+      rgba(100,100,100,1) 1px,
       transparent 1px
+    ),
+    linear-gradient(
+      200deg,
+      #ffff33 0%,
+      #ffff55 100%
     );
 
-  background-size: 24px 24px;
+  background-size:
+    24px 24px,
+    100% 100%;
 }
 
 /* control speed with js */
@@ -94,9 +99,9 @@ canvas.is-wiping {
 /* hint arrow */
 @keyframes arrowBounceDown {
   0%   { transform: translateY(0); }
-  50%   { transform: translateY(50px); }
-  75%   { transform: translateY(10px); }
-  100%  { transform: translateY(90px); }
+  50%   { transform: translateY(55px); }
+  75%   { transform: translateY(5px); }
+  100%  { transform: translateY(-90px); }
 }
 
 .arrow-bounce {

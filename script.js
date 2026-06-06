@@ -68,7 +68,7 @@ document.querySelectorAll('body *').forEach(node => {
 });
 
   canvas.style.boxSizing = 'border-box';
-  canvas.style.border = '50px solid white';
+  canvas.style.border = '50px solid #f7f7f7';
 
   canvasOnlyMode = true;
 
