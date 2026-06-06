@@ -2,7 +2,7 @@
 const API_ENDPOINT = 'https://presetloop.olk1.com/fetch_issues.php';
 
 const config = {
-  lazyLoadPages: 6
+  lazyLoadPages: 7
 };
 
 
@@ -71,16 +71,6 @@ document.querySelectorAll('body *').forEach(node => {
   canvas.style.border = '50px solid #f7f7f7';
 
   canvasOnlyMode = true;
-
-// canvas.style.position = 'fixed';
-// canvas.style.top = '0';
-// canvas.style.left = '0';
-
-// canvas.style.width = '100vw';
-// canvas.style.height = '100vh'
-
-// canvas.style.maxWidth = '2360px';
-// canvas.style.maxHeight = '1330px';;
 
 }
 
@@ -447,9 +437,9 @@ function closeThumbs() {
 
   el.thumbnailOverlay.classList.add('hidden');
 
-  if (window.innerWidth < 768) {
+  // if (window.innerWidth < 768) {
     el.closeFullViewBtn?.classList.remove('hidden');
-  }
+  // }
 
   enableCanvasOnlyMode();
 
