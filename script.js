@@ -134,8 +134,10 @@ function clampView(index) {
 
 async function fetchImages() {
   const res = await fetch(API_ENDPOINT);
+  const fetchedIssues = await res.json();
 
-  state.issues = await res.json();
+  // newest issue first
+  state.issues = [...fetchedIssues].reverse();
 
   renderIssueList();
 
@@ -143,7 +145,6 @@ async function fetchImages() {
     selectIssue(0);
   }
 }
-
 
 
 function renderIssueList() {
