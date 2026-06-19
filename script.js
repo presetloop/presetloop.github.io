@@ -68,10 +68,22 @@ document.querySelectorAll('body *').forEach(node => {
 });
 
   canvas.style.boxSizing = 'border-box';
-  canvas.style.border = '50px solid #f7f7f7';
+  
+  applyCanvasBorder();
+
+  window.addEventListener('resize', debounce(applyCanvasBorder, 150));
+  window.addEventListener('orientationchange', applyCanvasBorder);
 
   canvasOnlyMode = true;
 
+}
+
+function applyCanvasBorder() {
+  const isSmallViewport = window.innerWidth < 1280;
+
+  canvas.style.border = isSmallViewport
+    ? '10px solid #f7f7f7'
+    : '50px solid #f7f7f7';
 }
 
 function disableCanvasOnlyMode() {
@@ -94,12 +106,9 @@ function disableCanvasOnlyMode() {
   canvasOnlyMode = false;
 }
 
-function enterCanvasOnlyMode() {
-  enableCanvasOnlyMode();
-}
 
 function isSplitMode() {
-  return window.innerWidth < 640 && window.innerHeight > window.innerWidth;
+  return window.innerWidth < 240 && window.innerHeight > window.innerWidth;
 }
 
 function getIssue() {
