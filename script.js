@@ -69,21 +69,24 @@ document.querySelectorAll('body *').forEach(node => {
 
   canvas.style.boxSizing = 'border-box';
   
-  applyCanvasBorder();
-
-  window.addEventListener('resize', debounce(applyCanvasBorder, 150));
-  window.addEventListener('orientationchange', applyCanvasBorder);
+  applyResponsiveCanvasStyles();
 
   canvasOnlyMode = true;
 
 }
 
-function applyCanvasBorder() {
-  const isSmallViewport = window.innerWidth < 1280;
-
-  canvas.style.border = isSmallViewport
-    ? '10px solid #f7f7f7'
-    : '50px solid #f7f7f7';
+function applyResponsiveCanvasStyles() {
+  if (!canvasOnlyMode) {
+    canvas.style.border = '';
+    
+    const isSmallViewport = window.innerWidth < 1279;
+    
+    canvas.style.marginTop = isSmallViewport
+     ? '150px'
+      : '0px';
+    
+    return;
+  }
 }
 
 function disableCanvasOnlyMode() {
@@ -581,6 +584,14 @@ function applyCanvasAspect() {
 }
 
 
+function clearCanvas() {
+  const ctx = el.canvas.getContext('2d');
+
+  ctx.clearRect(0, 0, el.canvas.width, el.canvas.height);
+
+  // force blank frame
+  el.canvas.width = el.canvas.width;
+}
 
 function debounce(fn, delay = 150) {
   let t;
@@ -603,13 +614,3 @@ window.addEventListener('resize', debounce(() => {
 
 window.addEventListener('orientationchange', applyCanvasAspect);
 
-
-
-function clearCanvas() {
-  const ctx = el.canvas.getContext('2d');
-
-  ctx.clearRect(0, 0, el.canvas.width, el.canvas.height);
-
-  // force blank frame
-  el.canvas.width = el.canvas.width;
-}
