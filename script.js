@@ -1,616 +1,670 @@
-
 const API_ENDPOINT = 'https://presetloop.olk1.com/fetch_issues.php';
 
-const config = {
-  lazyLoadPages: 7
-};
+const API = API_ENDPOINT;
 
+let images = [];
 
+let currentImage = 0;
 
-const el = {
+let scale = 1;
+let offsetX = 0;
+let offsetY = 0;
 
-  canvas: document.getElementById('canvas'),
+let isPanning = false;
 
-  loading: document.getElementById('loading'),
+let startPanX = 0;
+let startPanY = 0;
 
-  thumbnailOverlay: document.getElementById('thumbnailOverlay'),
-  thumbnailGrid: document.getElementById('thumbnailGrid'),
+let touchMode = null;
 
-  pagesContainer: document.getElementById('pagesContainer'),
+let swipeStartX = 0;
+let swipeStartY = 0;
 
-  closeFullViewBtn: document.getElementById('closeFullViewBtn')
-  
-};
+let swipeCloseStartY = 0;
+let swipeCloseStartX = 0;
+let swipeCloseActive = false;
 
-const state = {
-  issues: [],
-  currentIssue: 0,
+let pinchStartDistance = 0;
+let pinchStartScale = 1;
 
+const thumbGrid = document.getElementById('thumbGrid');
 
-  currentView: 0,
+const thumbView = document.getElementById('thumbView');
 
-  imageCache: new Map(),
-  loadedBlocks: new Set(),
+const viewer = document.getElementById('viewer');
 
-  // for canvas border draw and position shift
-  hasRendered: false, 
+const viewerImage =
+    document.getElementById('viewerImage');
 
-  mode: 'page' // page | thumbs
-};
+const counter =
+    document.getElementById('counter');
 
+const closeBtn =
+    document.getElementById('closeBtn');
 
-const canvas = document.getElementById('canvas');
-const thumbnailOverlay = document.getElementById('thumbnailOverlay');
+async function init(){
 
-let hiddenElements = [];
-let canvasOnlyMode = false;
+    const res = await fetch(API);
 
-function enableCanvasOnlyMode() {
-  if (canvasOnlyMode) return;
+    const issues = await res.json();
 
-  hiddenElements = [];
+    images = [];
 
-document.querySelectorAll('body *').forEach(node => {
+    issues.forEach(issue => {
 
-  const keepVisible =
-    node === canvas ||
-    node.contains(canvas) ||
-    node === el.closeFullViewBtn ||
-    node.contains(el.closeFullViewBtn) ||
-    node === el.thumbnailOverlay ||
-    node.contains(el.thumbnailOverlay);
+        if(Array.isArray(issue.pages)){
 
-  if (!keepVisible) {
-    hiddenElements.push(node);
-    node.style.display = 'none';
-  }
+            images.push(...issue.pages);
+        }
 
-});
+    });
 
-  canvas.style.boxSizing = 'border-box';
-  
-  applyResponsiveCanvasStyles();
+    images;
 
-  canvasOnlyMode = true;
-
+    renderThumbs();
 }
 
-function applyResponsiveCanvasStyles() {
-  if (!canvasOnlyMode) {
-    canvas.style.border = '';
-    
-    const isSmallViewport = window.innerWidth < 1279;
-    
-    canvas.style.marginTop = isSmallViewport
-     ? '150px'
-      : '0px';
-    
-    return;
-  }
+function renderThumbs(){
+
+    thumbGrid.innerHTML = '';
+
+    images.forEach((img,index)=>{
+
+        const thumb =
+            document.createElement('img');
+
+        thumb.src = img.url;
+
+        thumb.className = 'thumb';
+
+        thumb.loading = 'lazy';
+
+        thumb.onclick = () => {
+
+            openViewer(index);
+
+        };
+
+        thumbGrid.appendChild(thumb);
+
+    });
 }
 
-function disableCanvasOnlyMode() {
-  if (!canvasOnlyMode) return;
+function openViewer(index){
 
-  hiddenElements.forEach(el => {
-    el.style.display = '';
-  });
+    currentImage = index;
 
-  canvas.style.zIndex = '';
-  canvas.style.position = '';
-  canvas.style.top = '';
-  canvas.style.left = '';
-   canvas.style.transform = '';
-  canvas.style.width = '';
-  canvas.style.height = '';
-  canvas.style.border = '';
+    viewer.classList.remove('hidden');
 
-  hiddenElements = [];
-  canvasOnlyMode = false;
+    thumbView.classList.add('hidden');
+
+    document.body.style.overflow = 'hidden';
+
+    resetTransform();
+
+    updateViewer();
 }
 
+function closeViewer(){
 
-function isSplitMode() {
-  return window.innerWidth < 240 && window.innerHeight > window.innerWidth;
+    viewer.classList.add('hidden');
+
+    thumbView.classList.remove('hidden');
+
+    document.body.style.overflow = '';
+
+    resetTransform();
 }
 
-function getIssue() {
-  return state.issues[state.currentIssue];
+function updateViewer(){
+
+    if(!images.length) return;
+
+    viewerImage.src =
+        images[currentImage].url;
+
+    counter.textContent =
+        `${currentImage + 1} / ${images.length}`;
 }
 
-function getTotalViews() {
-  const issue = getIssue();
-  if (!issue) return 0;
-  return isSplitMode()
-    ? issue.pages.length * 2
-    : issue.pages.length;
-}
+function nextImage(){
 
-function getImageIndex(viewIndex) {
-  return isSplitMode()
-    ? Math.floor(viewIndex / 2)
-    : viewIndex;
-}
+    if(currentImage >= images.length - 1){
 
-function getViewSide(viewIndex) {
-  if (!isSplitMode()) return 'full';
-  return viewIndex % 2 === 0 ? 'left' : 'right';
-}
-
-function clampView(index) {
-  const max = getTotalViews();
-  return Math.max(0, Math.min(index, max - 1));
-}
-
-
-
-async function fetchImages() {
-  const res = await fetch(API_ENDPOINT);
-  const fetchedIssues = await res.json();
-
-  // newest issue first
-  state.issues = [...fetchedIssues].reverse();
-
-  renderIssueList();
-
-  if (state.issues.length) {
-    selectIssue(0);
-  }
-}
-
-
-function renderIssueList() {
-  const BASE_CLASS = `text-center mt-0 mb-0.5 pl-1.5 pr-1.5 pt-2 pb-1 text-sm md:text-md leading-[0.75rem] md:leading-[0.90rem] bg-[#000] transform transition hover:bg-[#f33] hover:text-white leading-[12px] tracking-tight`;
-  
-  
-  const list = document.getElementById('issueList');
-  if (!list) return;
-
-  list.innerHTML = '';
-
-  state.issues.forEach((issue, index) => {
-    const btn = document.createElement('button');
-
-    const isActive = index === state.currentIssue;
-
-    btn.className = BASE_CLASS;
-
-    if (isActive) {
-      btn.classList.add(
-        'bg-[#f33]',
-        'text-white'
-      );
+        closeViewer();
+        return;
     }
 
+    currentImage++;
 
-    btn.innerHTML = `
-      <div class="tracking-widest">#${issue.title}</div>
-      <div class="text-xs">x ${issue.pages.length}</div>
-    `;
+    resetTransform();
 
-    btn.addEventListener('click', () => selectIssue(index));
-
-    list.appendChild(btn);
-  });
+    updateViewer();
 }
 
-function selectIssue(index) {
-  state.currentIssue = index;
-  state.currentView = 0;
-  state.hasRendered = false;
+function prevImage(){
 
-  clearCanvas();
+    if(currentImage <= 0){
 
-  renderIssueList();
-  loadBlockIfNeeded(0);
+        closeViewer();
+        return;
+    }
 
-  openThumbs();
+    currentImage--;
+
+    resetTransform();
+
+    updateViewer();
 }
 
-async function loadBlockIfNeeded(pageIndex) {
-  const issue = getIssue();
-  if (!issue) return;
+function resetTransform(){
 
-  const lazyLoadPages = config.lazyLoadPages;
-  const blockIndex = Math.floor(pageIndex / lazyLoadPages);
+    scale = 1;
 
-  const key = `${state.currentIssue}-${blockIndex}`;
+    offsetX = 0;
+    offsetY = 0;
 
-  if (state.loadedBlocks.has(key)) return;
-  state.loadedBlocks.add(key);
-
-  el.loading.classList.remove('hidden');
-
-  const start = blockIndex * lazyLoadPages;
-  const end = start + lazyLoadPages;
-
-  const pages = issue.pages.slice(start, end);
-  await Promise.all(pages.map(loadImage));
-
-  el.loading.classList.add('hidden');
+    applyTransform();
 }
 
+function applyTransform(){
+
+    viewerImage.style.transform =
+        `translate(${offsetX}px, ${offsetY}px) scale(${scale})`;
+}
+
+function clampScale(v){
+
+    return Math.min(
+        8,
+        Math.max(
+            1,
+            v
+        )
+    );
+}
+
+function getDistance(a,b){
+
+    const dx =
+        a.clientX - b.clientX;
+
+    const dy =
+        a.clientY - b.clientY;
+
+    return Math.sqrt(
+        dx*dx + dy*dy
+    );
+}
+
+function getMidpoint(a,b){
+
+    return {
+        x:(a.clientX + b.clientX)/2,
+        y:(a.clientY + b.clientY)/2
+    };
+}
+
+closeBtn.addEventListener(
+    'click',
+    closeViewer
+);
+
+document.addEventListener(
+    'keydown',
+    e => {
+
+        if(viewer.classList.contains('hidden')){
+
+            if(
+                e.key === 'ArrowRight' ||
+                e.key === 'ArrowLeft'
+            ){
+
+                if(images.length){
+
+                    openViewer(0);
+                }
+            }
+
+            return;
+        }
+
+        switch(e.key){
+
+            case 'Escape':
+                closeViewer();
+                break;
+
+            case 'ArrowRight':
+                nextImage();
+                break;
+
+            case 'ArrowLeft':
+                prevImage();
+                break;
+        }
+
+    }
+);
+
+viewer.addEventListener(
+    'wheel',
+    e => {
+
+        e.preventDefault();
+
+        const rect =
+            viewer.getBoundingClientRect();
+
+        const x =
+            e.clientX - rect.left;
+
+        const y =
+            e.clientY - rect.top;
+
+        const worldX =
+            (x - offsetX) / scale;
+
+        const worldY =
+            (y - offsetY) / scale;
+
+        let newScale =
+            scale + (-e.deltaY * 0.002);
+
+        newScale =
+            clampScale(newScale);
+
+        offsetX =
+            x - (worldX * newScale);
+
+        offsetY =
+            y - (worldY * newScale);
+
+        scale = newScale;
+
+        applyTransform();
+
+    },
+    { passive:false }
+);
+
+viewer.addEventListener(
+    'mousedown',
+    e => {
+
+        if(scale <= 1) return;
+
+        isPanning = true;
+
+        startPanX =
+            e.clientX - offsetX;
+
+        startPanY =
+            e.clientY - offsetY;
+
+    }
+);
+
+window.addEventListener(
+    'mouseup',
+    () => {
+
+        isPanning = false;
+
+    }
+);
+
+window.addEventListener(
+    'mousemove',
+    e => {
+
+        if(!isPanning) return;
+
+        offsetX =
+            e.clientX - startPanX;
+
+        offsetY =
+            e.clientY - startPanY;
+
+        applyTransform();
+
+    }
+);
 
 
-function loadImage(item) {
-  return new Promise((resolve) => {
-    const url = item?.url;
-    if (!url) return resolve();
 
-    if (state.imageCache.has(url)) return resolve();
+viewer.addEventListener(
+    'touchstart',
+    e => {
 
-    const img = new Image();
-    img.src = url;
+        if(e.touches.length === 2){
 
-    img.onload = () => {
-      state.imageCache.set(url, img);
-      resolve();
+            touchMode = 'pinch';
+
+            pinchStartDistance =
+                getDistance(
+                    e.touches[0],
+                    e.touches[1]
+                );
+
+            pinchStartScale =
+                scale;
+
+            swipeCloseActive = false;
+
+            return;
+        }
+
+        if(e.touches.length !== 1){
+            return;
+        }
+
+        const touch = e.touches[0];
+
+        if(scale > 1){
+
+            touchMode = 'pan';
+
+            swipeCloseActive = false;
+
+            startPanX =
+                touch.clientX - offsetX;
+
+            startPanY =
+                touch.clientY - offsetY;
+
+        }else{
+
+            touchMode = 'swipe';
+
+            swipeStartX =
+                touch.clientX;
+
+            swipeStartY =
+                touch.clientY;
+
+            swipeCloseStartX =
+                touch.clientX;
+
+            swipeCloseStartY =
+                touch.clientY;
+
+            swipeCloseActive = true;
+        }
+
+    },
+    { passive:false }
+);
+
+viewer.addEventListener(
+    'touchmove',
+    e => {
+
+        if(
+            touchMode === 'pinch' &&
+            e.touches.length === 2
+        ){
+
+            e.preventDefault();
+
+            const t1 =
+                e.touches[0];
+
+            const t2 =
+                e.touches[1];
+
+            const midpoint =
+                getMidpoint(t1,t2);
+
+            const dist =
+                getDistance(t1,t2);
+
+            let newScale =
+                pinchStartScale *
+                (dist / pinchStartDistance);
+
+            newScale =
+                clampScale(newScale);
+
+            const worldX =
+                (midpoint.x - offsetX)
+                / scale;
+
+            const worldY =
+                (midpoint.y - offsetY)
+                / scale;
+
+            offsetX =
+                midpoint.x -
+                (worldX * newScale);
+
+            offsetY =
+                midpoint.y -
+                (worldY * newScale);
+
+            scale = newScale;
+
+            applyTransform();
+
+            return;
+        }
+
+        if(
+            swipeCloseActive &&
+            touchMode === 'swipe' &&
+            e.touches.length === 1
+        ){
+
+            const touch =
+                e.touches[0];
+
+            const dx =
+                touch.clientX -
+                swipeCloseStartX;
+
+            const dy =
+                touch.clientY -
+                swipeCloseStartY;
+
+            if(
+                dy > 0 &&
+                Math.abs(dy) > Math.abs(dx)
+            ){
+
+                e.preventDefault();
+
+                viewerImage.style.transform =
+                    `translate(${offsetX}px, ${offsetY + dy}px) scale(${scale})`;
+
+                return;
+            }
+        }
+
+        if(
+            touchMode === 'pan' &&
+            e.touches.length === 1
+        ){
+
+            e.preventDefault();
+
+            const touch =
+                e.touches[0];
+
+            offsetX =
+                touch.clientX -
+                startPanX;
+
+            offsetY =
+                touch.clientY -
+                startPanY;
+
+            applyTransform();
+        }
+
+    },
+    { passive:false }
+);
+
+viewer.addEventListener(
+    'touchend',
+    e => {
+
+        if(
+            swipeCloseActive &&
+            e.changedTouches.length
+        ){
+
+            const touch =
+                e.changedTouches[0];
+
+            const dx =
+                touch.clientX -
+                swipeCloseStartX;
+
+            const dy =
+                touch.clientY -
+                swipeCloseStartY;
+
+            swipeCloseActive = false;
+
+            applyTransform();
+
+            if(
+                dy > 20 &&
+                Math.abs(dy) > Math.abs(dx)
+            ){
+
+                closeViewer();
+                return;
+            }
+        }
+
+        if(touchMode === 'swipe'){
+
+            if(scale > 1.05){
+
+                touchMode = null;
+                return;
+            }
+
+            const touch =
+                e.changedTouches[0];
+
+            const dx =
+                touch.clientX -
+                swipeStartX;
+
+            const dy =
+                touch.clientY -
+                swipeStartY;
+
+            if(
+                Math.abs(dx) > 60 &&
+                Math.abs(dx) > Math.abs(dy)
+            ){
+
+                if(dx < 0){
+
+                    nextImage();
+
+                }else{
+
+                    prevImage();
+                }
+            }
+        }
+
+        touchMode = null;
+
+    }
+);
+
+let lastTap = 0;
+
+viewer.addEventListener(
+    'touchend',
+    e => {
+
+        if(
+            e.changedTouches.length !== 1
+        ) return;
+
+        const now = Date.now();
+
+        if(now - lastTap < 300){
+
+            const touch =
+                e.changedTouches[0];
+
+            const x = touch.clientX;
+            const y = touch.clientY;
+
+            if(scale === 1){
+
+                scale = 2.5;
+
+                offsetX =
+                    -(x * (scale - 1));
+
+                offsetY =
+                    -(y * (scale - 1));
+
+            }else{
+
+                resetTransform();
+            }
+
+            applyTransform();
+        }
+
+        lastTap = now;
+
+    }
+);
+
+
+
+const overlay = document.getElementById('touchInfoOverlay');
+
+function showInfoOverlay(){
+
+    overlay.style.display = 'flex';
+
+    let dismissed = false;
+
+    const dismiss = (e) => {
+
+        if(dismissed) return;
+
+        dismissed = true;
+
+        // CRITICAL: stop full event chain
+        e.preventDefault();
+        e.stopPropagation();
+        e.stopImmediatePropagation?.();
+
+        overlay.style.display = 'none';
+
+        // prevent ghost click on mobile (important)
+        window.addEventListener('click', blockGhostClick, true);
+        setTimeout(() => {
+            window.removeEventListener('click', blockGhostClick, true);
+        }, 500);
     };
 
-    img.onerror = () => resolve();
-  });
+    const blockGhostClick = (e) => {
+        e.preventDefault();
+        e.stopPropagation();
+    };
+
+    // IMPORTANT: listen directly on overlay, not window
+    overlay.addEventListener('pointerdown', dismiss, {
+        once: true,
+        capture: true
+    });
 }
 
+window.addEventListener('load', showInfoOverlay);
 
-async function renderView(viewIndex) {
-  const issue = getIssue();
-  if (!issue) return;
-
-  const safeView = clampView(viewIndex);
-
-  const imageIndex = getImageIndex(safeView);
-  const side = getViewSide(safeView);
-
-  const item = issue.pages[imageIndex];
-  if (!item) return;
-
-  const canvas = el.canvas;
-  const ctx = canvas.getContext('2d');
-
-  /* =====================================================
-     CANVAS SETUP
-  ===================================================== */
-
-  if (isSplitMode()) {
-    const dpr = window.devicePixelRatio || 1;
-
-    canvas.width = window.innerWidth * dpr;
-    canvas.height = window.innerHeight * dpr;
-
-    canvas.style.width = `${window.innerWidth}px`;
-    canvas.style.height = `${window.innerHeight}px`;
-    
-    canvas.style.border = '';
-
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  } else {
-    canvas.width = 1920;
-    canvas.height = 1080;
-
-    canvas.style.width = '';
-    canvas.style.height = '';
-
-    ctx.setTransform(1, 0, 0, 1, 0, 0);
-  }
-
-  /* =====================================================
-     IMAGE LOAD
-  ===================================================== */
-
-  await loadImage(item);
-
-  const img = state.imageCache.get(item.url);
-  if (!img) return;
-
-  canvas.classList.add('is-wiping');
-  await new Promise(resolve => setTimeout(resolve, 120));
-
-  ctx.clearRect(0, 0, canvas.width, canvas.height);
-
-  /* =====================================================
-     FULL PAGE MODE
-  ===================================================== */
-
-  if (side === 'full') {
-    ctx.drawImage(
-      img,
-      0,
-      0,
-      img.width,
-      img.height,
-      0,
-      0,
-      canvas.width,
-      canvas.height
-    );
-  }
-
-  /* =====================================================
-     SPLIT MODE
-  ===================================================== */
-
-  else {
-    const cropWidth = img.width / 2;
-    const cropHeight = img.height;
-
-    const sx =
-      side === 'left'
-        ? 0
-        : cropWidth;
-
-    const viewWidth = window.innerWidth;
-    const viewHeight = window.innerHeight;
-
-    const imageRatio = cropWidth / cropHeight;
-    const viewportRatio = viewWidth / viewHeight;
-
-    let drawWidth;
-    let drawHeight;
-    let dx;
-    let dy;
-
-    // Cover viewport without distortion
-    if (imageRatio > viewportRatio) {
-      drawHeight = viewHeight;
-      drawWidth = drawHeight * imageRatio;
-
-      dx = (viewWidth - drawWidth) / 2;
-      dy = 0;
-    } else {
-      drawWidth = viewWidth;
-      drawHeight = drawWidth / imageRatio;
-
-      dx = 0;
-      dy = (viewHeight - drawHeight) / 2;
-    }
-
-    ctx.drawImage(
-      img,
-      sx,
-      0,
-      cropWidth,
-      cropHeight,
-      dx,
-      dy,
-      drawWidth,
-      drawHeight
-    );
-  }
-
-  /* =====================================================
-     FIRST RENDER
-  ===================================================== */
-
-  if (!state.hasRendered) {
-    state.hasRendered = true;
-    el.pagesContainer.classList.remove('opacity-0');
-  }
-
-  state.currentView = safeView;
-
-  requestAnimationFrame(() => {
-    canvas.classList.remove('is-wiping');
-  });
-}
-
-
-
-function renderThumbnails() {
-  const issue = getIssue();
-  if (!issue) return;
-
-  el.thumbnailGrid.innerHTML = '';
-
-  issue.pages.forEach((item, index) => {
-    const btn = document.createElement('button');
-
-    btn.className =
-      'relative bg-zinc-900 border border-zinc-800 rounded overflow-hidden aspect-[16/9]';
-
-    btn.innerHTML = `
-      <img src="${item.url}" class="w-full h-full object-cover" />
-      <!-- <div class="absolute bottom-0 left-0 right-0 bg-black/60 text-xs px-2 py-1">
-        Page ${index + 1}
-      </div> -->
-    `;
-
-    btn.addEventListener('click', () => {
-      if (!canvasOnlyMode) enableCanvasOnlyMode();
-
-      navigate('GOTO', isSplitMode() ? index * 2 : index);
-
-      requestAnimationFrame(() => {
-        if (canvasOnlyMode) enableCanvasOnlyMode();
-      });
-});
-
-    el.thumbnailGrid.appendChild(btn);
-  });
-}
-
-
-
-
-function openThumbs() {
-  disableCanvasOnlyMode();
-
-  state.mode = 'thumbs';
-
-  clearCanvas();
-
-  el.thumbnailOverlay.classList.remove('hidden');
-  renderThumbnails();
-
-  el.closeFullViewBtn?.classList.add('hidden');
-
-}
-
-function closeThumbs() {
-  state.mode = 'page';
-
-  el.thumbnailOverlay.classList.add('hidden');
-
-  // if (window.innerWidth < 768) {
-    el.closeFullViewBtn?.classList.remove('hidden');
-  // }
-
-  enableCanvasOnlyMode();
-
-  clearCanvas();
-}
-
-async function navigate(action, value = 1) {
-  const issue = getIssue();
-  if (!issue) return;
-
-  const max = getTotalViews();
-
-  if (state.mode === 'thumbs') {
-    switch (action) {
-      case 'NEXT':
-        closeThumbs();
-        return renderView(0);
-
-      case 'PREV':
-        closeThumbs();
-        return renderView(max - 1);
-
-      case 'GOTO':
-        closeThumbs();
-        return renderView(value);
-    }
-    return;
-  }
-
-  switch (action) {
-    case 'NEXT': {
-      const next = state.currentView + value;
-      if (next >= max) return openThumbs();
-      return renderView(next);
-    }
-
-    case 'PREV': {
-      const prev = state.currentView - value;
-      if (prev < 0) return openThumbs();
-      return renderView(prev);
-    }
-
-    case 'GOTO':
-      return renderView(value);
-
-    case 'OPEN_THUMBS':
-      return openThumbs();
-
-    case 'CLOSE_THUMBS':
-      return closeThumbs();
-  }
-}
-
-el.closeFullViewBtn?.addEventListener('click', () => {
-  navigate('OPEN_THUMBS');
-});
-
-
-document.addEventListener('keydown', e => {
-  const tag = document.activeElement.tagName;
-  const ignoreTyping = tag === 'INPUT' || tag === 'TEXTAREA';
-
-  // Escape exits only
-  if (e.key === 'Escape') {
-    disableCanvasOnlyMode();
-    return;
-  }
-
-  // Arrow keys only ENTER mode (never exit)
-  if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && !ignoreTyping) {
-    e.preventDefault();
-    enableCanvasOnlyMode();
-  }
-});
-
-window.addEventListener('keydown', (e) => {
-  if (e.key === 'ArrowRight') navigate('NEXT');
-  if (e.key === 'ArrowLeft') navigate('PREV');
-  if (e.key === 'Escape') navigate('OPEN_THUMBS');
-});
-
-
-
-
-
-
-function attachSwipeNavigation(target = el.pagesContainer || document) {
-  let startX = 0;
-  let startY = 0;
-
-  const MIN_DISTANCE = 50;
-  const MAX_VERTICAL_DRIFT = 75;
-
-  target.addEventListener('touchstart', (e) => {
-    const touch = e.changedTouches[0];
-    startX = touch.clientX;
-    startY = touch.clientY;
-  }, { passive: true });
-
-  target.addEventListener('touchend', (e) => {
-    const touch = e.changedTouches[0];
-
-    const dx = touch.clientX - startX;
-    const dy = touch.clientY - startY;
-
-    if (Math.abs(dy) > MAX_VERTICAL_DRIFT) return;
-    if (Math.abs(dx) < MIN_DISTANCE) return;
-
-    if (dx < 0) navigate('NEXT');
-    else navigate('PREV');
-
-  }, { passive: true });
-}
-
-attachSwipeNavigation();
-
-
-
-
-function applyCanvasAspect() {
-  const wrapper = document.getElementById('pagesContainer');
-
-  if (!wrapper) return;
-
-  wrapper.style.aspectRatio =
-  isSplitMode()
-    ? '9 / 16'
-    : '16 / 9';
-}
-
-
-function clearCanvas() {
-  const ctx = el.canvas.getContext('2d');
-
-  ctx.clearRect(0, 0, el.canvas.width, el.canvas.height);
-
-  // force blank frame
-  el.canvas.width = el.canvas.width;
-}
-
-function debounce(fn, delay = 150) {
-  let t;
-  return (...args) => {
-    clearTimeout(t);
-    t = setTimeout(() => fn(...args), delay);
-  };
-}
-
-
-fetchImages();
-applyCanvasAspect();
-
-
-
-window.addEventListener('resize', debounce(() => {
-  applyCanvasAspect();
-  renderIssueList();
-}));
-
-window.addEventListener('orientationchange', applyCanvasAspect);
-
+init();

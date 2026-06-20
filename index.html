@@ -1,148 +1,29 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8" />
-<meta
-  name="viewport"
-  content="width=device-width, initial-scale=1.0"
-/>
-<link rel='icon' href='data:;base64,='>
-<title>PRESET LOOP</title>
-
-<script src='tailwindcss.min.js'></script>
-
-<link rel='stylesheet' href='style.css' />
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel='shortcut icon' href='pl-logo-trans.png' type='image/x-icon' />
+  <script src='tailwindcss.min.js'></script>
+  <title>P R E S E T L O O P</title>
 </head>
+<body class="bg-white">
+      <div class="flex flex-col justify-center items-center mt-[100px] gap-10">
+        
+      <img
+        src="pl-logo-trans.png"
+        alt="Preset Loop"
+        class="h-[55px] w-auto mb-3" />
 
-<body class="text-white">
-<div class="w-screen h-screen flex flex-col">
-
-
-<button id="closeFullViewBtn" class="hidden fixed top-2 right-2 z-[999999] w-10 h-10 rounded-full bg-white/20 text-black hover:bg-black hover:text-white">✕</button>
-
-
-<header class="relative">
-
-  <!-- ISSUE LIST -->
-  <aside
-    id="issueList"
-    class="absolute top-0 left-0 flex flex-col overflow-y-auto z-50"
-  ></aside>
-
-  <!-- animated hint arrow -->
-  <div id="hintArrow" class="absolute top-2 left-10 flex flex-col overflow-y-auto z-50 text-[#111] arrow-bounce italic">&larr; SELECT</div>
-  
-  
-  <!-- MASTHEAD -->
-  <div
-    id="masthead"
-    class="bg-[#f7f7f7] h-24 grid grid-cols-3 items-center px-2 select-none transition transform"
-  >
-
-    <!-- LEFT (empty spacer) -->
-    <div></div>
-
-    <!-- CENTER (strictly centered) -->
-    <div class="hidden sm:flex justify-center -ml-12 sm:ml-0 -mt-[2px]">
-      <div class="key-instructions inline-flex flex-col items-center text-sm sm:text-lg">
-        <div class="key-row">
-          <span class="key">←</span>
-          <span class="key">→</span>
-          <span class="label">Navigate</span>
-        </div>
-
-        <div class="key-row">
-          <span class="key">Esc</span>
-          <span class="hidden sm:inline-block label mr-[32px]">EXIT</span>
-        </div>
-      </div>
+      <a href="gallery.html" class="inline-block pr-10 -rotate-1">G A L L E R Y</a>
+      
+      <a href="about.html" class="inline-block pl-10 rotate-1">A B O U T</a>
+      
+      <a href="mailto:presetloop@gmail.com" class="inline-block pr-8 -rotate-2">E M A I L</a>  
+      
+      <a href="https://x.com/presetloop" target="_blank" class="inline-block pl-16 rotate-2">DM on X</a>
+      
     </div>
 
-    <!-- RIGHT (logo pinned) -->
-    <div class="flex justify-center sm:justify-end">
-      <a href="about.html">
-        <img
-          src="pl-logo-trans.png"
-          alt="Preset Loop"
-          class="h-[55px] w-auto sm:mr-3 hover:opacity-20" title="click me"/>
-      </a>
-    </div>
-
-  </div>
-
-</header>
-
-  <div class="flex flex-1 overflow-hidden">
-
-  <main class="relative flex-1 overflow-hidden">
-
-    <!-- CENTER WRAPPER (X ONLY) -->
-    <div class="w-full flex justify-center">
-
-      <!-- STAGE WRAPPER -->
-      <div class="w-full max-w-[2360px]">
-
-        <!-- CANVAS STAGE -->
-        <div
-          id="pagesContainer"
-          class="relative w-full aspect-[16/9] mt-0 transition transform"
-        >
-
-          <canvas
-            id="canvas"
-            width="1920"
-            height="1080"
-            class="w-full h-full block"
-          ></canvas>
-
-          <!-- THUMBNAIL OVERLAY -->
-          <div
-            id="thumbnailOverlay"
-            class="absolute h-screen inset-0 overflow-y-auto thumb-scroll"
-          >
-            <div
-              id="thumbnailGrid"
-              class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4 p-6 mx-auto max-w-[1920px] mb-64"
-            ></div>
-          </div>
-
-          <!-- LOADING -->
-          <div
-            id="loading"
-            class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 text-white text-7xl hidden -mt-32"
-          >
-            Loading...
-          </div>
-
-        </div>
-      </div>
-
-    </div>
-
-  </main>
-</div>
-
-<!--  -->
-</div>
-
-<script>
-window.addEventListener('load', () => {
-  const el = document.getElementById('hintArrow');
-  if (!el) return;
-
-  // visible for initial moment
-  setTimeout(() => {
-    el.classList.add('arrow-hidden');
-
-    // fully remove from DOM after fade
-    setTimeout(() => {
-      el.remove();
-    }, 350);
-
-  }, 5000); // visible duration
-});
-</script>
-<!--  -->
-<script type="module" src="script.js"></script>
 </body>
 </html>

@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta
+    name="viewport"
+    content="
+        width=device-width,
+        initial-scale=1,
+        maximum-scale=1,
+        user-scalable=no
+    ">
+
+<title>Preset Loop</title>
+<link rel='shortcut icon' href='pl-logo-trans.png' type='image/x-icon' />
+<script src='tailwindcss.min.js'></script>
+
+<link rel='stylesheet' href='style.css' />
+</head>
+<body class="bg-black text-white">
+
+<!-- THUMBNAILS -->
+
+<div id="thumbView">
+
+    <div
+        id="thumbGrid"
+        class="mb-[160px] grid grid-cols-3 md:grid-cols-4 lg:grid-cols-8 gap-[10px] bg-transparent">
+    </div>
+
+</div>
+
+<!-- VIEWER -->
+
+<div
+    id="viewer"
+    class="hidden fixed inset-0 z-50 bg-black overflow-hidden">
+
+    <button
+        id="closeBtn"
+        class="fixed top-3 right-3 z-[999] w-12 h-12 rounded-full bg-white/20 text-black text-xl hover:bg-[#f33333] hover:text-white">
+        ✕
+    </button>
+
+    <div
+    id="counter"
+    class="fixed -left-5 top-[60px] z-[999] text-black/20 font-mono text-sm -rotate-90 w-24 text-right"></div>
+
+
+    <img id="viewerImage">
+
+</div>
+
+
+<div id="touchInfoOverlay">
+  <div class="touchInfoBox">
+      
+    <div class="flex flex-col md:hidden gap-2.5">
+      <p><b>Swipe</b> to <b>navigate</b></p>
+      <p><b>Double-tap</b> to <b>zoom</b></p> 
+
+      <p class="text-xs mt-3 rounded bg-black text-white pt-1 pb-1.5 px-2">click to close</p>
+    </div>
+
+    <div class="hidden md:mt-4 md:flex flex-col items-center">
+        <div class="key-row">
+          <span class="key">←</span>
+          <span class="key">→</span>
+          <span class="label ml-3">Navigate</span>
+        </div>
+
+      <div class="key-row mt-2">
+        <span class="key -ml-[40px]">Esc</span>
+        <span class="hidden sm:inline-block label pl-[29px]">EXIT</span>
+      </div>
+    
+      <p class="text-xs mt-8 rounded bg-black text-white pt-1 pb-1.5 px-2">click to close</p>
+  </div>
+
+<!--  -->
+  </div>
+</div>
+
+<script src="script.js"></script>
+
+</body>
+</html>
